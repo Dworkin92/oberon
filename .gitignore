@@ -43,7 +43,7 @@
 *.pdb
 
 # Kernel Module Compile Results
-*.mod*
+#*.mod*
 *.cmd
 .tmp_versions/
 modules.order
@@ -59,6 +59,7 @@ dkms.conf
 *.log
 
 # backup files
+*.swp
 *.bak
 *~
 core
