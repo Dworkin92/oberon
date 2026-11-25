@@ -1,0 +1,76 @@
+# REPRISE — point d'entrée après compactage / nouvelle session
+
+> **Règle d'or** : mettre ce fichier à jour à chaque fin de session (état, tests, prochaine étape).
+> Tout l'état du projet vit dans le dépôt ; une nouvelle session repart d'ici.
+
+## État actuel (25/11/2026, vérifié ce jour)
+
+Chaîne complète **compilateur Oberon-07 → bytecode `.obc` → VM maison**, stage-0 en C,
+plus VM réécrite en Oberon. **Tests : 88/88** (22 exemples × 4 moteurs : `obvm` C,
+natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif).
+
+```
+oberon/
+  README.md  journal.md  TODO.md          docs de haut niveau
+  docs/REPRISE.md (ce fichier)  LANGAGE.md (référence du dialecte)  AUTOHEBERGEMENT.md (vision)
+  lib/            bibliothèque : MathLib.Mod, Strings.Mod (+ .obc recompilés par les tests)
+  bootstrap/      stage-0 100 % C : src/ (obc obvm obdis ob2c, runtime rt.[ch] partagé),
+                  build.sh, Makefile, examples/ (22 .Mod), tests/run_tests.sh + expected/
+                  binaires : obc.exe obvm.exe obdis.exe ob2c.exe
+  selfhost/       VM.Mod (~700 lignes, la VM en Oberon) + VM.obc (recompilé par run_tests.sh)
+```
+
+## Commandes essentielles (toutes depuis `bootstrap/`)
+
+```sh
+./build.sh                          # rebuild les 4 binaires C
+./tests/run_tests.sh                # 88/88 attendu ; « passed: 88  failed: 0 »
+./obc.exe examples/Hello.Mod        # compile (.obc à côté du .Mod ; imports compilés aussi)
+./obvm.exe examples/Hello.obc       # exécute sur la VM C
+./obdis.exe examples/Hello.obc      # désassemble
+./obvm.exe ../selfhost/VM.obc examples/Hello.obc   # exécute via VM.Mod (Oberon) sur obvm
+# natif : ./ob2c.exe examples/Hello.obc -o /tmp/H.c && gcc -O2 -Isrc -o /tmp/h /tmp/H.c \
+#          src/rt.c src/ob.c src/model.c src/module.c -lm && /tmp/h examples/Hello.obc
+```
+
+Chemin de recherche des imports (dans obc, obvm, ob2c **et** VM.Mod) : `D/M.obc`, `D/M.Mod`,
+`D/../lib/…`, `D/../../lib/…` — c'est comme ça que `lib/` est trouvable depuis `bootstrap/examples` et `selfhost/`.
+
+## Invariants à ne PAS régresser
+
+- **Opcodes append-only** dans `bootstrap/src/ob.h` (dernier = `OP_DISPOSE` 87 ; `OP_JUMPTABLE` 86).
+- Cellules 64 bits ; adresses taggées (octet haut : 0x00 pile / 0x01 global / 0x02 tas).
+- **Adresse globale = gid absolu** résolu à la création (pas l'index d'import local) — sinon les `VAR`
+  cross-module lisent le mauvais module. Idem dans `VM.Mod`. Max 256 modules.
+- Tas : **free-list first-fit + découpe** (bloc libre = `[0, taille, suivant]`) dans `rt.c` et `VM.Mod` ;
+  `OP_DISPOSE` met NIL dans le slot (double DISPOSE = no-op).
+- `Type.visited` = **stamp `gTypeStamp`** incrémenté par `writeModule` (pas un simple flag booléen).
+- Procédure corps = `procs[0]` ; les pointeurs `Proc*` deviennent invalides après `addProc` (realloc) → utiliser des **indices**.
+- Constantes `TK_LONGINT`/`TK_OP` identiques des deux côtés C et VM.Mod (TK_ARRAY=7, RECORD=8, POINTER=9).
+- Mots-clés **sensibles à la casse** en majuscules (`In` ≠ `IN`) ; `HALT` est un ident prédéfini.
+
+## Dialecte supporté (extensions maison marquées « ext » dans `docs/LANGAGE.md`)
+
+LONGINT 64 bits, procédures-fonctions avec `RETURN expr`, littéraux `'c'`, appels sans `()`,
+`FLOOR`, `Out.Byte`/`In.Byte`, module `Files` (I/O binaire fichiers), **open arrays**
+(`VAR a: ARRAY OF T`, `LEN(a,0)` = taille réelle), **`NEW`/`DISPOSE` sur POINTER TO ARRAY OF T**,
+**conversion implicite INTEGER→REAL** (`7/2 = 3.5`), **`WITH p: T DO … END`** (multi-gardes),
+module `SYSTEM` (BAND/BOR/BXOR/BNOT/LSH/ROT/BIT/ARGC/ARGV/TICKS/EXIT, casts L2I/REALBITS/BITSREAL/I2REAL),
+superinstruction `OP_JUMPTABLE` pour les `CASE` denses.
+
+## Prochaine étape (TODO groupe A restant)
+
+1. **Types procéduraux / variables procédurales** (threaded code dans `VM.Mod` aussi)
+2. `VAR` record params, `ARRAY OF RECORD`, `SYSTEM.VAL/ADR/GET/PUT` si besoin réel
+3. Puis **OC.Mod** (compilateur en Oberon) : d'abord émetteur de `.obc` identique au stage-0
+   (phase `PASS-OC`), puis backend C et auto-compilation (`oc.obc → oc2.c → gcc`, `diff`),
+   avec `bootstrap/tests/expected/` comme banc de régression.
+
+Détails : `TODO.md` (cases à cocher) · `journal.md` (faits, datés) · `docs/AUTOHEBERGEMENT.md` (vision).
+
+## Rappels de session (Vibe Desktop)
+
+Pas de `/compact` manuel en Desktop : le compactage est **automatique** au seuil
+`auto_compact_threshold` (config `~/.vibe/config.toml`) ; une nouvelle session remet le
+contexte à zéro — d'où ce fichier. Pour alléger le contexte : ne pas relire les gros fichiers
+en entier, déléguer les recherches larges à des sous-agents, réponses courtes.

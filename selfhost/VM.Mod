@@ -35,6 +35,7 @@ CONST
   OP_LNEG = 76; OP_LABS = 77; OP_LODD = 78;
   OP_LLT = 79; OP_LLE = 80; OP_LGT = 81; OP_LGE = 82; OP_LEQ = 83; OP_LNE = 84; OP_L2I = 85;
   OP_JUMPTABLE = 86;
+  OP_DISPOSE = 87;
 
   (* --- builtin proc ids (bootstrap/src/parser.c), module id 255 --- *)
   B_OUT_INT = 0; B_OUT_REAL = 1; B_OUT_CHAR = 2; B_OUT_STRING = 3; B_OUT_LN = 4;
@@ -61,7 +62,7 @@ CONST
 
 VAR
   (* ---- guest memory ---- *)
-  heap: ARRAY HEAPSIZE OF LONGINT; heapUsed: INTEGER;
+  heap: ARRAY HEAPSIZE OF LONGINT; heapUsed: INTEGER; freeHead: INTEGER;
   stack: ARRAY STACKSIZE OF LONGINT; sp: INTEGER;
   fmod, fproc, fpc, fbase, fslink: ARRAY FRAMES OF INTEGER;
   fp: INTEGER; running: BOOLEAN; haltCode: INTEGER;
@@ -111,13 +112,46 @@ BEGIN r := SYSTEM.BAND(x, MASK32); IF r >= SIGN32 THEN r := r - MASK32 - 1 END; 
 END;
 
 (* ---------- guest heap ---------- *)
+(* first-fit on the free list, else bump. Free block: heap[h]=0, heap[h+1]=size, heap[h+2]=next *)
 PROCEDURE HeapAlloc(n: INTEGER): INTEGER;
-VAR h, i: INTEGER;
+VAR h, i, prev, cur, size, next, rem: INTEGER;
 BEGIN
+  prev := 0; cur := freeHead;
+  WHILE cur # 0 DO
+    size := SYSTEM.L2I(heap[cur+1]);
+    IF size >= n THEN
+      next := SYSTEM.L2I(heap[cur+2]);
+      IF size - n >= 4 THEN (* split: remainder stays free where the block was *)
+        rem := cur + n;
+        heap[rem] := 0; heap[rem+1] := size - n; heap[rem+2] := next;
+        IF prev = 0 THEN freeHead := rem ELSE heap[prev+2] := rem END
+      ELSE
+        IF prev = 0 THEN freeHead := next ELSE heap[prev+2] := next END
+      END;
+      h := cur;
+      FOR i := 0 TO n-1 DO heap[h+i] := 0 END;
+      RETURN h
+    END;
+    prev := cur; cur := SYSTEM.L2I(heap[cur+2])
+  END;
   IF heapUsed + n > HEAPSIZE THEN msgbuf := "heap overflow"; Fatal END;
   h := heapUsed; heapUsed := heapUsed + n;
   FOR i := 0 TO n-1 DO heap[h+i] := 0 END;
   RETURN h
+END;
+
+PROCEDURE HeapFree(ref, size: INTEGER);
+BEGIN
+  IF (ref <= 0) OR (size < 3) THEN msgbuf := "bad free"; Fatal END;
+  IF heap[ref] = 0 THEN msgbuf := "double DISPOSE"; Fatal END;
+  heap[ref] := 0; heap[ref+1] := size; heap[ref+2] := freeHead; freeHead := ref
+END;
+
+PROCEDURE ObjSize(gid, t: INTEGER): INTEGER;
+BEGIN
+  IF tkind[gid, t] = TK_ARRAY THEN RETURN tndim[gid, t] + 2 + ttotal[gid, t] END;
+  IF tkind[gid, t] = TK_RECORD THEN RETURN 2 + tpayload[gid, t] END;
+  RETURN 0
 END;
 
 PROCEDURE AllocArray(gid, t: INTEGER): INTEGER;
@@ -577,7 +611,7 @@ END;
 (* ---------- the interpreter ---------- *)
 PROCEDURE Run();
 VAR op, pc, cur, cofs, oldfp, slot, fi, ld, off, lmod, pidx, steps, base: INTEGER;
-    g, st, n, i, tag, hres, ok: INTEGER;
+    g, st, n, i, tag, hres, ok, to, ref: INTEGER;
     u, a, b, rv, t, tg: LONGINT; x, y: REAL;
 BEGIN
   fmod[0] := 0; fproc[0] := 0; fpc[0] := 0; fbase[0] := 0; fslink[0] := -1;
@@ -655,9 +689,27 @@ BEGIN
         ELSE IF hres = 1 THEN Push(rv) END
         END
     | OP_NEW: lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
-        g := map[cur, lmod]; tag := rtPtrTag[g, SYSTEM.L2I(u)]; n := rtPtrSize[g, SYSTEM.L2I(u)];
-        IF tag = 0 THEN msgbuf := "NEW on non-record pointer"; Fatal END;
-        slot := HeapAlloc(2 + n); heap[slot] := tag; heap[slot+1] := n; Push(slot)
+        g := map[cur, lmod];
+        IF tkind[g, SYSTEM.L2I(u)] # TK_POINTER THEN msgbuf := "NEW on non-pointer type"; Fatal END;
+        to := tto[g, SYSTEM.L2I(u)];
+        IF to < 0 THEN msgbuf := "NEW on non-pointer type"; Fatal END;
+        IF tkind[g, to] = TK_RECORD THEN
+          tag := rtPtrTag[g, SYSTEM.L2I(u)]; n := rtPtrSize[g, SYSTEM.L2I(u)];
+          IF tag = 0 THEN msgbuf := "NEW on non-record pointer"; Fatal END;
+          slot := HeapAlloc(2 + n); heap[slot] := tag; heap[slot+1] := n; Push(slot)
+        ELSIF tkind[g, to] = TK_ARRAY THEN
+          IF ttotal[g, to] = 1073741823 THEN msgbuf := "NEW on open array pointer"; Fatal END;
+          Push(AllocArray(g, to))
+        ELSE msgbuf := "NEW on unsupported pointee"; Fatal END
+    | OP_DISPOSE: lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
+        g := map[cur, lmod]; a := Pop(); ref := SYSTEM.L2I(MemRead(a));
+        IF ref # 0 THEN
+          IF (tkind[g, SYSTEM.L2I(u)] = TK_POINTER) & (tto[g, SYSTEM.L2I(u)] >= 0) THEN
+            n := ObjSize(g, tto[g, SYSTEM.L2I(u)]);
+            IF n <= 0 THEN msgbuf := "DISPOSE on unsupported pointee"; Fatal END;
+            HeapFree(ref, n); MemWrite(a, 0)
+          ELSE msgbuf := "DISPOSE on non-pointer type"; Fatal END
+        END
     | OP_ALLOC_ARRAY: lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
         g := map[cur, lmod]; Push(AllocArray(g, SYSTEM.L2I(u)))
     | OP_LEN: u := RD32(cofs+pc); pc := pc+4; a := Pop();
@@ -781,7 +833,7 @@ BEGIN
   i := lastSep + 1; j := 0;
   WHILE (path[i] # 0X) & (path[i] # CHR(46)) DO name[j] := path[i]; INC(i); INC(j) END;
   name[j] := 0X;
-  nmods := 0; heapUsed := 1; codeUsed := 0; globalsUsed := 0; tagCounter := 0;
+  nmods := 0; heapUsed := 1; freeHead := 0; codeUsed := 0; globalsUsed := 0; tagCounter := 0;
   fp := 0; sp := 0; running := FALSE; haltCode := 0;
   LoadMod(name, dir);
   Run();

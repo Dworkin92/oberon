@@ -22,6 +22,7 @@ struct Type {
   char name[64];   /* for named types */
   int isStringLit; /* array-of-char produced by a string literal */
   int anyCharArray; /* marker type: accepts any ARRAY OF CHAR (Out.String, In.Line) */
+  int anyPointer;   /* marker type: accepts any POINTER (DISPOSE) */
   int isOpen;      /* open array: formal parameter "ARRAY OF T" (any length) */
   /* ARRAY */
   Type *elem;
@@ -108,6 +109,7 @@ typedef struct Module {
 Type *newType(int kind);
 extern Type *typeInt, *typeReal, *typeBool, *typeChar, *typeSet, *typeNil, *typeLongint;
 extern Type *typeCharArrayAny; /* marker: any ARRAY OF CHAR (Out.String, In.Line, COPY) */
+extern Type *typeAnyPointer;   /* marker: any pointer (DISPOSE param) */
 void initBasicTypes(void);
 extern int gTypeStamp; /* incremented by writeModule; type registration guard */
 int typeSizeCells(Type *t);          /* slots occupied inline (always 1 in v1) */

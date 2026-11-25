@@ -45,6 +45,7 @@ enum {
   OP_LLT, OP_LLE, OP_LGT, OP_LGE, OP_LEQ, OP_LNE,
   OP_L2I,                                       /* LONGINT -> INTEGER (truncate) */
   OP_JUMPTABLE,                                 /* superinstruction: u32 n, u32 base, u32 default, n x u32 targets; pop selector, jump */
+  OP_DISPOSE,                                   /* u8 mod, u32 typeidx (pointer type): pop slot addr, free object, store NIL */
   OP_COUNT
 };
 

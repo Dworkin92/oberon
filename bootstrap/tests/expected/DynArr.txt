@@ -1,0 +1,7 @@
+len=8
+sum=140
+nil=1
+reuse=42
+qsum=828
+rsum=8
+done

@@ -105,6 +105,7 @@ void vmRun(VM *vm) {
     [OP_SWAP] = &&L_OP_SWAP,
     [OP_NOP] = &&L_OP_NOP,
     [OP_JUMPTABLE] = &&L_OP_JUMPTABLE,
+    [OP_DISPOSE] = &&L_OP_DISPOSE,
   };
 #endif
   rtEnterBody(vm);
@@ -293,14 +294,16 @@ void vmRun(VM *vm) {
         u32a = (uint32_t)code[pc] | ((uint32_t)code[pc+1] << 8) |
                ((uint32_t)code[pc+2] << 16) | ((uint32_t)code[pc+3] << 24);
         pc += 4;
-        VMMod *tm = vm->mods[cur->map[lmod]];
-        int tag = tm->rtPtrTag[u32a];
-        int size = tm->rtPtrSize[u32a];
-        if (tag == 0) vmRuntimeError(vm, "NEW on non-record pointer");
-        int h = heapAlloc(vm, 2 + size);
-        vm->heap[h] = tag;
-        vm->heap[h + 1] = size;
-        push(vm, h);
+        push(vm, rtNew(vm, lmod, (int)u32a));
+        break;
+      }
+      case OP_DISPOSE: OPLABEL(OP_DISPOSE) {
+        int lmod = code[pc++];
+        u32a = (uint32_t)code[pc] | ((uint32_t)code[pc+1] << 8) |
+               ((uint32_t)code[pc+2] << 16) | ((uint32_t)code[pc+3] << 24);
+        pc += 4;
+        Cell addr = pop(vm);
+        rtDispose(vm, addr, lmod, (int)u32a);
         break;
       }
       case OP_ALLOC_ARRAY: OPLABEL(OP_ALLOC_ARRAY) {

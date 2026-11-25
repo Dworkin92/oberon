@@ -2,6 +2,7 @@
 
 Type *typeInt, *typeReal, *typeBool, *typeChar, *typeSet, *typeNil, *typeLongint;
 Type *typeCharArrayAny;
+Type *typeAnyPointer;
 int gTypeStamp = 0;
 Obj *scopeStack[64];
 int scopeTop = -1;
@@ -18,6 +19,9 @@ void initBasicTypes(void) {
   typeLongint = newType(TK_LONGINT); strcpy(typeLongint->name, "LONGINT");
   typeCharArrayAny = mkArrayType(typeChar, 1, (int[]){0x3FFFFFFF});
   typeCharArrayAny->anyCharArray = 1;
+  typeAnyPointer = newType(TK_POINTER);
+  strcpy(typeAnyPointer->name, "ANYPOINTER");
+  typeAnyPointer->anyPointer = 1;
 }
 
 Type *newType(int kind) {
@@ -54,15 +58,23 @@ int typeAssignable(Type *dst, Type *src) {
   if (dst->kind == TK_POINTER && src->kind == TK_NIL) return 1;
   /* INTEGER widens to LONGINT */
   if (dst->kind == TK_LONGINT && src->kind == TK_INT) return 1;
+  /* INTEGER converts implicitly to REAL (ext) */
+  if (dst->kind == TK_REAL && src->kind == TK_INT) return 1;
   /* string literal to ARRAY OF CHAR */
   if (dst->kind == TK_ARRAY && src->kind == TK_ARRAY && src->isStringLit &&
       dst->elem->kind == TK_CHAR && src->total <= dst->total) return 1;
   /* any char array accepted where the marker is expected */
   if (dst->kind == TK_ARRAY && dst->anyCharArray && src->kind == TK_ARRAY &&
       src->elem->kind == TK_CHAR) return 1;
+  /* pointer to array of char accepted where the char-array marker is expected */
+  if (dst->kind == TK_ARRAY && dst->anyCharArray && src->kind == TK_POINTER &&
+      src->to && src->to->kind == TK_ARRAY && src->to->elem->kind == TK_CHAR) return 1;
   /* open array param (ARRAY OF T) accepts any array with the same element type */
   if (dst->kind == TK_ARRAY && dst->isOpen && src->kind == TK_ARRAY &&
       typeEquals(dst->elem, src->elem)) return 1;
+  /* open array param also accepts a pointer to array of the same element type */
+  if (dst->kind == TK_ARRAY && dst->isOpen && src->kind == TK_POINTER &&
+      src->to && src->to->kind == TK_ARRAY && typeEquals(dst->elem, src->to->elem)) return 1;
   /* string literal to an open ARRAY OF CHAR param */
   if (dst->kind == TK_ARRAY && dst->isOpen && dst->elem->kind == TK_CHAR &&
       src->kind == TK_ARRAY && src->isStringLit) return 1;

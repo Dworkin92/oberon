@@ -7,7 +7,7 @@
 
 /* predefined procedure ids (Obj with modId == -1) */
 enum { PD_ABS = 1, PD_ODD, PD_LEN, PD_ORD, PD_CHR, PD_ENTIER, PD_FLOOR,
-       PD_NEW = 20, PD_INC, PD_DEC, PD_INCL, PD_EXCL, PD_COPY, PD_HALT };
+       PD_NEW = 20, PD_INC, PD_DEC, PD_INCL, PD_EXCL, PD_COPY, PD_HALT, PD_DISPOSE };
 
 /* builtin module proc ids (module id 255) */
 enum { B_OUT_INT = 0, B_OUT_REAL, B_OUT_CHAR, B_OUT_STRING, B_OUT_LN,
@@ -27,11 +27,16 @@ enum { B_OUT_INT = 0, B_OUT_REAL, B_OUT_CHAR, B_OUT_STRING, B_OUT_LN,
 
 static int curLevel;
 static Obj *builtinOut, *builtinIn, *builtinFiles, *builtinSystem;
+static Obj *withShadows[64]; static int nWithShadows; /* WITH guards: vars shadowed in current scope */
 
 static int isIntLike(Type *t) { return t == typeInt || t == typeLongint; }
 
 /* ---------- emission helpers ---------- */
 static void emit(int op) { bufU8(&curProc->code, op); }
+/* implicit INTEGER -> REAL conversion (ext): stack holds [a, b]; convert the top (b) */
+static void emitI2FTop(Type *t) { if (t == typeInt) emit(OP_I2F); }
+/* convert the value UNDER the top (a): SWAP, I2F, SWAP */
+static void emitI2FBelow(Type *t) { if (t == typeInt) { emit(OP_SWAP); emit(OP_I2F); emit(OP_SWAP); } }
 static void emit32(int op, uint32_t v) { emit(op); bufU32(&curProc->code, v); }
 static int here(void) { return curProc->code.len; }
 static void patch32(int pos, uint32_t v) {
@@ -134,6 +139,8 @@ static void installPredefined(void) {
   insertObj(mkPredefProc("ENTIER", PD_ENTIER, 1, z1, (Type *[]){typeReal}));
   insertObj(mkPredefProc("FLOOR", PD_FLOOR, 1, z1, (Type *[]){typeReal}));
   insertObj(mkPredefProc("NEW", PD_NEW, 1, z1, (Type *[]){typeCharArrayAny}));
+  { int z1v[1] = {1};
+    insertObj(mkPredefProc("DISPOSE", PD_DISPOSE, 1, z1v, (Type *[]){typeAnyPointer})); }
   insertObj(mkPredefProc("INC", PD_INC, 2, z2, (Type *[]){typeInt, typeInt}));
   insertObj(mkPredefProc("DEC", PD_DEC, 2, z2, (Type *[]){typeInt, typeInt}));
   insertObj(mkPredefProc("INCL", PD_INCL, 2, z2, (Type *[]){typeSet, typeInt}));
@@ -539,6 +546,11 @@ static Type *parseType(void) {
   if (sym == S_POINTER) {
     nextSym();
     expect(S_TO);
+    if (sym == S_ARRAY) { /* POINTER TO ARRAY n OF T (fixed dims only; open arrays rejected at NEW) */
+      Type *to = parseType();
+      if (to->kind != TK_ARRAY || to->isOpen) obError(line, "pointer base must be a fixed array or record");
+      return mkPointerType(to);
+    }
     char n[64];
     readIdent(n);
     Obj *o = lookup(n);
@@ -554,7 +566,8 @@ static Type *parseType(void) {
       insertObj(no);
     }
     if (o && o->cls == CL_MODULE) obError(line, "module-qualified pointer not supported here");
-    if (to->kind != TK_RECORD) obError(line, "pointer base must be a record");
+    if (to->kind != TK_RECORD && to->kind != TK_ARRAY) obError(line, "pointer base must be a record or array");
+    if (to->kind == TK_ARRAY && to->isOpen) obError(line, "pointer to open array not allowed");
     return mkPointerType(to);
   }
   return parseQualType();
@@ -850,6 +863,11 @@ static Type *parseDesignator(int mode, Obj *o, int mod) {
       t = (rt->kind == TK_POINTER) ? rt : mkPointerType(rec);
       st = 0;
     } else if (sym == S_LBRACK) {
+      if (t->kind == TK_POINTER && t->to && t->to->kind == TK_ARRAY) {
+        /* implicit deref: p[i] with p: POINTER TO ARRAY */
+        if (st == 1) { emit(OP_LOAD_AT); st = 0; } /* slot addr -> ref */
+        t = t->to;
+      }
       if (t->kind != TK_ARRAY) obError(line, "indexing non-array");
       if (st == 1) { emit(OP_LOAD_AT); st = 0; } /* slot addr -> ref */
       int nd = t->ndim;
@@ -903,7 +921,11 @@ static Type *parseDesignator(int mode, Obj *o, int mod) {
 
 /* ---------- expressions ---------- */
 static void emitRelation(int op, Type *a, Type *b) {
-  int isReal = (a == typeReal && b == typeReal);
+  int mixed = (a == typeReal && b == typeInt) || (a == typeInt && b == typeReal);
+  if (mixed) { /* convert the INTEGER side (ext) */
+    if (a == typeInt) { emit(OP_SWAP); emit(OP_I2F); emit(OP_SWAP); } else emit(OP_I2F);
+  }
+  int isReal = (a == typeReal && b == typeReal) || mixed;
   int isNum = (a == typeInt && b == typeInt) || (a == typeChar && b == typeChar);
   int isLong = isIntLike(a) && isIntLike(b) && (a == typeLongint || b == typeLongint);
   switch (op) {
@@ -944,6 +966,7 @@ static Type *parseExpression(void) {
     /* type checks */
     if (op == S_IN) { /* checked in emitRelation */ }
     else if (!((isIntLike(t) && isIntLike(t2)) || (t == typeReal && t2 == typeReal) ||
+               (t == typeReal && t2 == typeInt) || (t == typeInt && t2 == typeReal) ||
                (t == typeChar && t2 == typeChar) || (t == typeBool && t2 == typeBool && (op == S_EQ || op == S_NEQ)) ||
                (t == typeSet && t2 == typeSet && (op == S_EQ || op == S_NEQ)) ||
                ((t->kind == TK_POINTER || t->kind == TK_NIL) && (t2->kind == TK_POINTER || t2->kind == TK_NIL) && (op == S_EQ || op == S_NEQ))))
@@ -977,6 +1000,10 @@ static Type *parseSimpleExpr(void) {
       emit(op == S_PLUS ? OP_IADD : OP_ISUB);
     } else if (t == typeReal && t2 == typeReal) {
       emit(op == S_PLUS ? OP_FADD : OP_FSUB);
+    } else if ((t == typeReal && t2 == typeInt) || (t == typeInt && t2 == typeReal)) {
+      /* mixed INTEGER/REAL (ext): convert the INTEGER side, real arithmetic */
+      if (t == typeInt) emitI2FBelow(t); else emitI2FTop(t2);
+      emit(op == S_PLUS ? OP_FADD : OP_FSUB);
     } else if (t == typeSet && t2 == typeSet) {
       if (op == S_PLUS) emit(OP_SET_UNION); else emit(OP_SET_DIFF);
     } else {
@@ -1001,11 +1028,22 @@ static Type *parseTerm(void) {
       if (isIntLike(t) && isIntLike(t2) && (t == typeLongint || t2 == typeLongint)) emit(OP_LMUL);
       else if (t == typeInt && t2 == typeInt) emit(OP_IMUL);
       else if (t == typeReal && t2 == typeReal) emit(OP_FMUL);
+      else if ((t == typeReal && t2 == typeInt) || (t == typeInt && t2 == typeReal)) {
+        if (t == typeInt) emitI2FBelow(t); else emitI2FTop(t2);
+        emit(OP_FMUL);
+      }
       else if (t == typeSet && t2 == typeSet) emit(OP_SET_INTER);
       else obError(line, "bad operands for *");
-      t = (t == typeReal) ? typeReal : ((t == typeLongint || t2 == typeLongint) ? typeLongint : t);
+      t = (t == typeReal || t2 == typeReal) ? typeReal
+        : ((t == typeLongint || t2 == typeLongint) ? typeLongint : t);
     } else if (op == S_SLASH) {
-      if (t != typeReal || t2 != typeReal) obError(line, "/ requires REAL operands");
+      /* / is real division: INTEGER operands are converted implicitly (ext) */
+      if (t == typeLongint || t2 == typeLongint) obError(line, "/ on LONGINT: convert to REAL explicitly");
+      if (t != typeReal && t != typeInt) obError(line, "/ requires REAL operands");
+      if (t2 != typeReal && t2 != typeInt) obError(line, "/ requires REAL operands");
+      if (t == typeInt && t2 == typeInt) { emit(OP_I2F); emitI2FBelow(typeInt); }
+      else if (t == typeInt) emitI2FBelow(t);
+      else if (t2 == typeInt) emit(OP_I2F);
       emit(OP_FDIV);
       t = typeReal;
     } else {
@@ -1159,6 +1197,7 @@ static Type *parseFactor(void) {
             Obj *a; int m2;
             a = readFirstIdent(&m2);
             t = parseDesignator(M_VAL, a, m2);
+            if (t->kind == TK_POINTER && t->to && t->to->kind == TK_ARRAY) t = t->to;
             if (t->kind != TK_ARRAY) obError(line, "LEN requires array");
             int dim = 0;
             if (accept(S_COMMA)) {
@@ -1258,12 +1297,19 @@ static void parseCallArgs(Obj *proc, int mod) {
         int ok = typeEquals(p->type, at) ||
                  (p->type->kind == TK_ARRAY && p->type->anyCharArray &&
                   at->kind == TK_ARRAY && at->elem->kind == TK_CHAR) ||
+                 (p->type->kind == TK_ARRAY && p->type->anyCharArray &&
+                  at->kind == TK_POINTER && at->to->kind == TK_ARRAY &&
+                  at->to->elem->kind == TK_CHAR) ||
                  (p->type->kind == TK_ARRAY && p->type->isOpen &&
-                  at->kind == TK_ARRAY && typeEquals(p->type->elem, at->elem));
+                  at->kind == TK_ARRAY && typeEquals(p->type->elem, at->elem)) ||
+                 (p->type->kind == TK_ARRAY && p->type->isOpen &&
+                  at->kind == TK_POINTER && at->to->kind == TK_ARRAY &&
+                  typeEquals(p->type->elem, at->to->elem));
         if (!ok) obError(line, "VAR argument type mismatch in '%s'", proc->name);
       } else {
         Type *at = parseExpression();
         if (!typeAssignable(p->type, at)) obError(line, "argument type mismatch in '%s'", proc->name);
+        if (p->type == typeReal && at == typeInt) emit(OP_I2F); /* implicit INTEGER -> REAL (ext) */
       }
       p = p->nextParam;
       if (!accept(S_COMMA)) break;
@@ -1281,11 +1327,23 @@ static void predefinedStatement(Obj *o) {
       expect(S_LPAREN);
       int m2; Obj *a = readFirstIdent(&m2);
       Type *t = parseDesignator(M_ADDR, a, m2);
-      if (t->kind != TK_POINTER || t->to->kind != TK_RECORD)
-        obError(line, "NEW requires a pointer to record variable");
+      if (t->kind != TK_POINTER ||
+          !(t->to->kind == TK_RECORD || (t->to->kind == TK_ARRAY && !t->to->isOpen)))
+        obError(line, "NEW requires a pointer to record or to fixed array variable");
       int m, ix; findTypeRef(t, &m, &ix);
       emitTypeOp(OP_NEW, m, ix);
       emit(OP_STORE_AT);
+      expect(S_RPAREN);
+      return;
+    }
+    case PD_DISPOSE: {
+      expect(S_LPAREN);
+      int m2; Obj *a = readFirstIdent(&m2);
+      if (a->cls != CL_VAR) obError(line, "DISPOSE needs a pointer variable");
+      Type *t = parseDesignator(M_ADDR, a, m2);
+      if (t->kind != TK_POINTER) obError(line, "DISPOSE requires a pointer variable");
+      int m, ix; findTypeRef(t, &m, &ix);
+      emitTypeOp(OP_DISPOSE, m, ix); /* pops slot addr, frees object, stores NIL */
       expect(S_RPAREN);
       return;
     }
@@ -1396,6 +1454,7 @@ static void parseStatement(void) {
       } else {
         Type *rt = parseExpression();
         if (!typeAssignable(lt, rt)) obError(line, "assignment type mismatch");
+        if (lt == typeReal && rt == typeInt) emit(OP_I2F); /* implicit INTEGER -> REAL (ext) */
         emit(OP_STORE_AT);
       }
       return;
@@ -1588,11 +1647,52 @@ static void parseStatement(void) {
       }
       return;
     }
+    case S_WITH: {
+      /* WITH p: T, q: U DO stmts END — p is statically POINTER TO T inside the body,
+         with a runtime type check (OP_CHECKTYPE) at entry */
+      nextSym();
+      int shBase = nWithShadows;
+      for (;;) {
+        int m2; Obj *v = readFirstIdent(&m2);
+        if (!v || v->cls != CL_VAR) obError(line, "WITH guard needs a pointer variable");
+        if (v->type->kind != TK_POINTER || !v->type->to || v->type->to->kind != TK_RECORD)
+          obError(line, "WITH guard variable must be a pointer to record");
+        expect(S_COLON);
+        Type *rt = parseQualType();
+        Type *rec = (rt->kind == TK_POINTER) ? rt->to : rt;
+        if (rec->kind != TK_RECORD) obError(line, "WITH guard type must be a record type");
+        /* guard type must be the pointee or an extension of it (walk rec's base chain) */
+        int ok = 0;
+        for (Type *r = rec; r; r = (r->kind == TK_RECORD) ? r->base : NULL) if (r == v->type->to) { ok = 1; break; }
+        if (!ok) obError(line, "WITH guard type must be the pointee or an extension of it");
+        /* runtime check: push ref, CHECKTYPE, drop */
+        parseDesignator(M_VAL, v, m2);
+        int m, ix; findTypeRef(rec, &m, &ix);
+        emitTypeOp(OP_CHECKTYPE, m, ix);
+        emit(OP_DROP);
+        /* shadow the variable with POINTER TO rec for the body (same storage) */
+        Obj *sh = newObj(v->name, CL_VAR);
+        sh->type = mkPointerType(rec);
+        sh->level = v->level;
+        sh->offset = v->offset;
+        sh->isVarParam = v->isVarParam;
+        sh->next = scopeStack[scopeTop];
+        scopeStack[scopeTop] = sh;
+        if (nWithShadows < 64) withShadows[nWithShadows++] = sh;
+        if (!accept(S_COMMA)) break;
+      }
+      expect(S_DO);
+      parseStatements();
+      expect(S_END);
+      while (nWithShadows > shBase) scopeStack[scopeTop] = withShadows[--nWithShadows]->next;
+      return;
+    }
     case S_RETURN:
       nextSym();
       if (curProc->hasResult) {
         Type *t = parseExpression();
-        if (!typeEquals(curProc->result, t)) obError(line, "RETURN type mismatch");
+        if (!typeAssignable(curProc->result, t)) obError(line, "RETURN type mismatch");
+        if (curProc->result == typeReal && t == typeInt) emit(OP_I2F); /* implicit INTEGER -> REAL (ext) */
       } else if (sym != S_SEMI && !isEndSym()) {
         obError(line, "RETURN takes no expression in a plain procedure");
       }

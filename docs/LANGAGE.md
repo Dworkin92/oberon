@@ -99,9 +99,9 @@ Sémantique des opérateurs :
 
 | Opérateur | Types | Sémantique |
 |---|---|---|
-| `+ - *` | INT/LONGINT/REAL | arithmétique ; `INTEGER`+`LONGINT` → `LONGINT` |
+| `+ - *` | INT/LONGINT/REAL | arithmétique ; `INTEGER`+`LONGINT` → `LONGINT` ; **mixte `INTEGER`/`REAL` → `REAL` (ext)** |
 | `+ - *` | SET | union / différence / intersection |
-| `/` | REAL × REAL | division réelle (les opérandes entiers ne sont PAS convertis) |
+| `/` | INT/REAL | division réelle ; **les opérandes `INTEGER` sont convertis en `REAL` (ext)**, donc `7/2 = 3.5` |
 | `DIV MOD` | INT/LONGINT | **division euclidienne vers −∞** : `q = a DIV b`, `r = a MOD b`, `r` du signe de `b`, `a = q*b + r` |
 | `& OR ~` | BOOLEAN | et / ou / non (évaluation non court-circuitante) |
 | `= #` | nombres, CHAR, BOOLEAN, SET, pointeurs | égalité |
@@ -129,7 +129,10 @@ Statement = [ Designator ( ":=" Expression | [ "(" [ ExprList ] ")" ] )  (* appe
            | "WHILE" Expression "DO" StatementSequence "END"
            | "REPEAT" StatementSequence "UNTIL" Expression
            | "FOR" ident ":=" Expression "TO" Expression [ "BY" ConstExpr ] "DO" StatementSequence "END"
+           | "WITH" Guard { "," Guard } "DO" StatementSequence "END"   (* ext *)
            | "RETURN" [ Expression ] ] .
+Guard = ident ":" QualType .   (* la variable doit être POINTER TO Record ; le type de garde
+                                  doit être le pointé ou une extension ; check runtime (CHECKTYPE) *)
 Case = Label { "," Label } ":" StatementSequence .
 Label = ConstExpr [ ".." ConstExpr ] .
 ```
@@ -153,7 +156,8 @@ Label = ConstExpr [ ".." ConstExpr ] .
 | `INC(x [, n])` / `DEC(x [, n])` | VAR INTEGER | `x := x ± n` (n = 1 par défaut) |
 | `INCL(s, e)` / `EXCL(s, e)` | VAR SET, INTEGER | `s := s + {e}` / `s - {e}` |
 | `COPY(x, y)` | char arrays | copie `x` dans `y` |
-| `NEW(p)` | VAR POINTER TO Record | alloue le record |
+| `NEW(p)` | VAR POINTER TO Record **ou** POINTER TO `ARRAY n OF T` **(ext)** | alloue le record / le tableau (tas avec free-list) |
+| `DISPOSE(p)` | VAR POINTER (record ou tableau) **(ext)** | libère l'objet (free-list, first-fit avec découpe) et fait `p := NIL` ; `DISPOSE` sur `NIL` est un no-op |
 | `HALT(n)` | INTEGER | termine la VM avec code de sortie `n` |
 
 ## 6. Modules prédéfinis (builtins)
@@ -217,7 +221,7 @@ décoder opcodes et adresses taggées, récupérer le `.obc` à exécuter, profi
 - **Identificateurs** : lettre ou `_`, puis lettres/chiffres/`_` ; max 63 caractères significatifs.
 - **Mots-clés** (majuscules, réservés) : `ARRAY BEGIN BY CASE CONST DIV DO ELSE ELSIF END
   FOR IF IMPORT IN IS MOD MODULE NIL OF OR POINTER PROCEDURE RECORD REPEAT RETURN THEN
-  TO TYPE UNTIL VAR WHILE WITH` (`WITH` reconnu mais non implémenté).
+  TO TYPE UNTIL VAR WHILE WITH`.
 - `HALT`, `TRUE`, `FALSE`, `ABS`... sont des **identificateurs prédéfinis**, pas des mots-clés.
 
 ## 8. Extensions au Oberon-07 strict (récapitulatif)
@@ -236,13 +240,15 @@ décoder opcodes et adresses taggées, récupérer le `.obc` à exécuter, profi
    (INTEGER→REAL) — voir [`AUTOHEBERGEMENT.md`](AUTOHEBERGEMENT.md).
 10. **Open arrays** en paramètres formels : `ARRAY OF T` accepte tout tableau de `T`,
     `LEN(a, 0)` = taille réelle ; littéraux chaîne acceptés pour `ARRAY OF CHAR`.
+- Pointeurs vers tableaux **(ext)** : `VAR p: POINTER TO ARRAY 100 OF INTEGER` (ou `POINTER TO` un type tableau nommé) ; `NEW(p)` alloue, `p[i]` indexe (déréférencement implicite), `LEN(p, 0)` marche, et `p` est accepté comme argument (valeur ou `VAR`) là où un `ARRAY OF T` ouvert est attendu. `DISPOSE(p)` libère et met `p := NIL`.
 
 ## 9. Limitations connues (v1)
 
-- Pas de `WITH`, pas de `DISPOSE`, **pas de ramasse-miettes** (`NEW` n'est jamais libéré).
+- `DISPOSE` existe avec **free-list** (pas de GC) : un bloc libéré est réutilisé par le prochain `NEW`/`ALLOC_ARRAY` de taille compatible (first-fit avec découpe). Pas de `ARRAY OF Record` en ligne.
+- `WITH p: T DO … END` **(ext)** : `p` (variable `POINTER TO Record`) a le type statique `POINTER TO T` dans le corps, avec vérification de type à l'exécution (`CHECKTYPE`, erreur « type guard failed »). Multi-gardes `WITH a: T, b: U DO … END` supportées.
 - Records uniquement via pointeurs ; pas de `ARRAY OF Record` en ligne.
 - `SET` limité à 32 éléments ; `CHAR` = point de code (32 bits).
-- `/` exige des opérandes `REAL` (pas de conversion implicite entier → réel).
+- Conversion implicite `INTEGER` → `REAL` **(ext)** : dans `+ - * /`, les comparaisons, l'assignation, les arguments valeur et `RETURN` — un opérande `INTEGER` est converti (`I2F`) quand l'autre côté est `REAL`. `DIV`/`MOD` restent strictement entiers ; `LONGINT` ne se convertit pas en `REAL` implicitement.
 - Le signe unaire n'est autorisé qu'en tête de `SimpleExpr` (donc `7 DIV (-2)`, pas `7 DIV -2`).
 - `Out.Real` utilise le format `%g`.
 - Les signaux (ex. `SIGINT`) sont gérés par l'hôte C (`obvm`), pas par le langage.

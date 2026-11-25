@@ -68,7 +68,27 @@ void vmRuntimeError(VM *vm, const char *msg) {
 }
 
 /* ---------- heap ---------- */
+/* Free block layout: heap[h] = 0 (marker; arrays use negative, records positive),
+   heap[h+1] = block size in cells, heap[h+2] = next free block (0 = end). */
 int heapAlloc(VM *vm, int n) {
+  int prev = 0, cur = vm->freeHead;
+  while (cur) {
+    int size = (int)vm->heap[cur + 1];
+    if (size >= n) {
+      int next = (int)vm->heap[cur + 2];
+      if (size - n >= 4) { /* split: remainder stays free where the block was */
+        int rem = cur + n;
+        vm->heap[rem] = 0; vm->heap[rem + 1] = size - n; vm->heap[rem + 2] = next;
+        if (prev) vm->heap[prev + 2] = rem; else vm->freeHead = rem;
+      } else { /* take the whole block (small remainder = internal fragmentation) */
+        if (prev) vm->heap[prev + 2] = next; else vm->freeHead = next;
+      }
+      for (int i = 0; i < n; i++) vm->heap[cur + i] = 0;
+      return cur;
+    }
+    prev = cur;
+    cur = (int)vm->heap[cur + 2];
+  }
   if (vm->heapUsed + (size_t)n > vm->heapCap) {
     vm->heapCap = (vm->heapUsed + n) * 2 + 1024;
     vm->heap = realloc(vm->heap, vm->heapCap * sizeof(Cell));
@@ -79,6 +99,22 @@ int heapAlloc(VM *vm, int n) {
   return h;
 }
 
+void heapFree(VM *vm, int ref, int size) {
+  if (ref <= 0 || size < 3) vmRuntimeError(vm, "bad free");
+  if (vm->heap[ref] == 0) vmRuntimeError(vm, "double DISPOSE");
+  vm->heap[ref] = 0;
+  vm->heap[ref + 1] = size;
+  vm->heap[ref + 2] = vm->freeHead;
+  vm->freeHead = ref;
+}
+
+int heapObjSize(Type *t) {
+  if (!t) return 0;
+  if (t->kind == TK_ARRAY) return t->ndim + 2 + t->total;
+  if (t->kind == TK_RECORD) return 2 + t->payload;
+  return 0;
+}
+
 int allocArrayObj(VM *vm, Type *t) {
   int hdr = t->ndim + 2;
   int h = heapAlloc(vm, hdr + t->total);
@@ -86,6 +122,44 @@ int allocArrayObj(VM *vm, Type *t) {
   for (int i = 0; i < t->ndim; i++) vm->heap[h + 1 + i] = t->dims[i];
   vm->heap[h + t->ndim + 1] = t->total;
   return h;
+}
+
+/* OP_NEW: allocate for a pointer type (record or fixed array pointee) */
+Cell rtNew(VM *vm, int lmod, int typeidx) {
+  VMMod *cur = vm->mods[vm->frames[vm->fp - 1].mod];
+  VMMod *tm = vm->mods[cur->map[lmod]];
+  Type *pt = tm->lm->types[typeidx];
+  if (pt->kind != TK_POINTER || !pt->to) vmRuntimeError(vm, "NEW on non-pointer type");
+  Type *to = pt->to;
+  if (to->kind == TK_RECORD) {
+    int tag = tm->rtPtrTag[typeidx];
+    int size = tm->rtPtrSize[typeidx];
+    if (tag == 0) vmRuntimeError(vm, "NEW on non-record pointer");
+    int h = heapAlloc(vm, 2 + size);
+    vm->heap[h] = tag;
+    vm->heap[h + 1] = size;
+    return h;
+  }
+  if (to->kind == TK_ARRAY) {
+    if (to->isOpen) vmRuntimeError(vm, "NEW on open array pointer");
+    return allocArrayObj(vm, to);
+  }
+  vmRuntimeError(vm, "NEW on unsupported pointee");
+  return 0;
+}
+
+/* OP_DISPOSE: free the object referenced by the pointer in slot `slotAddr`, set NIL */
+void rtDispose(VM *vm, Cell slotAddr, int lmod, int typeidx) {
+  VMMod *cur = vm->mods[vm->frames[vm->fp - 1].mod];
+  VMMod *tm = vm->mods[cur->map[lmod]];
+  Type *pt = tm->lm->types[typeidx];
+  Cell ref = memRead(vm, slotAddr);
+  if (ref != 0) {
+    int size = (pt->kind == TK_POINTER && pt->to) ? heapObjSize(pt->to) : 0;
+    if (size <= 0) vmRuntimeError(vm, "DISPOSE on unsupported pointee");
+    heapFree(vm, (int)ref, size);
+    memWrite(vm, slotAddr, 0);
+  }
 }
 
 /* ---------- memory access (tagged addresses) ---------- */
@@ -221,6 +295,7 @@ VM *vmLoad(const char *mainObcPath) {
   vm->heapCap = 4096;
   vm->heap = calloc(vm->heapCap, sizeof(Cell));
   vm->heapUsed = 1; /* cell 0 reserved: ref 0 == NIL */
+  vm->freeHead = 0;
   vm->stackCap = 65536;
   vm->stack = calloc(vm->stackCap, sizeof(Cell));
   vm->frameCap = 1024;

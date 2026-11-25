@@ -18,6 +18,7 @@ virtuelle** (`obvm`).
    README.md                ce fichier
    journal.md               journal de bord
    docs/
+     REPRISE.md             ⭐ point d'entrée rapide après compactage / nouvelle session
      LANGAGE.md             référence du dialecte Oberon supporté
      AUTOHEBERGEMENT.md     feuille de route : VM/compilateur auto-hébergés en Oberon
    lib/                     bibliothèque de modules réutilisables (MathLib, Strings, ...)
@@ -210,4 +211,4 @@ Si seul `M.Mod` est trouvé, il est compilé à la volée en `M.obc` à côté d
 
 ## Exemples (`bootstrap/examples/`)
 
-`Hello`, `Factorial` (récursion), `Arrays` (tri à bulles, tableau 2D, `LEN`), `Records` (listes chaînées, `NEW`, extension de record, `IS`/garde), `Sets` (`INCL/EXCL/IN/opérations`), `Control` (`WHILE/REPEAT/FOR BY/CASE`), `UseMath` + `MathLib` (import, symboles exportés `*`, variable globale exportée), `Nested` (procédures imbriquées + liens statiques + `VAR`), `Primes` (crible), `Echo` (entrée clavier), `Sem` (sémantique DIV/MOD/ENTIER/FLOOR/chaînes/HALT), `Longint` (64 bits), `Bytes` (I/O octet brut), `FilesDemo` (module `Files` : créer/écrire/lire/seek/supprimer un fichier binaire), `SysDemo` (module `SYSTEM` : arguments programme `ARGC/ARGV`, opérateurs bit à bit 64 bits `BAND/BOR/BXOR/BNOT/LSH/ROT/BIT`, horloge `TICKS`), `StringsDemo` (bibliothèque `lib/Strings`), `UseMath` importe `MathLib` via `lib/`.
+`Hello`, `Factorial` (récursion), `Arrays` (tri à bulles, tableau 2D, `LEN`), `Records` (listes chaînées, `NEW`, extension de record, `IS`/garde), `Sets` (`INCL/EXCL/IN/opérations`), `Control` (`WHILE/REPEAT/FOR BY/CASE`), `UseMath` + `MathLib` (import, symboles exportés `*`, variable globale exportée), `Nested` (procédures imbriquées + liens statiques + `VAR`), `Primes` (crible), `Echo` (entrée clavier), `Sem` (sémantique DIV/MOD/ENTIER/FLOOR/chaînes/HALT), `Longint` (64 bits), `Bytes` (I/O octet brut), `FilesDemo` (module `Files` : créer/écrire/lire/seek/supprimer un fichier binaire), `SysDemo` (module `SYSTEM` : arguments programme `ARGC/ARGV`, opérateurs bit à bit 64 bits `BAND/BOR/BXOR/BNOT/LSH/ROT/BIT`, horloge `TICKS`), `StringsDemo` (bibliothèque `lib/Strings`), `UseMath` importe `MathLib` via `lib/`, `DynArr` (`NEW`/`DISPOSE` sur `POINTER TO ARRAY OF T`, free-list, passage à paramètres ouverts), `RealConv` (conversion implicite `INTEGER`→`REAL` : `7/2 = 3.5`), `WithDemo` (`WITH p: T DO … END` avec check de type runtime).

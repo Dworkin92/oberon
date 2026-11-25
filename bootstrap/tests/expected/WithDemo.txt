@@ -1,0 +1,6 @@
+circle r=2.5
+rect 3x4
+shape kind=9
+both: r=2.5 w=3
+after-with kind=1
+radius=7.5

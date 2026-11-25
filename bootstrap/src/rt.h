@@ -30,6 +30,7 @@ typedef struct {
   int nmods, capmods;
   Cell *heap;
   size_t heapCap, heapUsed;
+  int freeHead;    /* free-list of heap blocks: heap[h]=0 (marker), heap[h+1]=size, heap[h+2]=next; 0 = empty */
   Cell *stack;
   size_t stackCap;
   int sp;
@@ -59,8 +60,12 @@ static inline Cell pop(VM *vm) { return vm->stack[--vm->sp]; }
 static inline Cell peek(VM *vm) { return vm->stack[vm->sp - 1]; }
 Cell memRead(VM *vm, Cell a);
 void memWrite(VM *vm, Cell a, Cell v);
-int heapAlloc(VM *vm, int n);
+int heapAlloc(VM *vm, int n);   /* first-fit on the free list, else bump */
+void heapFree(VM *vm, int ref, int size);
+int heapObjSize(Type *t);        /* cells occupied by an object of type t (array or record) */
 int allocArrayObj(VM *vm, Type *t);
+Cell rtNew(VM *vm, int lmod, int typeidx);          /* OP_NEW: record or array pointer */
+void rtDispose(VM *vm, Cell slotAddr, int lmod, int typeidx); /* OP_DISPOSE: free + NIL */
 void idivmod(Cell a, Cell b, Cell *q, Cell *r);
 void vmRuntimeError(VM *vm, const char *msg);
 void callBuiltin(VM *vm, int id, int base, int nparams);

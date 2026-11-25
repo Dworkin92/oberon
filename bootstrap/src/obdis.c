@@ -27,7 +27,8 @@ static const char *opName(int op) {
     "CONST_L",
     "LADD", "LSUB", "LMUL", "LDIV", "LMOD", "LNEG", "LABS", "LODD",
     "LLT", "LLE", "LGT", "LGE", "LEQ", "LNE", "L2I",
-    "JUMPTABLE"
+    "JUMPTABLE",
+    "DISPOSE"
   };
   if (op >= 0 && op < OP_COUNT) return names[op];
   return "?";
@@ -44,7 +45,7 @@ static int argKind(int op) {
     case OP_LOAD_GLOBAL: case OP_STORE_GLOBAL: case OP_ADDR_GLOBAL: return A_GLOBAL;
     case OP_JMP: case OP_JZ: case OP_JNZ: return A_JMP;
     case OP_CALL: return A_CALL;
-    case OP_NEW: case OP_ALLOC_ARRAY: case OP_ISTYPE: case OP_CHECKTYPE: return A_TYPEOP;
+    case OP_NEW: case OP_ALLOC_ARRAY: case OP_ISTYPE: case OP_CHECKTYPE: case OP_DISPOSE: return A_TYPEOP;
     case OP_JUMPTABLE: return A_TABLE;
     default: return A_NONE;
   }

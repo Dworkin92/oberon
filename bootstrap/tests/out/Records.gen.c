@@ -201,9 +201,7 @@ L202: ;
   }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 4u)); } /* absolute gid */
-  { VMMod *tm = vm->mods[cur->map[0]]; int tag = tm->rtPtrTag[5u]; int size = tm->rtPtrSize[5u];
-    if (tag == 0) vmRuntimeError(vm, "NEW on non-record pointer");
-    int h = heapAlloc(vm, 2 + size); vm->heap[h] = tag; vm->heap[h + 1] = size; push(vm, h); }
+  push(vm, rtNew(vm, 0, 5u));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 4u)); } /* absolute gid */
@@ -444,9 +442,7 @@ static void f0_1(VM *vm) {
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
-  { VMMod *tm = vm->mods[cur->map[0]]; int tag = tm->rtPtrTag[0u]; int size = tm->rtPtrSize[0u];
-    if (tag == 0) vmRuntimeError(vm, "NEW on non-record pointer");
-    int h = heapAlloc(vm, 2 + size); vm->heap[h] = tag; vm->heap[h + 1] = size; push(vm, h); }
+  push(vm, rtNew(vm, 0, 0u));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int ld = 0, off = 1; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }

@@ -39,7 +39,7 @@ static int operandLen(int op) {
     case OP_CONST_R: case OP_CONST_L:
       return 8;
     case OP_LOAD_GLOBAL: case OP_STORE_GLOBAL: case OP_ADDR_GLOBAL:
-    case OP_NEW: case OP_ALLOC_ARRAY: case OP_ISTYPE: case OP_CHECKTYPE:
+    case OP_NEW: case OP_ALLOC_ARRAY: case OP_ISTYPE: case OP_CHECKTYPE: case OP_DISPOSE:
       return 5; /* u8 mod + u32 */
     case OP_CALL:
       return 12;
@@ -245,9 +245,13 @@ static void emitProc(int gid, int pidx, LProc *lp) {
       case OP_NEW: {
         int lmod = c[pc++];
         a = rd32(c, &pc);
-        E("  { VMMod *tm = vm->mods[cur->map[%d]]; int tag = tm->rtPtrTag[%uu]; int size = tm->rtPtrSize[%uu];\n"
-          "    if (tag == 0) vmRuntimeError(vm, \"NEW on non-record pointer\");\n"
-          "    int h = heapAlloc(vm, 2 + size); vm->heap[h] = tag; vm->heap[h + 1] = size; push(vm, h); }\n", lmod, a, a);
+        E("  push(vm, rtNew(vm, %d, %uu));\n", lmod, a);
+        break;
+      }
+      case OP_DISPOSE: {
+        int lmod = c[pc++];
+        a = rd32(c, &pc);
+        E("  rtDispose(vm, pop(vm), %d, %uu);\n", lmod, a);
         break;
       }
       case OP_ALLOC_ARRAY: {

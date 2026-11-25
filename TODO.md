@@ -1,6 +1,8 @@
 # TODO — compilateur Oberon auto-hébergé
 
-État au 25/11/2026 : étapes 0–5 faites, **76/76 tests** (19 exemples × 4 moteurs :
+> ⭐ Après un compactage ou une nouvelle session, repartir de [`docs/REPRISE.md`](docs/REPRISE.md).
+
+État au 25/11/2026 : étapes 0–5 faites, **88/88 tests** (22 exemples × 4 moteurs :
 `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif). Voir
 [`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md) pour la vision d'ensemble.
 
@@ -24,9 +26,10 @@
 
 - [x] **Open arrays** : `PROCEDURE P(VAR a: ARRAY OF CHAR)` (paramètre de taille dynamique, `LEN(a,0)` = taille réelle passée) — fait : flag `isOpen` sur `Type`, sentinelle `0xFFFFFFFF` dans le `.obc`, tests `OpenArr.Mod` + `MathLib.SumArr` (72/72)
 - [x] **Bibliothèque `lib/`** : `MathLib` déplacé, `Strings` ajouté, chemin de recherche `D/`, `D/../lib/`, `D/../../lib/` dans obc/obvm/ob2c/VM.Mod (76/76)
-- [ ] **`NEW(p)` sur `POINTER TO ARRAY OF T` + `DISPOSE`** (free-list, pas forcément GC) — mémoire dynamique
-- [ ] **Conversion implicite `INTEGER` → `REAL`** (émettre `I2F` dans le parser quand un opérande est REAL)
-- [ ] `WITH` (confort, contournable avec gardes `p(T)`)
+- [x] **`NEW`/`DISPOSE` sur pointeurs vers tableaux** : free-list first-fit, `OP_DISPOSE`=87, `p[i]`/`LEN(p)`/passage en param ouvert implicites — `DynArr.Mod`, 80/80
+- [x] **`NEW(p)` sur `POINTER TO ARRAY OF T` + `DISPOSE`** — fait : `OP_DISPOSE` (87), free-list first-fit avec découpe dans le tas (rt.c + VM.Mod), `p[i]` implicite, `LEN(p,0)`, passage à params ouverts, `DISPOSE` met NIL (double DISPOSE = no-op). Test `DynArr.Mod` + stress 200k NEW/DISPOSE dans le tas borné de VM.Mod → 80/80
+- [x] **Conversion implicite `INTEGER` → `REAL`** — fait : `I2F` émis dans `+ - * /` (mixte), comparaisons, assignation, arguments valeur, `RETURN` ; `7/2 = 3.5` maintenant. Test `RealConv.Mod` → 84/84
+- [x] **`WITH p: T DO … END`** — fait : shadowing de la variable (POINTER TO T) dans le corps + check runtime CHECKTYPE ; multi-gardes OK. Test `WithDemo.Mod` (hiérarchie Shape/Circle/Rect, param, multi-gardes, restauration du type après) → 88/88
 - [ ] Types procéduraux / variables procédurales (threaded code dans `VM.Mod`)
 - [ ] `VAR` record params, `ARRAY OF RECORD`
 - [ ] `SYSTEM.VAL/ADR/GET/PUT` (à rouvrir seulement si besoin réel)
