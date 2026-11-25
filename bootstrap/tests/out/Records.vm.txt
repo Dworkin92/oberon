@@ -1,0 +1,3 @@
+list:    55   44   33   22   11
+s is a Circle
+radius =      3.5

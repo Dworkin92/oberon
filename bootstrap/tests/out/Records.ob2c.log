@@ -1,0 +1,1 @@
+ob2c: examples/Records.obc -> tests/out/Records.gen.c (1 modules)

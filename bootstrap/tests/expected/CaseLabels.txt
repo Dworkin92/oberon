@@ -1,0 +1,2 @@
+aabbbc
+sum=355

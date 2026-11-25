@@ -1,0 +1,1 @@
+ob2c: examples/Primes.obc -> tests/out/Primes.gen.c (1 modules)

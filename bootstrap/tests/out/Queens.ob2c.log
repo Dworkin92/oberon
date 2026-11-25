@@ -1,0 +1,1 @@
+ob2c: examples/Queens.obc -> tests/out/Queens.gen.c (1 modules)

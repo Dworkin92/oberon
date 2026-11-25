@@ -1,0 +1,7 @@
+exists: 1
+length:   261
+sum of all bytes:  33172
+eof: 1
+pos:   256
+read  5 bytes: hello
+after delete, exists: 0

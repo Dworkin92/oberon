@@ -1,0 +1,5 @@
+sum 1..100 =   5050
+repeat i =   0
+  10   7   4   1
+vowel a cons. b cons. c cons. d vowel e 
+  100   14   18    0

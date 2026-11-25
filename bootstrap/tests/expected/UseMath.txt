@@ -1,0 +1,4 @@
+Square(12) =   144
+GCD(1071, 462) =  21
+SumTo(100) =   5050
+MathLib.calls =  1

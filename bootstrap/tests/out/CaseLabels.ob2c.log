@@ -1,0 +1,1 @@
+ob2c: examples/CaseLabels.obc -> tests/out/CaseLabels.gen.c (1 modules)

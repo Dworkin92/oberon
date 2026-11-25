@@ -1,0 +1,4 @@
+Inner: x=  5 y= 50 z=  1 g= 99
+Inner: x=  5 y= 51 z=  2 g= 99
+y after =  53
+a= 2 b= 1
