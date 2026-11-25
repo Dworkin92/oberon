@@ -1,1 +1,0 @@
-ob2c: examples/Arrays.obc -> tests/out/Arrays.gen.c (1 modules)

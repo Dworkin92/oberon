@@ -1,1 +1,0 @@
-ob2c: examples/Factorial.obc -> tests/out/Factorial.gen.c (1 modules)

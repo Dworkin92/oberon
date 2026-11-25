@@ -1,1 +1,0 @@
-ob2c: examples/Control.obc -> tests/out/Control.gen.c (1 modules)

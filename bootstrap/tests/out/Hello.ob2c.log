@@ -1,1 +1,0 @@
-ob2c: examples/Hello.obc -> tests/out/Hello.gen.c (1 modules)

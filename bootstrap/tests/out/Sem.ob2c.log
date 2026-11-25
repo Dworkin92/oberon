@@ -1,1 +1,0 @@
-ob2c: examples/Sem.obc -> tests/out/Sem.gen.c (1 modules)

@@ -1,1 +1,0 @@
-ob2c: examples/Echo.obc -> tests/out/Echo.gen.c (1 modules)
