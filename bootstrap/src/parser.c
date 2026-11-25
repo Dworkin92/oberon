@@ -249,34 +249,42 @@ static void installImport(const char *real, const char *alias, const char *dir) 
     insertObj(cp);
     return;
   }
-  char path[600];
-  snprintf(path, sizeof path, "%s/%s.obc", dir, real);
-  if (!fileExists(path)) {
-    char mp[600];
-    snprintf(mp, sizeof mp, "%s/%s.Mod", dir, real);
-    if (!fileExists(mp)) obError(line, "cannot find module '%s' (.obc or .Mod)", real);
-    /* compile recursively, preserving all compiler/lexer state */
-    LexState ls;
-    lexSave(&ls);
-    Module *savedMod = curMod;
-    Proc *savedProc = curProc;
-    int savedScopeTop = scopeTop;
-    Obj *savedScopes[64];
-    memcpy(savedScopes, scopeStack, sizeof scopeStack);
-    int savedLevel = curLevel;
-    ImpEnt savedCache[64];
-    int savedN = nImpCache;
-    memcpy(savedCache, impCache, sizeof impCache);
-    int ok = compileFile(mp, path, dir);
-    lexRestore(&ls);
-    curMod = savedMod; curProc = savedProc;
-    scopeTop = savedScopeTop;
-    memcpy(scopeStack, savedScopes, sizeof scopeStack);
-    curLevel = savedLevel;
-    nImpCache = savedN;
-    memcpy(impCache, savedCache, sizeof impCache);
-    if (!ok) obError(line, "failed to compile imported module '%s'", real);
+  /* search path: dir of the importing file, then dir/../lib, dir/../../lib (project lib/) */
+  char path[600], mp[600], cdir[600];
+  const char *rel[3] = { "", "/../lib", "/../../lib" };
+  int found = 0;
+  for (int ci = 0; ci < 3 && !found; ci++) {
+    snprintf(cdir, sizeof cdir, "%s%s", dir, rel[ci]);
+    snprintf(path, sizeof path, "%s/%s.obc", cdir, real);
+    snprintf(mp, sizeof mp, "%s/%s.Mod", cdir, real);
+    if (fileExists(path)) {
+      found = 1;
+    } else if (fileExists(mp)) {
+      /* compile recursively, preserving all compiler/lexer state */
+      LexState ls;
+      lexSave(&ls);
+      Module *savedMod = curMod;
+      Proc *savedProc = curProc;
+      int savedScopeTop = scopeTop;
+      Obj *savedScopes[64];
+      memcpy(savedScopes, scopeStack, sizeof scopeStack);
+      int savedLevel = curLevel;
+      ImpEnt savedCache[64];
+      int savedN = nImpCache;
+      memcpy(savedCache, impCache, sizeof impCache);
+      int ok = compileFile(mp, path, cdir);
+      lexRestore(&ls);
+      curMod = savedMod; curProc = savedProc;
+      scopeTop = savedScopeTop;
+      memcpy(scopeStack, savedScopes, sizeof scopeStack);
+      curLevel = savedLevel;
+      nImpCache = savedN;
+      memcpy(impCache, savedCache, sizeof impCache);
+      if (!ok) obError(line, "failed to compile imported module '%s'", real);
+      found = 1;
+    }
   }
+  if (!found) obError(line, "cannot find module '%s' (.obc or .Mod) in '%s' or its lib dirs", real, dir);
   /* cache lookup */
   LoadedModule *lm = NULL;
   int cachedModId = 0;
@@ -476,9 +484,16 @@ static Type *parseQualType(void) {
   return o->type;
 }
 
+static int allowOpenArray = 0; /* set while parsing formal parameters */
+
 static Type *parseType(void) {
   if (sym == S_ARRAY) {
     nextSym();
+    if (allowOpenArray && sym == S_OF) { /* open array: formal param "ARRAY OF T" */
+      nextSym();
+      Type *e = parseType();
+      return mkOpenArrayType(e);
+    }
     int dims[8], nd = 0;
     for (;;) {
       Type *t; Cell v = parseConstExpr(&t);
@@ -698,7 +713,10 @@ static void parseProcDecl(void) {
         char names[16][64]; int nn = 0;
         do { strcpy(names[nn++], name); nextSym(); } while (accept(S_COMMA));
         expect(S_COLON);
+        int savedAllowOpen = allowOpenArray;
+        allowOpenArray = 1; /* formal params may be open arrays: ARRAY OF T */
         Type *pt = parseType();
+        allowOpenArray = savedAllowOpen;
         for (int i = 0; i < nn; i++) {
           Obj *pa = newObj(names[i], CL_VAR);
           pa->type = pt;
@@ -1239,7 +1257,9 @@ static void parseCallArgs(Obj *proc, int mod) {
           a, m2);
         int ok = typeEquals(p->type, at) ||
                  (p->type->kind == TK_ARRAY && p->type->anyCharArray &&
-                  at->kind == TK_ARRAY && at->elem->kind == TK_CHAR);
+                  at->kind == TK_ARRAY && at->elem->kind == TK_CHAR) ||
+                 (p->type->kind == TK_ARRAY && p->type->isOpen &&
+                  at->kind == TK_ARRAY && typeEquals(p->type->elem, at->elem));
         if (!ok) obError(line, "VAR argument type mismatch in '%s'", proc->name);
       } else {
         Type *at = parseExpression();

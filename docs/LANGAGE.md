@@ -29,6 +29,14 @@ FormalParameters = "(" [ FPSection { ";" FPSection } ] ")" .
 FPSection    = [ "VAR" ] ident { "," ident } ":" Type .
 ```
 
+**Open arrays (paramètres formels)** : dans une liste de paramètres, `ARRAY OF T`
+déclare un *open array* (tableau ouvert) : l'argument peut être n'importe quel
+`ARRAY ... OF T`, de n'importe quelle taille ; `LEN(a, 0)` retourne la taille réelle
+passée. `VAR a: ARRAY OF T` passe par référence (écriture possible). Un littéral
+chaîne est accepté comme `ARRAY OF CHAR` (paramètre valeur). Exemple :
+`examples/OpenArr.Mod`, et `MathLib.SumArr*(a: ARRAY OF INTEGER)` appelé depuis
+un autre module (`UseMath.Mod`).
+
 - `*` après un nom = **exporté** (visible des modules qui importent).
 - Le corps `BEGIN ... END` est exécuté au chargement du module (proc 0 du bytecode).
 - **Procédures fonction (ext)** : `PROCEDURE F(x: INTEGER): INTEGER; ... RETURN expr END F;`
@@ -226,6 +234,8 @@ décoder opcodes et adresses taggées, récupérer le `.obc` à exécuter, profi
    arguments programme (`ARGC/ARGV`), horloge (`TICKS`), sortie (`EXIT`), et casts
    `L2I` (LONGINT→INTEGER), `REALBITS` (REAL→bits), `BITSREAL` (bits→REAL), `I2REAL`
    (INTEGER→REAL) — voir [`AUTOHEBERGEMENT.md`](AUTOHEBERGEMENT.md).
+10. **Open arrays** en paramètres formels : `ARRAY OF T` accepte tout tableau de `T`,
+    `LEN(a, 0)` = taille réelle ; littéraux chaîne acceptés pour `ARRAY OF CHAR`.
 
 ## 9. Limitations connues (v1)
 
@@ -238,12 +248,12 @@ décoder opcodes et adresses taggées, récupérer le `.obc` à exécuter, profi
 - Les signaux (ex. `SIGINT`) sont gérés par l'hôte C (`obvm`), pas par le langage.
 - `&` et `OR` **ne court-circuitent pas** (les deux côtés sont toujours évalués) — utiliser des `IF` imbriqués pour garder un indice valide.
 - Le 2e argument de `INC`/`DEC` doit être une **constante** (`INC(x)` OK, `INC(x, n)` avec `n` variable refusé).
-- Pas d'open arrays en source : un paramètre tableau a une taille fixe exacte (`VAR a: ARRAY 256 OF CHAR`) et l'argument doit avoir exactement cette taille.
+- Open arrays uniquement en **paramètres formels** (`ARRAY OF T`) ; ailleurs, les tableaux ont une taille fixe exacte (`VAR a: ARRAY 256 OF CHAR`).
 - Pas d'indexation partielle : `t[i]` sur un `ARRAY n, m OF T` exige les deux indices.
 - Max 16 identificateurs par déclaration (`VAR a, b, ... : T`).
 - `RETURN expr` exige un type strictement égal au type de résultat.
 - Bornes de `FOR` : expressions dynamiques OK (évaluées une fois), mais `BY` doit être une constante non nulle.
-- Modules importés : le compilateur cherche `M.obc`, sinon compile `M.Mod` à la volée.
+- Modules importés : pour `IMPORT M` depuis un fichier situé dans le répertoire `D`, on cherche dans l'ordre `D/M.obc`, `D/M.Mod`, puis `D/../lib/…`, puis `D/../../lib/…` (le `lib/` de la racine du projet). Si seul `M.Mod` est trouvé, il est compilé à la volée en `M.obc` à côté du source. Même recherche côté exécution (`obvm`, `ob2c`, `VM.Mod`). Voir `lib/` (`MathLib`, `Strings`).
 
 ## 10. Exemple complet
 

@@ -96,10 +96,8 @@ Cell memRead(VM *vm, Cell a) {
     case TAG_HEAP:
       return vm->heap[a & 0x00FFFFFFFFFFFFFFLL];
     case TAG_GLOBAL: {
-      int lmod = (int)((a >> 48) & 0xFF);
+      int g = (int)((a >> 48) & 0xFF);   /* absolute module gid (resolved at ADDR_GLOBAL) */
       int off = (int)(a & 0xFFFFFFFFFFFFLL);
-      VMMod *cur = vm->mods[vm->frames[vm->fp - 1].mod];
-      int g = cur->map[lmod];
       return vm->mods[g]->globals[off];
     }
   }
@@ -116,10 +114,8 @@ void memWrite(VM *vm, Cell a, Cell v) {
       vm->heap[a & 0x00FFFFFFFFFFFFFFLL] = v;
       return;
     case TAG_GLOBAL: {
-      int lmod = (int)((a >> 48) & 0xFF);
+      int g = (int)((a >> 48) & 0xFF);   /* absolute module gid (resolved at ADDR_GLOBAL) */
       int off = (int)(a & 0xFFFFFFFFFFFFLL);
-      VMMod *cur = vm->mods[vm->frames[vm->fp - 1].mod];
-      int g = cur->map[lmod];
       vm->mods[g]->globals[off] = v;
       return;
     }
@@ -140,10 +136,17 @@ static VMMod *loadMod(VM *vm, const char *name, const char *dir, int *tc) {
   VMMod *existing = findMod(vm, name);
   if (existing) return existing;
   char path[600];
-  snprintf(path, sizeof path, "%s/%s.obc", dir, name);
+  if (!findModuleFile(name, dir, path, sizeof path)) {
+    fprintf(stderr, "cannot load module '%s' (searched from '%s')\n", name, dir);
+    exit(1);
+  }
   LoadedModule *lm = loadModuleFile(path);
   if (!lm) {
     fprintf(stderr, "cannot load module '%s' (%s)\n", name, path);
+    exit(1);
+  }
+  if (vm->nmods >= 256) {
+    fprintf(stderr, "too many modules (max 256: gid is stored in one address byte)\n");
     exit(1);
   }
   VMMod *m = calloc(1, sizeof(VMMod));

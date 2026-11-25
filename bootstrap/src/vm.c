@@ -161,7 +161,7 @@ void vmRun(VM *vm) {
         int g = cur->map[lmod];
         if (op == OP_LOAD_GLOBAL) push(vm, vm->mods[g]->globals[u32a]);
         else if (op == OP_STORE_GLOBAL) vm->mods[g]->globals[u32a] = pop(vm);
-        else push(vm, MK_GLOBAL_ADDR(lmod, u32a));
+        else push(vm, MK_GLOBAL_ADDR(g, u32a)); /* absolute gid: valid across modules */
         break;
       }
       case OP_LOAD_AT: OPLABEL(OP_LOAD_AT) { Cell a = pop(vm); push(vm, memRead(vm, a)); break; }

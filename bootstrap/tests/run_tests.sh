@@ -4,6 +4,7 @@
 cd "$(dirname "$0")/.." || exit 1
 ROOT=$(pwd)
 mkdir -p tests/expected tests/out
+rm -f ../lib/*.obc   # force recompilation of library modules from lib/*.Mod
 pass=0; fail=0
 
 # build the Oberon-written VM once (selfhost/VM.Mod -> ../selfhost/VM.obc)
@@ -112,7 +113,7 @@ run_vmntest() {
   fi
 }
 
-for m in Hello Factorial Arrays Records Sets Control CaseLabels UseMath Nested Primes Sem Queens Longint FilesDemo; do
+for m in Hello Factorial Arrays Records Sets Control CaseLabels OpenArr UseMath StringsDemo Nested Primes Sem Queens Longint FilesDemo; do
   run_test "$m" ""
   run_ctest "$m" ""
   run_vmtest "$m" ""

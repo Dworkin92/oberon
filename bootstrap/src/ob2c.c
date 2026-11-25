@@ -58,7 +58,7 @@ static void walk(const char *name, const char *dir) {
   for (int i = 0; i < gNMods; i++)
     if (!strcmp(gMods[i].lm->name, name)) return;
   char path[600];
-  snprintf(path, sizeof path, "%s/%s.obc", dir, name);
+  if (!findModuleFile(name, dir, path, sizeof path)) { fprintf(stderr, "ob2c: cannot find %s.obc from %s\n", name, dir); exit(1); }
   LoadedModule *lm = loadModuleFile(path);
   if (!lm) { fprintf(stderr, "ob2c: cannot load %s\n", path); exit(1); }
   gMods[gNMods].lm = lm;
@@ -136,7 +136,7 @@ static void emitProc(int gid, int pidx, LProc *lp) {
         E("  { int g = cur->map[%d];\n", lmod);
         if (op == OP_LOAD_GLOBAL)       E("    push(vm, vm->mods[g]->globals[%uu]); }\n", a);
         else if (op == OP_STORE_GLOBAL) E("    vm->mods[g]->globals[%uu] = pop(vm); }\n", a);
-        else                            E("    push(vm, MK_GLOBAL_ADDR(%d, %uu)); }\n", lmod, a);
+        else                            E("    push(vm, MK_GLOBAL_ADDR(g, %uu)); } /* absolute gid */\n", a);
         break;
       }
       case OP_LOAD_AT:   E("  { Cell a = pop(vm); push(vm, memRead(vm, a)); }\n"); break;

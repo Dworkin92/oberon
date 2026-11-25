@@ -20,8 +20,11 @@ static void writeType(Module *m, FILE *f, TypeDef *td) {
   wU8(f, td->exported);
   switch (t->kind) {
     case TK_ARRAY:
-      wU32(f, t->ndim);
-      for (int i = 0; i < t->ndim; i++) wU32(f, t->dims[i]);
+      if (t->isOpen) wU32(f, 0xFFFFFFFFu); /* sentinel: open array param, no dims stored */
+      else {
+        wU32(f, t->ndim);
+        for (int i = 0; i < t->ndim; i++) wU32(f, t->dims[i]);
+      }
       wU32(f, typeIndex(m, t->elem));
       break;
     case TK_RECORD: {
@@ -46,8 +49,8 @@ static void writeType(Module *m, FILE *f, TypeDef *td) {
 }
 
 static void registerTypeDeep(Module *m, Type *t) {
-  if (!t || t->visited) return;
-  t->visited = 1;
+  if (!t || t->visited == gTypeStamp) return;
+  t->visited = gTypeStamp;
   typeIndex(m, t);
   switch (t->kind) {
     case TK_ARRAY: registerTypeDeep(m, t->elem); break;
@@ -61,7 +64,10 @@ static void registerTypeDeep(Module *m, Type *t) {
 }
 
 void writeModule(Module *m, FILE *f) {
-  /* register every reachable type first so the count is correct */
+  /* register every reachable type first so the count is correct;
+     fresh stamp so types shared with a previously compiled module
+     (basic types, imported types) are re-registered for THIS module */
+  gTypeStamp++;
   for (Obj *o = m->globals; o; o = o->nextGlobal) registerTypeDeep(m, o->type);
   for (int i = 0; i < m->nprocs; i++) {
     Proc *p = &m->procs[i];
@@ -131,6 +137,17 @@ static Type *resolveIdx(uintptr_t raw, Type **types, int nt) {
   return typeNil;
 }
 
+int findModuleFile(const char *name, const char *dir, char *out, int outsz) {
+  static const char *rel[3] = { "", "/../lib", "/../../lib" };
+  for (int i = 0; i < 3; i++) {
+    char p[600];
+    snprintf(p, sizeof p, "%s%s/%s.obc", dir, rel[i], name);
+    FILE *f = fopen(p, "rb");
+    if (f) { fclose(f); snprintf(out, outsz, "%s", p); return 1; }
+  }
+  return 0;
+}
+
 LoadedModule *loadModuleFile(const char *path) {
   FILE *f = fopen(path, "rb");
   if (!f) return NULL;
@@ -179,8 +196,12 @@ LoadedModule *loadModuleFile(const char *path) {
     switch (k) {
       case TK_ARRAY: {
         int nd = (int)rU32(f);
-        t->ndim = nd; t->total = 1;
-        for (int d = 0; d < nd; d++) { t->dims[d] = (int)rU32(f); t->total *= t->dims[d]; }
+        if (nd < 0) { /* 0xFFFFFFFF sentinel: open array (formal param ARRAY OF T) */
+          t->isOpen = 1; t->ndim = 1; t->dims[0] = 0x3FFFFFFF; t->total = 0x3FFFFFFF;
+        } else {
+          t->ndim = nd; t->total = 1;
+          for (int d = 0; d < nd; d++) { t->dims[d] = (int)rU32(f); t->total *= t->dims[d]; }
+        }
         t->elem = (Type *)(uintptr_t)rU32(f);
         break;
       }

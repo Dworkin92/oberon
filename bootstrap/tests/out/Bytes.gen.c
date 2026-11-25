@@ -23,7 +23,7 @@ static void f0_0(VM *vm) {
   (void)fr; (void)cur;
 L0: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 0u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   { int lmod = 255, procIdx = 12, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);

@@ -23,7 +23,7 @@ static void f0_0(VM *vm) {
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)1);
@@ -52,7 +52,7 @@ static void f0_0(VM *vm) {
   { Cell b = pop(vm), a = pop(vm); push(vm, (a | b) & 0xFFFFFFFFLL); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 0u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)1);
   push(vm, (Cell)(int32_t)1);
@@ -276,7 +276,7 @@ L302: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 0u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)9);
@@ -286,7 +286,7 @@ L302: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (a | b) & 0xFFFFFFFFLL); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 0u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)2);
@@ -355,7 +355,7 @@ L302: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 0u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
@@ -462,7 +462,7 @@ L482: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 3u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)101);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
@@ -532,7 +532,7 @@ L482: ;
   }
 L588: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 3u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)120);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];

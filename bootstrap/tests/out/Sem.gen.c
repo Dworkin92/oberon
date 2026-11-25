@@ -576,7 +576,7 @@ L405: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 0u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);

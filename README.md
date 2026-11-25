@@ -20,6 +20,7 @@ virtuelle** (`obvm`).
    docs/
      LANGAGE.md             référence du dialecte Oberon supporté
      AUTOHEBERGEMENT.md     feuille de route : VM/compilateur auto-hébergés en Oberon
+   lib/                     bibliothèque de modules réutilisables (MathLib, Strings, ...)
    bootstrap/               stage-0 : la chaîne d'outils 100 % C
      src/                   obc / obvm / obdis / ob2c + runtime partagé rt.[ch]
      build.sh, Makefile
@@ -193,10 +194,20 @@ Détail complet : `bootstrap/src/ob.h` (enum des opcodes) et `obdis.exe` pour le
 - Pas de `WITH`, pas de `DISPOSE`, pas de GC (`NEW` n'est jamais libéré).
 - Records uniquement via pointeurs (`VAR r: Rec` est refusé ; utiliser `POINTER TO Rec` + `NEW`).
 - Tableaux d'éléments scalaires/pointeurs uniquement (pas de `ARRAY OF Record` en ligne).
+- Open arrays (`ARRAY OF T`) uniquement en paramètres formels ; `LEN(a, 0)` donne la taille réelle passée (ex. `bootstrap/examples/OpenArr.Mod`).
 - `INTEGER` = 32 bits, `LONGINT` = 64 bits, `SET` = 32 éléments, `CHAR` = point de code.
 - `Out.Real` utilise le format `%g`.
 - Prévu pour la suite (voir [`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md)) : `LONGINT` + le module `Files` (et bientôt `SYSTEM`) suffisent à lire/écrire des `.obc` depuis un programme Oberon.
 
+## Bibliothèque (`lib/`)
+
+Modules réutilisables importables depuis n'importe quel programme. **Chemin de recherche** de `IMPORT M` (dans l'ordre) :
+1. `M.obc` puis `M.Mod` dans le répertoire du fichier qui importe ;
+2. idem dans `<dir>/../lib` ;
+3. idem dans `<dir>/../../lib` (le `lib/` de la racine du projet — couvre `bootstrap/examples/` et `selfhost/`).
+
+Si seul `M.Mod` est trouvé, il est compilé à la volée en `M.obc` à côté du source. La même recherche est faite par le compilateur (`obc`), la VM C (`obvm`), `ob2c` et la VM en Oberon (`VM.Mod`). Contenu actuel : `MathLib` (math + `SumArr` sur tableau ouvert), `Strings` (chaînes 0X-terminées : `Len/Equal/Compare/Append/Insert/IntToStr/StrToInt`), demo dans `bootstrap/examples/StringsDemo.Mod`.
+
 ## Exemples (`bootstrap/examples/`)
 
-`Hello`, `Factorial` (récursion), `Arrays` (tri à bulles, tableau 2D, `LEN`), `Records` (listes chaînées, `NEW`, extension de record, `IS`/garde), `Sets` (`INCL/EXCL/IN/opérations`), `Control` (`WHILE/REPEAT/FOR BY/CASE`), `UseMath` + `MathLib` (import, symboles exportés `*`, variable globale exportée), `Nested` (procédures imbriquées + liens statiques + `VAR`), `Primes` (crible), `Echo` (entrée clavier), `Sem` (sémantique DIV/MOD/ENTIER/FLOOR/chaînes/HALT), `Longint` (64 bits), `Bytes` (I/O octet brut), `FilesDemo` (module `Files` : créer/écrire/lire/seek/supprimer un fichier binaire), `SysDemo` (module `SYSTEM` : arguments programme `ARGC/ARGV`, opérateurs bit à bit 64 bits `BAND/BOR/BXOR/BNOT/LSH/ROT/BIT`, horloge `TICKS`).
+`Hello`, `Factorial` (récursion), `Arrays` (tri à bulles, tableau 2D, `LEN`), `Records` (listes chaînées, `NEW`, extension de record, `IS`/garde), `Sets` (`INCL/EXCL/IN/opérations`), `Control` (`WHILE/REPEAT/FOR BY/CASE`), `UseMath` + `MathLib` (import, symboles exportés `*`, variable globale exportée), `Nested` (procédures imbriquées + liens statiques + `VAR`), `Primes` (crible), `Echo` (entrée clavier), `Sem` (sémantique DIV/MOD/ENTIER/FLOOR/chaînes/HALT), `Longint` (64 bits), `Bytes` (I/O octet brut), `FilesDemo` (module `Files` : créer/écrire/lire/seek/supprimer un fichier binaire), `SysDemo` (module `SYSTEM` : arguments programme `ARGC/ARGV`, opérateurs bit à bit 64 bits `BAND/BOR/BXOR/BNOT/LSH/ROT/BIT`, horloge `TICKS`), `StringsDemo` (bibliothèque `lib/Strings`), `UseMath` importe `MathLib` via `lib/`.

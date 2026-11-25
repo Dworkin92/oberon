@@ -34,6 +34,10 @@ typedef struct LoadedModule {
 
 void writeModule(Module *m, FILE *f);
 LoadedModule *loadModuleFile(const char *path);
+/* Search a compiled module `name` starting from dir `dir`:
+   dir/name.obc, then dir/../lib/name.obc, then dir/../../lib/name.obc.
+   On success writes the found path into out and returns 1, else returns 0. */
+int findModuleFile(const char *name, const char *dir, char *out, int outsz);
 /* Build import symbol table (Obj CL_MODULE) from a loaded module */
 Obj *moduleObjFromLoaded(LoadedModule *lm, int modId, int exportedOnly);
 

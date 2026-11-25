@@ -2,6 +2,7 @@
 
 Type *typeInt, *typeReal, *typeBool, *typeChar, *typeSet, *typeNil, *typeLongint;
 Type *typeCharArrayAny;
+int gTypeStamp = 0;
 Obj *scopeStack[64];
 int scopeTop = -1;
 Module *curMod;
@@ -59,6 +60,12 @@ int typeAssignable(Type *dst, Type *src) {
   /* any char array accepted where the marker is expected */
   if (dst->kind == TK_ARRAY && dst->anyCharArray && src->kind == TK_ARRAY &&
       src->elem->kind == TK_CHAR) return 1;
+  /* open array param (ARRAY OF T) accepts any array with the same element type */
+  if (dst->kind == TK_ARRAY && dst->isOpen && src->kind == TK_ARRAY &&
+      typeEquals(dst->elem, src->elem)) return 1;
+  /* string literal to an open ARRAY OF CHAR param */
+  if (dst->kind == TK_ARRAY && dst->isOpen && dst->elem->kind == TK_CHAR &&
+      src->kind == TK_ARRAY && src->isStringLit) return 1;
   /* derived pointer assignable to base pointer (record extension) */
   if (dst->kind == TK_POINTER && src->kind == TK_POINTER &&
       dst->to->kind == TK_RECORD && src->to->kind == TK_RECORD) {
@@ -143,6 +150,12 @@ Type *mkArrayType(Type *elem, int ndim, int *dims) {
     t->dims[i] = dims[i];
     t->total *= dims[i];
   }
+  return t;
+}
+
+Type *mkOpenArrayType(Type *elem) {
+  Type *t = mkArrayType(elem, 1, (int[]){0x3FFFFFFF});
+  t->isOpen = 1;
   return t;
 }
 

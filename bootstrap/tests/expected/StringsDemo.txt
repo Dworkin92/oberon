@@ -1,0 +1,7 @@
+len=6
+Oberon-07
+eq=1
+cmp=-1
+ins=Oberon!-07
+i2s=-42
+s2i=-42 ok=1

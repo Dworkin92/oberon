@@ -17,6 +17,6 @@ ob2c.exe: src/ob.c src/model.c src/module.c src/ob2c.c
 	$(CC) $(CFLAGS) -o $@ src/ob2c.c src/ob.c src/model.c src/module.c -lm
 
 clean:
-	rm -f obc.exe obvm.exe obdis.exe ob2c.exe examples/*.obc
+	rm -f obc.exe obvm.exe obdis.exe ob2c.exe examples/*.obc ../lib/*.obc ../selfhost/*.obc
 
 .PHONY: all clean

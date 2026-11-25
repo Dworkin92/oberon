@@ -23,11 +23,11 @@ static void f0_0(VM *vm) {
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 0u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 2u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 2u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)1);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   push(vm, (Cell)(int32_t)5);
@@ -77,7 +77,7 @@ L34: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 2u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 2u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
@@ -86,7 +86,7 @@ L34: ;
   goto L34;
 L96: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
@@ -161,7 +161,7 @@ L127: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[1u]); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
@@ -200,13 +200,13 @@ L202: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 4u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 4u)); } /* absolute gid */
   { VMMod *tm = vm->mods[cur->map[0]]; int tag = tm->rtPtrTag[5u]; int size = tm->rtPtrSize[5u];
     if (tag == 0) vmRuntimeError(vm, "NEW on non-record pointer");
     int h = heapAlloc(vm, 2 + size); vm->heap[h] = tag; vm->heap[h + 1] = size; push(vm, h); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 4u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 4u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
@@ -214,7 +214,7 @@ L202: ;
   push(vm, (Cell)(int64_t)UINT64_C(0x4004000000000000));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 3u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[4u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
@@ -316,7 +316,7 @@ L323: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 3u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { VMMod *tm = vm->mods[cur->map[0]]; int tag = tm->rtTag[4u];
     Cell ref = pop(vm); int ok = 0;
@@ -473,7 +473,7 @@ static void f0_1(VM *vm) {
     push(vm, vm->mods[g]->globals[0u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 0u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   { int ld = 0, off = 1; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;

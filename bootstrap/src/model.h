@@ -22,6 +22,7 @@ struct Type {
   char name[64];   /* for named types */
   int isStringLit; /* array-of-char produced by a string literal */
   int anyCharArray; /* marker type: accepts any ARRAY OF CHAR (Out.String, In.Line) */
+  int isOpen;      /* open array: formal parameter "ARRAY OF T" (any length) */
   /* ARRAY */
   Type *elem;
   int ndim, dims[8], total; /* total = product of dims */
@@ -33,7 +34,7 @@ struct Type {
   int tag;         /* compile-time tag id (records) */
   /* POINTER */
   Type *to;
-  int visited;     /* internal: recursion guard for type registration */
+  int visited;     /* internal: stamp == gTypeStamp when registered for the current writeModule */
 };
 
 /* Object classes */
@@ -108,6 +109,7 @@ Type *newType(int kind);
 extern Type *typeInt, *typeReal, *typeBool, *typeChar, *typeSet, *typeNil, *typeLongint;
 extern Type *typeCharArrayAny; /* marker: any ARRAY OF CHAR (Out.String, In.Line, COPY) */
 void initBasicTypes(void);
+extern int gTypeStamp; /* incremented by writeModule; type registration guard */
 int typeSizeCells(Type *t);          /* slots occupied inline (always 1 in v1) */
 int typeEquals(Type *a, Type *b);
 int typeAssignable(Type *dst, Type *src); /* src value assignable to dst var */
@@ -129,6 +131,7 @@ extern Proc *curProc;
 /* type table helpers */
 int typeIndex(Module *m, Type *t);  /* register if needed, return index */
 Type *mkArrayType(Type *elem, int ndim, int *dims);
+Type *mkOpenArrayType(Type *elem); /* formal param "ARRAY OF T" */
 Type *mkPointerType(Type *to);
 Type *mkRecordType(void);
 void completeRecord(Type *rec, Type *base, Field *fields, int nfields);

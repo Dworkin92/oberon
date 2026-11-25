@@ -1,0 +1,5 @@
+hello open arrays
+a literal!
+sum5=15
+sum5after=100
+len100=100 sum100=4950

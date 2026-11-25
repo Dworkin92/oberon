@@ -51,7 +51,7 @@ static void f0_0(VM *vm) {
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 0u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   { int lmod = 255, procIdx = 5, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -261,7 +261,7 @@ static void f0_0(VM *vm) {
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int lmod = 255, procIdx = 6, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -408,7 +408,7 @@ static void f0_0(VM *vm) {
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 2u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 2u)); } /* absolute gid */
   { int lmod = 255, procIdx = 8, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -467,7 +467,7 @@ static void f0_0(VM *vm) {
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 3u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L300: ;
@@ -552,7 +552,7 @@ L300: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 3u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);

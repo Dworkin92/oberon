@@ -22,7 +22,7 @@ static void f0_0(VM *vm) {
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 0u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)1);
   { Cell a = pop(vm); push(vm, (Cell)(int32_t)(-(int32_t)a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
@@ -263,7 +263,7 @@ L148: ;
   goto L125;
 L326: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 0u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
@@ -300,11 +300,11 @@ L346: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 0u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   push(vm, (Cell)(int32_t)12);
@@ -330,7 +330,7 @@ L393: ;
   goto L690;
 L426: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[1u]); }
   push(vm, (Cell)(int32_t)1);
@@ -339,7 +339,7 @@ L426: ;
   goto L748;
 L450: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[1u]); }
   push(vm, (Cell)(int32_t)2);
@@ -348,7 +348,7 @@ L450: ;
   goto L748;
 L474: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[1u]); }
   push(vm, (Cell)(int32_t)3);
@@ -357,7 +357,7 @@ L474: ;
   goto L748;
 L498: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[1u]); }
   push(vm, (Cell)(int32_t)4);
@@ -366,7 +366,7 @@ L498: ;
   goto L748;
 L522: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[1u]); }
   push(vm, (Cell)(int32_t)5);
@@ -375,7 +375,7 @@ L522: ;
   goto L748;
 L546: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[1u]); }
   push(vm, (Cell)(int32_t)6);
@@ -384,7 +384,7 @@ L546: ;
   goto L748;
 L570: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[1u]); }
   push(vm, (Cell)(int32_t)7);
@@ -393,7 +393,7 @@ L570: ;
   goto L748;
 L594: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[1u]); }
   push(vm, (Cell)(int32_t)8);
@@ -402,7 +402,7 @@ L594: ;
   goto L748;
 L618: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[1u]); }
   push(vm, (Cell)(int32_t)9);
@@ -411,7 +411,7 @@ L618: ;
   goto L748;
 L642: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[1u]); }
   push(vm, (Cell)(int32_t)10);
@@ -420,7 +420,7 @@ L642: ;
   goto L748;
 L666: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 1u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[1u]); }
   push(vm, (Cell)(int32_t)100);
@@ -447,7 +447,7 @@ L690: ;
       default: goto L666; } }
 L748: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(0, 0u)); }
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
