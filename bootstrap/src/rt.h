@@ -23,6 +23,8 @@ typedef struct {
 
 typedef struct {
   int mod, proc, pc, base, slink;
+  int extra;  /* OP_CALLP closure: number of captured frames to pop on RET */
+  int cref;   /* OP_CALLP closure: heap ref of the closure object (for write-back), else 0 */
 } Frame;
 
 typedef struct {
@@ -66,6 +68,9 @@ int heapObjSize(Type *t);        /* cells occupied by an object of type t (array
 int allocArrayObj(VM *vm, Type *t);
 Cell rtNew(VM *vm, int lmod, int typeidx);          /* OP_NEW: record or array pointer */
 void rtDispose(VM *vm, Cell slotAddr, int lmod, int typeidx); /* OP_DISPOSE: free + NIL */
+Cell rtProcVal(VM *vm, int lmod, int pidx, int steps); /* OP_PROCVAL: plain proc value or closure snapshot */
+void rtCallP(VM *vm, Cell pv);                     /* OP_CALLP: indirect call through proc value */
+Cell rtLeaveFrame(VM *vm);                          /* OP_RET: pop frame (+ captured frames), push result */
 void idivmod(Cell a, Cell b, Cell *q, Cell *r);
 void vmRuntimeError(VM *vm, const char *msg);
 void callBuiltin(VM *vm, int id, int base, int nparams);

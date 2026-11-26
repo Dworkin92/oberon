@@ -275,18 +275,14 @@ void vmRun(VM *vm) {
         }
         Frame *nf = &vm->frames[vm->fp++];
         nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+        nf->extra = 0; nf->cref = 0;
         vm->sp = base + cp->nlocals;
         pc = 0;
         break;
       }
       case OP_RET: OPLABEL(OP_RET) {
-        Frame *old = &vm->frames[vm->fp - 1];
-        LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-        Cell rv = oldp->hasResult ? pop(vm) : 0;
-        vm->sp = old->base;
-        vm->fp--;
-        if (vm->fp == 0) { vm->running = 0; break; }
-        if (oldp->hasResult) push(vm, rv);
+        rtLeaveFrame(vm);
+        if (!vm->running) break;
         fr = &vm->frames[vm->fp - 1];
         pc = fr->pc;
         break;
@@ -313,29 +309,15 @@ void vmRun(VM *vm) {
                ((uint32_t)code[pc+2] << 16) | ((uint32_t)code[pc+3] << 24);
         u32b = (uint32_t)code[pc+4] | ((uint32_t)code[pc+5] << 8) |
                ((uint32_t)code[pc+6] << 16) | ((uint32_t)code[pc+7] << 24);
-        pc += 8;
-        int g = cur->map[u32a];
-        push(vm, MK_PROC(g, (int)u32b));
+        u32c = (uint32_t)code[pc+8] | ((uint32_t)code[pc+9] << 8) |
+               ((uint32_t)code[pc+10] << 16) | ((uint32_t)code[pc+11] << 24);
+        pc += 12;
+        push(vm, rtProcVal(vm, (int)u32a, (int)u32b, (int)u32c));
         break;
       }
       case OP_CALLP: OPLABEL(OP_CALLP) {
-        Cell pv = pop(vm);
-        if (pv == 0) vmRuntimeError(vm, "call of NIL procedure");
-        if (ADDR_TAG(pv) != TAG_PROC) vmRuntimeError(vm, "call of non-procedure value");
-        int g = PROC_GID(pv), procIdx = PROC_IDX(pv);
         fr->pc = pc;
-        VMMod *callee = vm->mods[g];
-        LProc *cp = &callee->lm->procs[procIdx];
-        int base = vm->sp - cp->nparams;
-        int fi = vm->fp - 1; /* module-level procs: caller frame is a fine static link */
-        if (vm->fp >= vm->frameCap) {
-          vm->frameCap *= 2;
-          vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-          fr = &vm->frames[vm->fp - 1]; /* realloc may move */
-        }
-        Frame *nf = &vm->frames[vm->fp++];
-        nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-        vm->sp = base + cp->nlocals;
+        rtCallP(vm, pop(vm));
         pc = 0;
         break;
       }

@@ -44,7 +44,7 @@ static int operandLen(int op) {
     case OP_CALL:
       return 12;
     case OP_PROCVAL:
-      return 8;
+      return 12;
     default:
       return 0;
   }
@@ -225,6 +225,7 @@ static void emitProc(int gid, int pidx, LProc *lp) {
           "      }\n"
           "      Frame *nf = &vm->frames[vm->fp++];\n"
           "      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;\n"
+          "      nf->extra = 0; nf->cref = 0;\n"
           "      vm->sp = base + cp->nlocals;\n"
           "      procTab[g][procIdx](vm);\n"
           "      fr = &vm->frames[vm->fp - 1];\n"
@@ -235,14 +236,7 @@ static void emitProc(int gid, int pidx, LProc *lp) {
         break;
       }
       case OP_RET:
-        E("  { Frame *old = &vm->frames[vm->fp - 1];\n"
-          "    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];\n"
-          "    Cell rv = oldp->hasResult ? pop(vm) : 0;\n"
-          "    vm->sp = old->base;\n"
-          "    vm->fp--;\n"
-          "    if (vm->fp == 0) { vm->running = 0; return; }\n"
-          "    if (oldp->hasResult) push(vm, rv);\n"
-          "    return; }\n");
+        E("  rtLeaveFrame(vm);\n  return;\n");
         break;
       case OP_NEW: {
         int lmod = c[pc++];
@@ -257,28 +251,14 @@ static void emitProc(int gid, int pidx, LProc *lp) {
         break;
       }
       case OP_PROCVAL: {
-        a = rd32(c, &pc); b = rd32(c, &pc);
-        E("  push(vm, MK_PROC(cur->map[%u], %uu));\n", a, b);
+        a = rd32(c, &pc); b = rd32(c, &pc); cc = rd32(c, &pc);
+        E("  push(vm, rtProcVal(vm, %u, %u, %u));\n", a, b, cc);
         break;
       }
       case OP_CALLP:
-        E("  { Cell pv = pop(vm);\n"
-          "    if (pv == 0) vmRuntimeError(vm, \"call of NIL procedure\");\n"
-          "    if (ADDR_TAG(pv) != TAG_PROC) vmRuntimeError(vm, \"call of non-procedure value\");\n"
-          "    int g = PROC_GID(pv), procIdx = PROC_IDX(pv);\n"
-          "    VMMod *callee = vm->mods[g];\n"
-          "    LProc *cp = &callee->lm->procs[procIdx];\n"
-          "    int base = vm->sp - cp->nparams;\n"
-          "    int fi = vm->fp - 1;\n"
-          "    if (vm->fp >= vm->frameCap) {\n"
-          "      vm->frameCap *= 2;\n"
-          "      vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));\n"
-          "      fr = &vm->frames[vm->fp - 1];\n"
-          "    }\n"
-          "    Frame *nf = &vm->frames[vm->fp++];\n"
-          "    nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;\n"
-          "    vm->sp = base + cp->nlocals;\n"
-          "    procTab[g][procIdx](vm);\n"
+        E("  { rtCallP(vm, pop(vm));\n"
+          "    Frame *tf = &vm->frames[vm->fp - 1];\n"
+          "    procTab[tf->mod][tf->proc](vm);\n"
           "    fr = &vm->frames[vm->fp - 1];\n"
           "    cur = vm->mods[fr->mod];\n"
           "    if (!vm->running) return;\n"

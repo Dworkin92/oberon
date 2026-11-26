@@ -1352,14 +1352,19 @@ static int tryEmitProcValue(Type *pt) {
   lexSave(&ls);
   int mod;
   Obj *o = readFirstIdent(&mod); /* obError (longjmp) on undefined ident: fine */
-  if (o->cls == CL_PROC && o->modId != -1) {
-    if (o->level != 0)
-      obError(line, "only module-level procedures can be taken as values (closures not yet supported)");
+  /* a procedure identifier followed by '(' is a call, not a value; a 0-param function
+     without '(' is called implicitly (dialect extension) -> not a value either */
+  if (o->cls == CL_PROC && o->modId != -1 && sym != S_LPAREN &&
+      !(o->nparams == 0 && o->type != NULL)) {
     if (!procSigMatches(pt, o))
       obError(line, "procedure '%s' does not match type '%s'", o->name, pt->name[0] ? pt->name : "?");
     emit(OP_PROCVAL);
     bufU32(&curProc->code, (uint32_t)mod);
     bufU32(&curProc->code, (uint32_t)o->procIndex);
+    /* steps = slinks from current frame to the proc's defining frame.
+       0xFFFFFFFF = module-level proc -> plain value; else snapshot (closure), steps may be 0. */
+    uint32_t steps = (o->level == 0) ? 0xFFFFFFFFu : (uint32_t)(curLevel - o->level);
+    bufU32(&curProc->code, steps);
     return 1;
   }
   lexRestore(&ls);
@@ -1804,9 +1809,13 @@ static void parseStatement(void) {
     case S_RETURN:
       nextSym();
       if (curProc->hasResult) {
-        Type *t = parseExpression();
-        if (!typeAssignable(curProc->result, t)) obError(line, "RETURN type mismatch");
-        if (curProc->result == typeReal && t == typeInt) emit(OP_I2F); /* implicit INTEGER -> REAL (ext) */
+        if (curProc->result->kind == TK_PROC && tryEmitProcValue(curProc->result)) {
+          /* RETURN ProcIdent : return a procedure value (possibly a closure) */
+        } else {
+          Type *t = parseExpression();
+          if (!typeAssignable(curProc->result, t)) obError(line, "RETURN type mismatch");
+          if (curProc->result == typeReal && t == typeInt) emit(OP_I2F); /* implicit INTEGER -> REAL (ext) */
+        }
       } else if (sym != S_SEMI && !isEndSym()) {
         obError(line, "RETURN takes no expression in a plain procedure");
       }

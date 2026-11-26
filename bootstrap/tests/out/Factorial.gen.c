@@ -62,6 +62,7 @@ L22: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -93,6 +94,7 @@ L22: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -122,6 +124,7 @@ L22: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -152,6 +155,7 @@ L22: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -181,6 +185,7 @@ L22: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -209,6 +214,7 @@ L22: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -225,14 +231,8 @@ L22: ;
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   goto L22;
 L169: ;
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 
@@ -248,14 +248,8 @@ static void f0_1(VM *vm) {
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
   if (pop(vm) == 0) goto L22;
   push(vm, (Cell)(int32_t)1);
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
 L22: ;
   { int ld = 0, off = 0; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -288,6 +282,7 @@ L22: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -296,22 +291,10 @@ L22: ;
     }
   }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 

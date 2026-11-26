@@ -49,6 +49,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -78,6 +79,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -107,6 +109,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -135,6 +138,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -164,6 +168,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -194,6 +199,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -223,6 +229,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -251,6 +258,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -280,6 +288,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -309,6 +318,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -338,6 +348,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -366,6 +377,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -395,6 +407,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -426,6 +439,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -454,6 +468,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -535,6 +550,7 @@ L367: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -565,6 +581,7 @@ L367: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -594,6 +611,7 @@ L367: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -622,6 +640,7 @@ L367: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -629,14 +648,8 @@ L367: ;
       if (!vm->running) return;
     }
   }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 
@@ -644,14 +657,8 @@ static void f1_0(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 
@@ -675,22 +682,10 @@ static void f1_1(VM *vm) {
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 
@@ -744,22 +739,10 @@ L60: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 
@@ -780,22 +763,10 @@ static void f1_3(VM *vm) {
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   push(vm, (Cell)(int32_t)2);
   { Cell b = pop(vm), a = pop(vm); if (b == 0) vmRuntimeError(vm, "division by zero"); Cell q, r; idivmod(a, b, &q, &r); push(vm, q); }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 
@@ -890,22 +861,10 @@ L116: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 

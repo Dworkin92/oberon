@@ -57,6 +57,7 @@ CONST
   TK_ARRAY = 7; TK_RECORD = 8; TK_POINTER = 9; TK_LONGINT = 10; TK_PROC = 11;
 
   FILE_TAG = 1073741824;  (* 0x40000000: reserved runtime tag for Files.FileDesc *)
+  CLOSURE_TAG = 1073741825; (* 0x40000001: heap tag of closure objects *)
   MASK32 = 4294967295;    (* 0xFFFFFFFF *)
   MASK48 = 281474976710655;   (* 0xFFFFFFFFFFFF *)
   MASK56 = 72057594037927935; (* 0x00FFFFFFFFFFFFFF *)
@@ -70,6 +71,8 @@ VAR
   heap: ARRAY HEAPSIZE OF LONGINT; heapUsed: INTEGER; freeHead: INTEGER;
   stack: ARRAY STACKSIZE OF LONGINT; sp: INTEGER;
   fmod, fproc, fpc, fbase, fslink: ARRAY FRAMES OF INTEGER;
+  fextra, fcref: ARRAY FRAMES OF INTEGER;  (* closure support: extra frames to pop / closure object ref *)
+  scratch: ARRAY 256 OF INTEGER;           (* scratch for closure materialization *)
   fp: INTEGER; running: BOOLEAN; haltCode: INTEGER;
   code: ARRAY CODESIZE OF LONGINT; codeUsed: INTEGER;   (* guest bytecode pool, one byte per cell *)
   globals: ARRAY GLOBSIZE OF LONGINT; globalsUsed: INTEGER;
@@ -622,9 +625,11 @@ END;
 PROCEDURE Run();
 VAR op, pc, cur, cofs, oldfp, slot, fi, ld, off, lmod, pidx, steps, base: INTEGER;
     g, st, n, i, tag, hres, ok, to, ref: INTEGER;
+    e, cr, jb, cf, nl, capBase, bi, bas, prev, k, j, total: INTEGER;
     u, a, b, rv, t, tg: LONGINT; x, y: REAL;
 BEGIN
   fmod[0] := 0; fproc[0] := 0; fpc[0] := 0; fbase[0] := 0; fslink[0] := -1;
+  fextra[0] := 0; fcref[0] := 0;
   fp := 1; sp := pnlocals[0, 0]; running := TRUE;
   WHILE running & (fp > 0) DO
     cur := fmod[fp-1]; cofs := pcofs[cur, fproc[fp-1]]; pc := fpc[fp-1]; oldfp := fp;
@@ -653,7 +658,8 @@ BEGIN
           WHILE (st > 0) & (fi >= 0) DO fi := fslink[fi]; DEC(st) END;
           IF fp >= FRAMES THEN msgbuf := "frame overflow"; Fatal END;
           fpc[fp-1] := pc;
-          fmod[fp] := g; fproc[fp] := pidx; fpc[fp] := 0; fbase[fp] := base; fslink[fp] := fi; INC(fp);
+          fmod[fp] := g; fproc[fp] := pidx; fpc[fp] := 0; fbase[fp] := base; fslink[fp] := fi;
+          fextra[fp] := 0; fcref[fp] := 0; INC(fp);
           sp := base + pnlocals[g, pidx];
           pc := 0
         END
@@ -694,7 +700,16 @@ BEGIN
     | OP_TO_ADDR: a := Pop(); Push(SYSTEM.LSH(2, 56) + a)
     | OP_RET: hres := phasResult[fmod[fp-1], fproc[fp-1]];
         IF hres = 1 THEN rv := Pop() ELSE rv := 0 END;
-        sp := fbase[fp-1]; DEC(fp);
+        sp := fbase[fp-1]; e := fextra[fp-1]; cr := fcref[fp-1];
+        IF cr # 0 THEN  (* closure: write captured frames back into the closure object *)
+          n := SYSTEM.L2I(heap[cr+3]); off := 4; jb := fp-1-e;
+          FOR i := 0 TO n-1 DO
+            cf := jb + (n-1-i); nl := SYSTEM.L2I(heap[cr+off]);
+            FOR k := 0 TO nl-1 DO heap[cr+off+1+k] := stack[fbase[cf]+k] END;
+            off := off + 1 + nl
+          END
+        END;
+        fp := fp - 1 - e;
         IF fp = 0 THEN running := FALSE
         ELSE IF hres = 1 THEN Push(rv) END
         END
@@ -720,21 +735,77 @@ BEGIN
             HeapFree(ref, n); MemWrite(a, 0)
           ELSE msgbuf := "DISPOSE on non-pointer type"; Fatal END
         END
-    | OP_PROCVAL: lmod := SYSTEM.L2I(RD32(cofs+pc)); pidx := SYSTEM.L2I(RD32(cofs+pc+4)); pc := pc+8;
-        Push(TAG_PROC * SHIFT56 + map[cur, lmod] * SHIFT48 + pidx)
+    | OP_PROCVAL: lmod := SYSTEM.L2I(RD32(cofs+pc)); pidx := SYSTEM.L2I(RD32(cofs+pc+4));
+        steps := SYSTEM.L2I(RD32(cofs+pc+8)); pc := pc+12;
+        g := map[cur, lmod];
+        IF steps < 0 THEN  (* 0xFFFFFFFF sentinel: module-level proc -> plain value *)
+          Push(TAG_PROC * SHIFT56 + g * SHIFT48 + pidx)
+        ELSE  (* closure: snapshot the static-link chain from the defining frame down to root *)
+          fi := fp-1; st := steps;
+          WHILE st > 0 DO fi := fslink[fi]; DEC(st) END;
+          IF fi < 0 THEN msgbuf := "bad static link (closure)"; Fatal END;
+          n := 0; jb := fi; WHILE jb >= 0 DO INC(n); jb := fslink[jb] END;
+          total := 4; jb := fi;
+          WHILE jb >= 0 DO total := total + 1 + pnlocals[fmod[jb], fproc[jb]]; jb := fslink[jb] END;
+          ref := HeapAlloc(total);
+          heap[ref] := CLOSURE_TAG; heap[ref+1] := g; heap[ref+2] := pidx; heap[ref+3] := n;
+          off := 4; jb := fi;
+          WHILE jb >= 0 DO
+            nl := pnlocals[fmod[jb], fproc[jb]];
+            heap[ref+off] := nl; INC(off);
+            FOR k := 0 TO nl-1 DO heap[ref+off] := stack[fbase[jb]+k]; INC(off) END;
+            jb := fslink[jb]
+          END;
+          Push(ref)
+        END
     | OP_CALLP:
         u := Pop();
         IF u = 0 THEN msgbuf := "call of NIL procedure"; Fatal END;
-        IF SYSTEM.L2I(SYSTEM.LSH(u, -56)) # TAG_PROC THEN msgbuf := "call of non-procedure value"; Fatal END;
-        g := SYSTEM.L2I(SYSTEM.BAND(SYSTEM.LSH(u, -48), 255));
-        pidx := SYSTEM.L2I(SYSTEM.BAND(u, MASK32));
-        fpc[fp-1] := pc;
-        base := sp - pnparams[g, pidx];
-        fi := fp-1;  (* module-level procs: caller frame is a fine static link *)
-        IF fp >= FRAMES THEN msgbuf := "frame overflow"; Fatal END;
-        fmod[fp] := g; fproc[fp] := pidx; fpc[fp] := 0; fbase[fp] := base; fslink[fp] := fi; INC(fp);
-        sp := base + pnlocals[g, pidx];
-        pc := 0
+        IF SYSTEM.L2I(SYSTEM.LSH(u, -56)) = TAG_PROC THEN
+          (* plain module-level proc value: caller frame is a fine static link *)
+          g := SYSTEM.L2I(SYSTEM.BAND(SYSTEM.LSH(u, -48), 255));
+          pidx := SYSTEM.L2I(SYSTEM.BAND(u, MASK32));
+          fpc[fp-1] := pc;
+          base := sp - pnparams[g, pidx];
+          fi := fp-1;
+          IF fp >= FRAMES THEN msgbuf := "frame overflow"; Fatal END;
+          fmod[fp] := g; fproc[fp] := pidx; fpc[fp] := 0; fbase[fp] := base; fslink[fp] := fi;
+          fextra[fp] := 0; fcref[fp] := 0; INC(fp);
+          sp := base + pnlocals[g, pidx];
+          pc := 0
+        ELSE  (* closure: materialize captured frames, then push the callee frame *)
+          ref := SYSTEM.L2I(SYSTEM.BAND(u, MASK56));
+          IF (ref <= 0) OR (heap[ref] # CLOSURE_TAG) THEN msgbuf := "call of non-procedure value"; Fatal END;
+          g := SYSTEM.L2I(heap[ref+1]); pidx := SYSTEM.L2I(heap[ref+2]); n := SYSTEM.L2I(heap[ref+3]);
+          fpc[fp-1] := pc;
+          base := sp - pnparams[g, pidx];
+          capBase := base + pnlocals[g, pidx];
+          off := 4; total := 0;
+          FOR i := 0 TO n-1 DO scratch[i] := off; nl := SYSTEM.L2I(heap[ref+off]); off := off + 1 + nl; total := total + nl END;
+          IF capBase + total >= STACKSIZE THEN msgbuf := "stack overflow"; Fatal END;
+          bi := capBase;
+          i := n-1;
+          WHILE i >= 0 DO
+            nl := SYSTEM.L2I(heap[ref+scratch[i]]);
+            FOR k := 0 TO nl-1 DO stack[bi+k] := heap[ref+scratch[i]+1+k] END;
+            bi := bi + nl; DEC(i)
+          END;
+          prev := -1;
+          i := n-1;
+          WHILE i >= 0 DO
+            IF fp >= FRAMES THEN msgbuf := "frame overflow"; Fatal END;
+            bas := capBase;
+            FOR j := i+1 TO n-1 DO bas := bas + SYSTEM.L2I(heap[ref+scratch[j]]) END;
+            fmod[fp] := 0; fproc[fp] := 0; fpc[fp] := 0; fbase[fp] := bas; fslink[fp] := prev;
+            fextra[fp] := 0; fcref[fp] := 0;
+            prev := fp; INC(fp); DEC(i)
+          END;
+          IF fp >= FRAMES THEN msgbuf := "frame overflow"; Fatal END;
+          fmod[fp] := g; fproc[fp] := pidx; fpc[fp] := 0; fbase[fp] := base; fslink[fp] := prev;
+          fextra[fp] := n; fcref[fp] := ref; INC(fp);
+          sp := capBase + total;
+          pc := 0
+        END
     | OP_ALLOC_ARRAY: lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
         g := map[cur, lmod]; Push(AllocArray(g, SYSTEM.L2I(u)))
     | OP_LEN: u := RD32(cofs+pc); pc := pc+4; a := Pop();

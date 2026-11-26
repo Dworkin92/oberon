@@ -162,6 +162,138 @@ void rtDispose(VM *vm, Cell slotAddr, int lmod, int typeidx) {
   }
 }
 
+/* ---- procedural values / closures ---- */
+
+/* OP_PROCVAL: steps == 0 -> plain tagged value MK_PROC(gid, pidx) (module-level proc).
+   steps > 0 -> closure: snapshot the static-link chain from the defining frame
+   (walked `steps` slinks up from the current frame) down to the root frame into
+   a heap object, and push its raw ref. */
+Cell rtProcVal(VM *vm, int lmod, int pidx, int steps) {
+  VMMod *cur = vm->mods[vm->frames[vm->fp - 1].mod];
+  int g = cur->map[lmod];
+  if (steps == -1) return MK_PROC(g, pidx); /* 0xFFFFFFFF sentinel: module-level proc */
+  int fi = vm->fp - 1;
+  int st = steps;
+  while (st-- > 0) {
+    fi = vm->frames[fi].slink;
+    if (fi < 0) vmRuntimeError(vm, "bad static link (closure)");
+  }
+  int n = 0;
+  for (int j = fi; j >= 0; j = vm->frames[j].slink) n++;
+  int total = 4;
+  for (int j = fi; j >= 0; j = vm->frames[j].slink) {
+    Frame *f = &vm->frames[j];
+    total += 1 + vm->mods[f->mod]->lm->procs[f->proc].nlocals;
+  }
+  int ref = heapAlloc(vm, total);
+  Cell *h = &vm->heap[ref];
+  h[0] = CLOSURE_TAG; h[1] = g; h[2] = pidx; h[3] = n;
+  int off = 4;
+  for (int j = fi; j >= 0; j = vm->frames[j].slink) {
+    Frame *f = &vm->frames[j];
+    int nl = vm->mods[f->mod]->lm->procs[f->proc].nlocals;
+    h[off++] = nl;
+    for (int k = 0; k < nl; k++) h[off++] = vm->stack[f->base + k];
+  }
+  return (Cell)ref;
+}
+
+/* OP_CALLP: indirect call through a procedure value.
+   Plain value (TAG_PROC): slink = caller frame (module-level proc).
+   Closure (raw heap ref, CLOSURE_TAG): materialize the captured frames on the
+   stack (root first), then push the callee frame on top with extra/cref set. */
+void rtCallP(VM *vm, Cell pv) {
+  if (pv == 0) vmRuntimeError(vm, "call of NIL procedure");
+  int g, procIdx, slinkFi, extra = 0, cref = 0, total = 0;
+  if (ADDR_TAG(pv) == TAG_PROC) {
+    g = PROC_GID(pv); procIdx = PROC_IDX(pv);
+  } else {
+    int ref = (int)(pv & 0x00FFFFFFFFFFFFFFLL);
+    if (ref <= 0 || (size_t)ref >= vm->heapUsed || vm->heap[ref] != CLOSURE_TAG)
+      vmRuntimeError(vm, "call of non-procedure value");
+    cref = ref;
+    g = (int)vm->heap[ref + 1]; procIdx = (int)vm->heap[ref + 2];
+  }
+  VMMod *callee = vm->mods[g];
+  LProc *cp = &callee->lm->procs[procIdx];
+  int base = vm->sp - cp->nparams;
+  if (cref) {
+    int n = (int)vm->heap[cref + 3];
+    int capBase = base + cp->nlocals;
+    int *nl = malloc(sizeof(int) * (n ? n : 1));
+    int *objoff = malloc(sizeof(int) * (n ? n : 1));
+    int off = 4;
+    for (int i = 0; i < n; i++) {
+      nl[i] = (int)vm->heap[cref + off];
+      objoff[i] = off;
+      off += 1 + nl[i];
+      total += nl[i];
+    }
+    if ((size_t)(capBase + total + 1) > vm->stackCap) {
+      while (vm->stackCap < (size_t)(capBase + total + 1)) vm->stackCap *= 2;
+      vm->stack = realloc(vm->stack, vm->stackCap * sizeof(Cell));
+    }
+    int bi = capBase;
+    for (int i = n - 1; i >= 0; i--) {
+      for (int k = 0; k < nl[i]; k++) vm->stack[bi + k] = vm->heap[cref + objoff[i] + 1 + k];
+      bi += nl[i];
+    }
+    int prev = -1;
+    for (int i = n - 1; i >= 0; i--) {
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+      }
+      int b = capBase;
+      for (int j = i + 1; j < n; j++) b += nl[j];
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = 0; nf->proc = 0; nf->pc = 0; nf->base = b; nf->slink = prev;
+      nf->extra = 0; nf->cref = 0;
+      prev = vm->fp - 1;
+    }
+    free(nl); free(objoff);
+    slinkFi = prev;
+    extra = n;
+  } else {
+    slinkFi = vm->fp - 1;
+  }
+  if (vm->fp >= vm->frameCap) {
+    vm->frameCap *= 2;
+    vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+  }
+  Frame *nf = &vm->frames[vm->fp++];
+  nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = slinkFi;
+  nf->extra = extra; nf->cref = cref;
+  vm->sp = base + cp->nlocals + total;
+}
+
+/* OP_RET: pop the current frame (plus captured closure frames if any), write the
+   captured cells back into the closure object, restore sp and push the result. */
+Cell rtLeaveFrame(VM *vm) {
+  Frame *old = &vm->frames[vm->fp - 1];
+  LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
+  Cell rv = oldp->hasResult ? pop(vm) : 0;
+  vm->sp = old->base;
+  int ex = old->extra;
+  if (old->cref) {
+    Cell *h = &vm->heap[old->cref];
+    int n = (int)h[3];
+    int off = 4;
+    int F = vm->fp - 1 - ex; /* first captured frame index */
+    for (int i = 0; i < n; i++) {
+      /* object frame i (youngest first) was pushed at frame index F + (n-1-i) */
+      Frame *cf = &vm->frames[F + (n - 1 - i)];
+      int nl = (int)h[off];
+      for (int k = 0; k < nl; k++) h[off + 1 + k] = vm->stack[cf->base + k];
+      off += 1 + nl;
+    }
+  }
+  vm->fp -= 1 + ex;
+  if (vm->fp <= 0) { vm->fp = 0; vm->running = 0; return rv; }
+  if (oldp->hasResult) push(vm, rv);
+  return rv;
+}
+
 /* ---------- memory access (tagged addresses) ---------- */
 Cell memRead(VM *vm, Cell a) {
   switch (ADDR_TAG(a)) {
@@ -640,6 +772,7 @@ void rtEnterBody(VM *vm) {
   VMMod *main = vm->mods[0];
   Frame *f0 = &vm->frames[0];
   f0->mod = 0; f0->proc = 0; f0->pc = 0; f0->base = 0; f0->slink = -1;
+  f0->extra = 0; f0->cref = 0;
   vm->fp = 1;
   vm->sp = main->lm->procs[0].nlocals;
 }

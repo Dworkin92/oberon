@@ -64,6 +64,8 @@ enum {
 #define MK_PROC(g, p)        ((Cell)(((uint64_t)TAG_PROC << 56) | ((uint64_t)(g) << 48) | (uint64_t)(uint32_t)(p)))
 #define PROC_GID(c)          ((int)(((uint64_t)(c) >> 48) & 0xFF))
 #define PROC_IDX(c)          ((int)((uint64_t)(c) & 0xFFFFFFFFu))
+/* Heap tag of a closure object: [CLOSURE_TAG][gid][procIdx][nframes][per frame: nlocals, cells...] */
+#define CLOSURE_TAG          ((Cell)0x40000001)
 
 /* Growable byte buffer */
 typedef struct { unsigned char *b; int len, cap; } Buf;

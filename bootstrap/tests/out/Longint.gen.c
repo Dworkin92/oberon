@@ -47,6 +47,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -78,6 +79,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -106,6 +108,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -144,6 +147,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -175,6 +179,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -203,6 +208,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -236,6 +242,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -270,6 +277,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -298,6 +306,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -332,6 +341,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -360,6 +370,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -397,6 +408,7 @@ L277: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -428,6 +440,7 @@ L277: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -456,6 +469,7 @@ L277: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -485,6 +499,7 @@ L277: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -519,6 +534,7 @@ L277: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -547,6 +563,7 @@ L277: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -580,6 +597,7 @@ L277: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -608,6 +626,7 @@ L277: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -638,6 +657,7 @@ L460: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -671,6 +691,7 @@ L460: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -700,6 +721,7 @@ L460: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -733,6 +755,7 @@ L460: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -761,6 +784,7 @@ L460: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -795,6 +819,7 @@ L460: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -826,6 +851,7 @@ L460: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -854,6 +880,7 @@ L460: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -903,6 +930,7 @@ L667: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -940,6 +968,7 @@ L732: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -947,14 +976,8 @@ L732: ;
       if (!vm->running) return;
     }
   }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 

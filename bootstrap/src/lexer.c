@@ -205,12 +205,14 @@ void lexSave(LexState *s) {
   s->ival = ival; s->rval = rval; s->cval = cval;
   memcpy(s->name, name, 64); memcpy(s->sval, sval, 4096); s->slen = slen;
   s->srcName = obSrcName; s->obLine = obLine;
+  s->fpos = ftell(src); /* file position of the pending lookahead char ch */
 }
 void lexRestore(const LexState *s) {
   src = s->src; ch = s->ch; line = s->line; sym = s->sym;
   ival = s->ival; rval = s->rval; cval = s->cval;
   memcpy(name, s->name, 64); memcpy(sval, s->sval, 4096); slen = s->slen;
   obSrcName = s->srcName; obLine = s->obLine;
+  if (src && s->fpos >= 0) fseek(src, s->fpos, SEEK_SET); /* rewind past any lookahead consumed since save */
 }
 
 const char *symName(int s) {

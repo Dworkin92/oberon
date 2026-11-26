@@ -29,29 +29,15 @@ static void f0_0(VM *vm) {
   (void)fr; (void)cur;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
-  push(vm, MK_PROC(cur->map[0], 1u));
+  push(vm, rtProcVal(vm, 0, 1, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   push(vm, (Cell)(int32_t)3);
   push(vm, (Cell)(int32_t)4);
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
-  { Cell pv = pop(vm);
-    if (pv == 0) vmRuntimeError(vm, "call of NIL procedure");
-    if (ADDR_TAG(pv) != TAG_PROC) vmRuntimeError(vm, "call of non-procedure value");
-    int g = PROC_GID(pv), procIdx = PROC_IDX(pv);
-    VMMod *callee = vm->mods[g];
-    LProc *cp = &callee->lm->procs[procIdx];
-    int base = vm->sp - cp->nparams;
-    int fi = vm->fp - 1;
-    if (vm->fp >= vm->frameCap) {
-      vm->frameCap *= 2;
-      vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-      fr = &vm->frames[vm->fp - 1];
-    }
-    Frame *nf = &vm->frames[vm->fp++];
-    nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-    vm->sp = base + cp->nlocals;
-    procTab[g][procIdx](vm);
+  { rtCallP(vm, pop(vm));
+    Frame *tf = &vm->frames[vm->fp - 1];
+    procTab[tf->mod][tf->proc](vm);
     fr = &vm->frames[vm->fp - 1];
     cur = vm->mods[fr->mod];
     if (!vm->running) return;
@@ -78,6 +64,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -106,6 +93,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -115,29 +103,15 @@ static void f0_0(VM *vm) {
   }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
-  push(vm, MK_PROC(cur->map[0], 2u));
+  push(vm, rtProcVal(vm, 0, 2, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   push(vm, (Cell)(int32_t)3);
   push(vm, (Cell)(int32_t)4);
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
-  { Cell pv = pop(vm);
-    if (pv == 0) vmRuntimeError(vm, "call of NIL procedure");
-    if (ADDR_TAG(pv) != TAG_PROC) vmRuntimeError(vm, "call of non-procedure value");
-    int g = PROC_GID(pv), procIdx = PROC_IDX(pv);
-    VMMod *callee = vm->mods[g];
-    LProc *cp = &callee->lm->procs[procIdx];
-    int base = vm->sp - cp->nparams;
-    int fi = vm->fp - 1;
-    if (vm->fp >= vm->frameCap) {
-      vm->frameCap *= 2;
-      vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-      fr = &vm->frames[vm->fp - 1];
-    }
-    Frame *nf = &vm->frames[vm->fp++];
-    nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-    vm->sp = base + cp->nlocals;
-    procTab[g][procIdx](vm);
+  { rtCallP(vm, pop(vm));
+    Frame *tf = &vm->frames[vm->fp - 1];
+    procTab[tf->mod][tf->proc](vm);
     fr = &vm->frames[vm->fp - 1];
     cur = vm->mods[fr->mod];
     if (!vm->running) return;
@@ -164,6 +138,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -192,6 +167,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -201,7 +177,7 @@ static void f0_0(VM *vm) {
   }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 1u)); } /* absolute gid */
-  push(vm, MK_PROC(cur->map[0], 3u));
+  push(vm, rtProcVal(vm, 0, 3, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
@@ -233,6 +209,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -262,6 +239,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -290,6 +268,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -297,7 +276,7 @@ static void f0_0(VM *vm) {
       if (!vm->running) return;
     }
   }
-  push(vm, MK_PROC(cur->map[0], 1u));
+  push(vm, rtProcVal(vm, 0, 1, 4294967295));
   push(vm, (Cell)(int32_t)2);
   push(vm, (Cell)(int32_t)5);
   { int lmod = 0, procIdx = 6, steps = 0;
@@ -321,6 +300,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -350,6 +330,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -378,6 +359,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -387,33 +369,19 @@ static void f0_0(VM *vm) {
   }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 2u)); } /* absolute gid */
-  push(vm, MK_PROC(cur->map[0], 4u));
+  push(vm, rtProcVal(vm, 0, 4, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   push(vm, (Cell)(int32_t)5);
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[2u]); }
-  { Cell pv = pop(vm);
-    if (pv == 0) vmRuntimeError(vm, "call of NIL procedure");
-    if (ADDR_TAG(pv) != TAG_PROC) vmRuntimeError(vm, "call of non-procedure value");
-    int g = PROC_GID(pv), procIdx = PROC_IDX(pv);
-    VMMod *callee = vm->mods[g];
-    LProc *cp = &callee->lm->procs[procIdx];
-    int base = vm->sp - cp->nparams;
-    int fi = vm->fp - 1;
-    if (vm->fp >= vm->frameCap) {
-      vm->frameCap *= 2;
-      vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-      fr = &vm->frames[vm->fp - 1];
-    }
-    Frame *nf = &vm->frames[vm->fp++];
-    nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-    vm->sp = base + cp->nlocals;
-    procTab[g][procIdx](vm);
+  { rtCallP(vm, pop(vm));
+    Frame *tf = &vm->frames[vm->fp - 1];
+    procTab[tf->mod][tf->proc](vm);
     fr = &vm->frames[vm->fp - 1];
     cur = vm->mods[fr->mod];
     if (!vm->running) return;
   }
-  if (pop(vm) == 0) goto L331;
+  if (pop(vm) == 0) goto L351;
   push(vm, cur->strRefs[0u]);
   { int lmod = 255, procIdx = 3, steps = 0;
     if (lmod == 255) {
@@ -436,6 +404,7 @@ static void f0_0(VM *vm) {
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -443,7 +412,7 @@ static void f0_0(VM *vm) {
       if (!vm->running) return;
     }
   }
-L331: ;
+L351: ;
   { int lmod = 255, procIdx = 4, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -465,6 +434,7 @@ L331: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -474,33 +444,19 @@ L331: ;
   }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 2u)); } /* absolute gid */
-  push(vm, MK_PROC(cur->map[0], 5u));
+  push(vm, rtProcVal(vm, 0, 5, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   push(vm, (Cell)(int32_t)4);
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[2u]); }
-  { Cell pv = pop(vm);
-    if (pv == 0) vmRuntimeError(vm, "call of NIL procedure");
-    if (ADDR_TAG(pv) != TAG_PROC) vmRuntimeError(vm, "call of non-procedure value");
-    int g = PROC_GID(pv), procIdx = PROC_IDX(pv);
-    VMMod *callee = vm->mods[g];
-    LProc *cp = &callee->lm->procs[procIdx];
-    int base = vm->sp - cp->nparams;
-    int fi = vm->fp - 1;
-    if (vm->fp >= vm->frameCap) {
-      vm->frameCap *= 2;
-      vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-      fr = &vm->frames[vm->fp - 1];
-    }
-    Frame *nf = &vm->frames[vm->fp++];
-    nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-    vm->sp = base + cp->nlocals;
-    procTab[g][procIdx](vm);
+  { rtCallP(vm, pop(vm));
+    Frame *tf = &vm->frames[vm->fp - 1];
+    procTab[tf->mod][tf->proc](vm);
     fr = &vm->frames[vm->fp - 1];
     cur = vm->mods[fr->mod];
     if (!vm->running) return;
   }
-  if (pop(vm) == 0) goto L395;
+  if (pop(vm) == 0) goto L419;
   push(vm, cur->strRefs[1u]);
   { int lmod = 255, procIdx = 3, steps = 0;
     if (lmod == 255) {
@@ -523,6 +479,7 @@ L331: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -530,7 +487,7 @@ L331: ;
       if (!vm->running) return;
     }
   }
-L395: ;
+L419: ;
   { int lmod = 255, procIdx = 4, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -552,6 +509,7 @@ L395: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -567,7 +525,7 @@ L395: ;
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L455;
+  if (pop(vm) == 0) goto L479;
   push(vm, cur->strRefs[2u]);
   { int lmod = 255, procIdx = 3, steps = 0;
     if (lmod == 255) {
@@ -590,6 +548,7 @@ L395: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -597,7 +556,7 @@ L395: ;
       if (!vm->running) return;
     }
   }
-L455: ;
+L479: ;
   { int lmod = 255, procIdx = 4, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -619,6 +578,7 @@ L455: ;
       }
       Frame *nf = &vm->frames[vm->fp++];
       nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
       vm->sp = base + cp->nlocals;
       procTab[g][procIdx](vm);
       fr = &vm->frames[vm->fp - 1];
@@ -626,14 +586,8 @@ L455: ;
       if (!vm->running) return;
     }
   }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 
@@ -650,22 +604,10 @@ static void f0_1(VM *vm) {
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 
@@ -682,22 +624,10 @@ static void f0_2(VM *vm) {
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 
@@ -714,22 +644,10 @@ static void f0_3(VM *vm) {
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 
@@ -743,22 +661,10 @@ static void f0_4(VM *vm) {
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 
@@ -774,22 +680,10 @@ static void f0_5(VM *vm) {
   { Cell b = pop(vm), a = pop(vm); if (b == 0) vmRuntimeError(vm, "division by zero"); Cell q, r; idivmod(a, b, &q, &r); push(vm, r); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 
@@ -809,43 +703,17 @@ static void f0_6(VM *vm) {
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
-  { Cell pv = pop(vm);
-    if (pv == 0) vmRuntimeError(vm, "call of NIL procedure");
-    if (ADDR_TAG(pv) != TAG_PROC) vmRuntimeError(vm, "call of non-procedure value");
-    int g = PROC_GID(pv), procIdx = PROC_IDX(pv);
-    VMMod *callee = vm->mods[g];
-    LProc *cp = &callee->lm->procs[procIdx];
-    int base = vm->sp - cp->nparams;
-    int fi = vm->fp - 1;
-    if (vm->fp >= vm->frameCap) {
-      vm->frameCap *= 2;
-      vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-      fr = &vm->frames[vm->fp - 1];
-    }
-    Frame *nf = &vm->frames[vm->fp++];
-    nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-    vm->sp = base + cp->nlocals;
-    procTab[g][procIdx](vm);
+  { rtCallP(vm, pop(vm));
+    Frame *tf = &vm->frames[vm->fp - 1];
+    procTab[tf->mod][tf->proc](vm);
     fr = &vm->frames[vm->fp - 1];
     cur = vm->mods[fr->mod];
     if (!vm->running) return;
   }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
-  { Frame *old = &vm->frames[vm->fp - 1];
-    LProc *oldp = &vm->mods[old->mod]->lm->procs[old->proc];
-    Cell rv = oldp->hasResult ? pop(vm) : 0;
-    vm->sp = old->base;
-    vm->fp--;
-    if (vm->fp == 0) { vm->running = 0; return; }
-    if (oldp->hasResult) push(vm, rv);
-    return; }
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
   return;
 }
 

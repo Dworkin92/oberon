@@ -46,7 +46,7 @@ static int argKind(int op) {
     case OP_LOAD_GLOBAL: case OP_STORE_GLOBAL: case OP_ADDR_GLOBAL: return A_GLOBAL;
     case OP_JMP: case OP_JZ: case OP_JNZ: return A_JMP;
     case OP_CALL: return A_CALL;
-    case OP_PROCVAL: return A_PROC2;
+    case OP_PROCVAL: return A_CALL; /* u32 lmod, u32 proc, u32 steps */
     case OP_NEW: case OP_ALLOC_ARRAY: case OP_ISTYPE: case OP_CHECKTYPE: case OP_DISPOSE: return A_TYPEOP;
     case OP_JUMPTABLE: return A_TABLE;
     default: return A_NONE;

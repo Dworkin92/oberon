@@ -38,6 +38,7 @@ typedef struct {
   long long ival; double rval; int cval;
   char name[64]; char sval[4096]; int slen;
   const char *srcName; int obLine;
+  long fpos; /* ftell(src) at save time: rewind point for lexRestore */
 } LexState;
 void lexSave(LexState *s);
 void lexRestore(const LexState *s);

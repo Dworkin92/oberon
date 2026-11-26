@@ -76,9 +76,17 @@ Règles :
   `VAR f: Op;` — on assigne une procédure de **signature identique** (mêmes types de
   paramètres, mêmes marques `VAR`, même type de résultat) : `f := Add;` (ou `f := M.Add`),
   on copie (`g := f`), on compare à `NIL` (`f = NIL`, `f # NIL`), on appelle indirectement
-  `f(3, 4)` (statement ou expression si la signature a un résultat), et on passe une procédure
-  comme argument là où le paramètre formel est de type procédural. Appeler une variable `NIL`
-  → erreur d'exécution « call of NIL procedure ».
+  `f(3, 4)` (statement ou expression si la signature a un résultat), on passe une procédure
+  comme argument là où le paramètre formel est de type procédural, et on peut `RETURN` une
+  procédure. Appeler une variable `NIL` → erreur d'exécution « call of NIL procedure ».
+  - **Closures (ext)** : une procédure **imbriquée** mise dans une variable capture son
+    environnement : à `f := P` (P imbriquée), la chaîne des frames englobantes est copiée
+    dans un objet heap (`CLOSURE_TAG`), et chaque appel reconstruit ces frames sur la pile
+    puis les réécrit à la sortie (`RETURN`) — l'état capturé est donc persistant et partagé :
+    `PROCEDURE MakeCounter(): Maker; VAR c: INTEGER; PROCEDURE Next(...): ...; BEGIN c := 0; RETURN Next END`
+    donne un compteur fonctionnel. `OP_PROCVAL` a 3 opérandes (lmod, proc, steps) :
+    `steps = 0xFFFFFFFF` → valeur simple taguée `0x03` (proc de niveau module) ;
+    sinon snapshot de la chaîne de `steps` liens statiques.
 
 ### Assignabilité
 
@@ -251,7 +259,7 @@ décoder opcodes et adresses taggées, récupérer le `.obc` à exécuter, profi
 10. **Open arrays** en paramètres formels : `ARRAY OF T` accepte tout tableau de `T`,
     `LEN(a, 0)` = taille réelle ; littéraux chaîne acceptés pour `ARRAY OF CHAR`.
 - Pointeurs vers tableaux **(ext)** : `VAR p: POINTER TO ARRAY 100 OF INTEGER` (ou `POINTER TO` un type tableau nommé) ; `NEW(p)` alloue, `p[i]` indexe (déréférencement implicite), `LEN(p, 0)` marche, et `p` est accepté comme argument (valeur ou `VAR`) là où un `ARRAY OF T` ouvert est attendu. `DISPOSE(p)` libère et met `p := NIL`.
-11. **Types procéduraux / variables procédurales (ext)** : `TYPE P = PROCEDURE (x: INTEGER): INTEGER; VAR f: P;` — `f := MaProc;` (signature contrôlée, procédures de niveau module seulement), `f(3)`, `f = NIL`, passage en argument. Nouveaux opcodes `OP_PROCVAL` (88) / `OP_CALLP` (89) ; valeur = cellule taguée `0x03` [gid module 8 bits][index proc 32 bits]. C'est la base du **threaded code** prévu pour la VM en Oberon.
+11. **Types procéduraux / variables procédurales + closures (ext)** : `TYPE P = PROCEDURE (x: INTEGER): INTEGER; VAR f: P;` — `f := MaProc;`, `f(3)`, `f = NIL`, passage en argument, `RETURN MaProc`. Opcodes `OP_PROCVAL` (88, **3 opérandes u32** : lmod, proc, steps) / `OP_CALLP` (89) ; valeur simple = cellule taguée `0x03` [gid 8 bits][proc 32 bits], closure = objet heap `CLOSURE_TAG` (snapshot des frames capturées + réécriture au retour). C'est la base du **threaded code** prévu pour la VM en Oberon.
 
 ## 9. Limitations connues (v1)
 
@@ -270,10 +278,9 @@ décoder opcodes et adresses taggées, récupérer le `.obc` à exécuter, profi
 - Max 16 identificateurs par déclaration (`VAR a, b, ... : T`).
 - `RETURN expr` exige un type strictement égal au type de résultat.
 - Bornes de `FOR` : expressions dynamiques OK (évaluées une fois), mais `BY` doit être une constante non nulle.
-- Types procéduraux : seules les **procédures de niveau module** peuvent être mises dans une
-  variable (pas encore de closures sur procédures imbriquées — l'assignation d'une procédure
-  imbriquée est refusée à la compilation). L'appel indirect `f(args)` n'est reconnu que sur un
-  identificateur simple (pas sur `a[i](...)` ou `r.f(...)`).
+- Types procéduraux : l'appel indirect `f(args)` n'est reconnu que sur un identificateur
+  simple (pas sur `a[i](...)` ou `r.f(...)`). Les closures récursives avec état muté capturé
+  voient l'état de la capture au début de l'appel externe (pas d'entrelacement de réécriture).
 - Modules importés : pour `IMPORT M` depuis un fichier situé dans le répertoire `D`, on cherche dans l'ordre `D/M.obc`, `D/M.Mod`, puis `D/../lib/…`, puis `D/../../lib/…` (le `lib/` de la racine du projet). Si seul `M.Mod` est trouvé, il est compilé à la volée en `M.obc` à côté du source. Même recherche côté exécution (`obvm`, `ob2c`, `VM.Mod`). Voir `lib/` (`MathLib`, `Strings`).
 
 ## 10. Exemple complet

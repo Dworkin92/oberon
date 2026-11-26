@@ -65,3 +65,12 @@
   - VM.Mod : constantes 88/89 + branches CASE (décodage via LSH/BAND, `TAG_PROC*2^56 + gid*2^48 + pidx`), loader TK_PROC.
   - erreurs propres : signature incompatible → erreur de compilation « procedure 'One' does not match type 'BinOp' » ; appel de NIL → « runtime error: call of NIL procedure ».
   - procs de niveau module uniquement (slink = frame appelant) ; closures = item suivant, et c'est la porte ouverte vers le **threaded code** dans VM.Mod.
+- **closures** (26/11, même jour) — test `Closure.Mod` → **96/96** (24 ex × 4 moteurs).
+  - `OP_PROCVAL` passe à **3 opérandes u32** (lmod, procIdx, steps) : `steps = 0xFFFFFFFF` (L2I → -1) = proc de niveau module → valeur taguée 0x03 ; sinon snapshot de la chaîne de `steps` slinks depuis la frame courante jusqu'à la racine dans un objet heap `CLOSURE_TAG = 0x40000001` : `[tag][gid][procIdx][nframes][par frame: nlocals, cellules...]`.
+  - `OP_CALLP` : valeur 0x03 → appel direct (slink = frame appelant) ; ref heap `CLOSURE_TAG` → matérialise les frames capturées sur la pile (racine d'abord), pousse la frame du callee avec `extra = n` (frames capturées à dépiler) et `cref` (objet closure).
+  - `OP_RET` (`rtLeaveFrame` dans rt.c, partagé obvm et code ob2c) : dépile `1 + extra` frames et **réécrit** les cellules capturées dans l'objet closure → état persistant (compteur : 100, 200, 307 ✓).
+  - `Frame` gagne `extra`/`cref` (rt.h) ; `rtEnterBody`, `OP_CALL` et `OP_CALLP` les initialisent à 0.
+  - parser : `tryEmitProcValue` accepte toute proc (steps = curLevel - level, sentinel si level 0) ; garde-fou : ident suivi de `(` = appel, pas valeur ; fonction 0-param sans `(` = appel implicite, pas valeur. `RETURN ProcIdent` supporté quand le type de résultat est procédural.
+  - **bug lexer attraqué** : `lexSave`/`lexRestore` restauraient `ch` mais pas la position du `FILE*` → le lookahead consommé entre save et restore était perdu (`MakeAdder(5)` devenait `MakeAdder()`). Corrigé avec `ftell`/`fseek` dans `LexState.fpos`.
+  - VM.Mod : `fextra`/`fcref`, `scratch`, branches OP_PROCVAL (snapshot via HeapAlloc) / OP_CALLP (matérialisation) / OP_RET (réécriture), init frame 0.
+  - ob2c : `OP_PROCVAL` → `rtProcVal(...)`, `OP_CALLP` → `rtCallP` + `procTab[tf->mod][tf->proc](vm)`, `OP_RET` → `rtLeaveFrame(vm); return;`, `OP_CALL` pose extra/cref = 0 ; obdis : OP_PROCVAL = A_CALL (3 u32).
