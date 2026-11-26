@@ -98,6 +98,7 @@ static Type *parseType(void);
 static Type *parseQualType(void);
 static Cell parseConstExpr(Type **t);
 static void parseCallArgs(Obj *proc, int mod);
+static void parseArgsList(Obj *params, const char *nm);
 static void emitCall(Obj *proc, int mod);
 
 /* ---------- predefined & builtins ---------- */
@@ -570,6 +571,40 @@ static Type *parseType(void) {
     if (to->kind == TK_ARRAY && to->isOpen) obError(line, "pointer to open array not allowed");
     return mkPointerType(to);
   }
+  if (sym == S_PROCEDURE) { /* procedural type: PROCEDURE (FPSection; ...) [: T] (ext) */
+    nextSym();
+    Type *pt = mkProcType();
+    if (accept(S_LPAREN)) {
+      if (sym != S_RPAREN) {
+        for (;;) {
+          int isVar = accept(S_VAR);
+          char names[16][64]; int nn = 0;
+          do {
+            if (nn >= 16) obError(line, "too many parameter names in procedure type");
+            strcpy(names[nn++], name); nextSym();
+          } while (accept(S_COMMA));
+          expect(S_COLON);
+          int savedAllow = allowOpenArray;
+          allowOpenArray = 1; /* open arrays allowed in formal params */
+          Type *pty = parseType();
+          allowOpenArray = savedAllow;
+          for (int i = 0; i < nn; i++) {
+            Obj *pa = newObj(names[i], CL_VAR);
+            pa->type = pty;
+            pa->isVarParam = isVar;
+            Obj **tail = &pt->params;
+            while (*tail) tail = &(*tail)->nextParam;
+            *tail = pa;
+            pt->nparams++;
+          }
+          if (!accept(S_SEMI)) break;
+        }
+      }
+      expect(S_RPAREN);
+    }
+    if (accept(S_COLON)) pt->result = parseType();
+    return pt;
+  }
   return parseQualType();
 }
 
@@ -969,7 +1004,9 @@ static Type *parseExpression(void) {
                (t == typeReal && t2 == typeInt) || (t == typeInt && t2 == typeReal) ||
                (t == typeChar && t2 == typeChar) || (t == typeBool && t2 == typeBool && (op == S_EQ || op == S_NEQ)) ||
                (t == typeSet && t2 == typeSet && (op == S_EQ || op == S_NEQ)) ||
-               ((t->kind == TK_POINTER || t->kind == TK_NIL) && (t2->kind == TK_POINTER || t2->kind == TK_NIL) && (op == S_EQ || op == S_NEQ))))
+               ((t->kind == TK_POINTER || t->kind == TK_NIL) && (t2->kind == TK_POINTER || t2->kind == TK_NIL) && (op == S_EQ || op == S_NEQ)) ||
+               ((t->kind == TK_PROC || t->kind == TK_NIL) && (t2->kind == TK_PROC || t2->kind == TK_NIL) && (op == S_EQ || op == S_NEQ)) ||
+               (t->kind == TK_PROC && t2->kind == TK_PROC && (op == S_EQ || op == S_NEQ)))) /* proc var = proc var / NIL (ext) */
       obError(line, "incompatible types in comparison");
     emitRelation(op, t, t2);
     t = typeBool;
@@ -1251,6 +1288,15 @@ static Type *parseFactor(void) {
         else obError(line, "expected '(' in call to '%s'", o->name);
         return o->type;
       }
+      if (o->cls == CL_VAR && o->type && o->type->kind == TK_PROC && sym == S_LPAREN) {
+        /* indirect call through a procedure variable in an expression: f(args) (ext) */
+        Type *pt = o->type;
+        parseArgsList(pt->params, o->name);
+        parseDesignator(M_VAL, o, mod); /* proc value on top of the args */
+        emit(OP_CALLP);
+        if (!pt->result) obError(line, "'%s' is a procedure variable without result", o->name);
+        return pt->result;
+      }
       t = parseDesignator(M_VAL, o, mod);
       /* type guard: designator(Type) */
       if (sym == S_LPAREN) {
@@ -1281,12 +1327,51 @@ static void emitCall(Obj *proc, int mod) {
   bufU32(&curProc->code, steps);
 }
 
-static void parseCallArgs(Obj *proc, int mod) {
+/* structural match between a procedural type and a procedure object */
+static int procSigMatches(Type *pt, Obj *proc) {
+  if (!pt || pt->kind != TK_PROC) return 0;
+  if (!proc || proc->cls != CL_PROC || proc->modId == -1) return 0;
+  if (proc->nparams != pt->nparams) return 0;
+  Obj *pa = pt->params, *pb = proc->params;
+  while (pa && pb) {
+    if (pa->isVarParam != pb->isVarParam) return 0;
+    if (!typeEquals(pa->type, pb->type)) return 0;
+    pa = pa->nextParam; pb = pb->nextParam;
+  }
+  if (pa || pb) return 0;
+  if ((pt->result == NULL) != (proc->type == NULL)) return 0;
+  if (pt->result && !typeEquals(pt->result, proc->type)) return 0;
+  return 1;
+}
+
+/* Try to parse "Ident" or "Module.Ident" as a procedure reference and emit OP_PROCVAL.
+   Returns 1 if consumed (proc value pushed), 0 with the lexer restored otherwise. */
+static int tryEmitProcValue(Type *pt) {
+  if (sym != S_IDENT) return 0;
+  LexState ls;
+  lexSave(&ls);
+  int mod;
+  Obj *o = readFirstIdent(&mod); /* obError (longjmp) on undefined ident: fine */
+  if (o->cls == CL_PROC && o->modId != -1) {
+    if (o->level != 0)
+      obError(line, "only module-level procedures can be taken as values (closures not yet supported)");
+    if (!procSigMatches(pt, o))
+      obError(line, "procedure '%s' does not match type '%s'", o->name, pt->name[0] ? pt->name : "?");
+    emit(OP_PROCVAL);
+    bufU32(&curProc->code, (uint32_t)mod);
+    bufU32(&curProc->code, (uint32_t)o->procIndex);
+    return 1;
+  }
+  lexRestore(&ls);
+  return 0;
+}
+
+static void parseArgsList(Obj *params, const char *nm) {
   expect(S_LPAREN);
-  Obj *p = proc->params;
+  Obj *p = params;
   if (sym != S_RPAREN) {
     for (;;) {
-      if (!p) obError(line, "too many arguments in call to '%s'", proc->name);
+      if (!p) obError(line, "too many arguments in call to '%s'", nm);
       if (p->isVarParam) {
         int m2;
         Obj *a = readFirstIdent(&m2);
@@ -1305,10 +1390,12 @@ static void parseCallArgs(Obj *proc, int mod) {
                  (p->type->kind == TK_ARRAY && p->type->isOpen &&
                   at->kind == TK_POINTER && at->to->kind == TK_ARRAY &&
                   typeEquals(p->type->elem, at->to->elem));
-        if (!ok) obError(line, "VAR argument type mismatch in '%s'", proc->name);
+        if (!ok) obError(line, "VAR argument type mismatch in '%s'", nm);
+      } else if (p->type->kind == TK_PROC && tryEmitProcValue(p->type)) {
+        /* procedure value passed as actual argument */
       } else {
         Type *at = parseExpression();
-        if (!typeAssignable(p->type, at)) obError(line, "argument type mismatch in '%s'", proc->name);
+        if (!typeAssignable(p->type, at)) obError(line, "argument type mismatch in '%s'", nm);
         if (p->type == typeReal && at == typeInt) emit(OP_I2F); /* implicit INTEGER -> REAL (ext) */
       }
       p = p->nextParam;
@@ -1316,7 +1403,11 @@ static void parseCallArgs(Obj *proc, int mod) {
     }
   }
   expect(S_RPAREN);
-  if (p) obError(line, "too few arguments in call to '%s'", proc->name);
+  if (p) obError(line, "too few arguments in call to '%s'", nm);
+}
+
+static void parseCallArgs(Obj *proc, int mod) {
+  parseArgsList(proc->params, proc->name);
   emitCall(proc, mod);
 }
 
@@ -1431,6 +1522,22 @@ static void parseStatement(void) {
         }
         return;
       }
+      if (o->cls == CL_VAR && o->type && o->type->kind == TK_PROC && sym != S_ASSIGN) {
+        /* indirect call through a procedure variable: f(args) (ext) */
+        Type *pt = o->type;
+        if (sym == S_LPAREN) {
+          parseArgsList(pt->params, o->name);
+          parseDesignator(M_VAL, o, mod); /* proc value on top of the args */
+          emit(OP_CALLP);
+        } else if (pt->nparams == 0) {
+          parseDesignator(M_VAL, o, mod);
+          emit(OP_CALLP);
+        } else {
+          obError(line, "expected '(' in call through '%s'", o->name);
+        }
+        if (pt->result) emit(OP_DROP); /* discard result of a function called as a statement */
+        return;
+      }
       if (o->cls != CL_VAR) obError(line, "expected variable, := or call");
       /* assignment */
       Type *lt = parseDesignator(M_ADDR, o, mod);
@@ -1451,6 +1558,13 @@ static void parseStatement(void) {
         emit32(OP_CONST_I, 2);
         emit(OP_AADD);
         emit32(OP_COPY, (uint32_t)lt->payload);
+      } else if (lt->kind == TK_PROC) {
+        /* f := ProcIdent | f := g (proc var) | f := NIL (ext) */
+        if (!tryEmitProcValue(lt)) {
+          Type *rt = parseExpression();
+          if (!typeAssignable(lt, rt)) obError(line, "assignment type mismatch");
+        }
+        emit(OP_STORE_AT);
       } else {
         Type *rt = parseExpression();
         if (!typeAssignable(lt, rt)) obError(line, "assignment type mismatch");

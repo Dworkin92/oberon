@@ -3,11 +3,12 @@
 > **Règle d'or** : mettre ce fichier à jour à chaque fin de session (état, tests, prochaine étape).
 > Tout l'état du projet vit dans le dépôt ; une nouvelle session repart d'ici.
 
-## État actuel (25/11/2026, vérifié ce jour)
+## État actuel (26/11/2026, vérifié ce jour)
 
 Chaîne complète **compilateur Oberon-07 → bytecode `.obc` → VM maison**, stage-0 en C,
-plus VM réécrite en Oberon. **Tests : 88/88** (22 exemples × 4 moteurs : `obvm` C,
-natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif).
+plus VM réécrite en Oberon. **Tests : 92/92** (23 exemples × 4 moteurs : `obvm` C,
+natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif). Dernier ajout : **types procéduraux**
+(`TYPE P = PROCEDURE(...)[: T]`, `f := Proc`, `f(args)`, `OP_PROCVAL`=88/`OP_CALLP`=89).
 
 ```
 oberon/
@@ -38,7 +39,9 @@ Chemin de recherche des imports (dans obc, obvm, ob2c **et** VM.Mod) : `D/M.obc`
 
 ## Invariants à ne PAS régresser
 
-- **Opcodes append-only** dans `bootstrap/src/ob.h` (dernier = `OP_DISPOSE` 87 ; `OP_JUMPTABLE` 86).
+- **Opcodes append-only** dans `bootstrap/src/ob.h` (derniers = `OP_PROCVAL` 88, `OP_CALLP` 89 ; `OP_DISPOSE` 87 ; `OP_JUMPTABLE` 86). **Piège** : `OP_PROCVAL` = deux opérandes u32 (8 octets), pas u8+u32.
+- Valeur procédurale = cellule taguée `TAG_PROC=0x03` : [tag 8 bits][gid module 8 bits][index proc 32 bits] (`MK_PROC`/`PROC_GID`/`PROC_IDX`).
+- Kinds de types : `TK_LONGINT`=10, **`TK_PROC`=11** (les deux côtés C et VM.Mod doivent d'accord).
 - Cellules 64 bits ; adresses taggées (octet haut : 0x00 pile / 0x01 global / 0x02 tas).
 - **Adresse globale = gid absolu** résolu à la création (pas l'index d'import local) — sinon les `VAR`
   cross-module lisent le mauvais module. Idem dans `VM.Mod`. Max 256 modules.
@@ -55,12 +58,15 @@ LONGINT 64 bits, procédures-fonctions avec `RETURN expr`, littéraux `'c'`, app
 `FLOOR`, `Out.Byte`/`In.Byte`, module `Files` (I/O binaire fichiers), **open arrays**
 (`VAR a: ARRAY OF T`, `LEN(a,0)` = taille réelle), **`NEW`/`DISPOSE` sur POINTER TO ARRAY OF T**,
 **conversion implicite INTEGER→REAL** (`7/2 = 3.5`), **`WITH p: T DO … END`** (multi-gardes),
-module `SYSTEM` (BAND/BOR/BXOR/BNOT/LSH/ROT/BIT/ARGC/ARGV/TICKS/EXIT, casts L2I/REALBITS/BITSREAL/I2REAL),
+**types procéduraux** (`TYPE P = PROCEDURE(...)[: T]`, `VAR f: P`, `f := Proc`, `f(args)`,
+`f = NIL`, niveau module seulement — pas encore de closures), module `SYSTEM`
+(BAND/BOR/BXOR/BNOT/LSH/ROT/BIT/ARGC/ARGV/TICKS/EXIT, casts L2I/REALBITS/BITSREAL/I2REAL),
 superinstruction `OP_JUMPTABLE` pour les `CASE` denses.
 
 ## Prochaine étape (TODO groupe A restant)
 
-1. **Types procéduraux / variables procédurales** (threaded code dans `VM.Mod` aussi)
+1. **Closures** (procédures imbriquées comme valeurs) puis **threaded code dans `VM.Mod`**
+   (chaque instruction = valeur procédurale, dispatch sans décodage d'opcode)
 2. `VAR` record params, `ARRAY OF RECORD`, `SYSTEM.VAL/ADR/GET/PUT` si besoin réel
 3. Puis **OC.Mod** (compilateur en Oberon) : d'abord émetteur de `.obc` identique au stage-0
    (phase `PASS-OC`), puis backend C et auto-compilation (`oc.obc → oc2.c → gcc`, `diff`),

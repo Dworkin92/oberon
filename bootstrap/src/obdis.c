@@ -28,14 +28,15 @@ static const char *opName(int op) {
     "LADD", "LSUB", "LMUL", "LDIV", "LMOD", "LNEG", "LABS", "LODD",
     "LLT", "LLE", "LGT", "LGE", "LEQ", "LNE", "L2I",
     "JUMPTABLE",
-    "DISPOSE"
+    "DISPOSE",
+    "PROCVAL", "CALLP"
   };
   if (op >= 0 && op < OP_COUNT) return names[op];
   return "?";
 }
 
 /* operand signature per opcode */
-enum { A_NONE, A_U32, A_F64, A_I64, A_LOCAL, A_GLOBAL, A_JMP, A_CALL, A_TYPEOP, A_TABLE };
+enum { A_NONE, A_U32, A_F64, A_I64, A_LOCAL, A_GLOBAL, A_JMP, A_CALL, A_PROC2, A_TYPEOP, A_TABLE };
 static int argKind(int op) {
   switch (op) {
     case OP_CONST_I: case OP_CONST_S: case OP_LEN: case OP_COPY: return A_U32;
@@ -45,6 +46,7 @@ static int argKind(int op) {
     case OP_LOAD_GLOBAL: case OP_STORE_GLOBAL: case OP_ADDR_GLOBAL: return A_GLOBAL;
     case OP_JMP: case OP_JZ: case OP_JNZ: return A_JMP;
     case OP_CALL: return A_CALL;
+    case OP_PROCVAL: return A_PROC2;
     case OP_NEW: case OP_ALLOC_ARRAY: case OP_ISTYPE: case OP_CHECKTYPE: case OP_DISPOSE: return A_TYPEOP;
     case OP_JUMPTABLE: return A_TABLE;
     default: return A_NONE;
@@ -101,6 +103,11 @@ static void disasmProc(LoadedModule *lm, LProc *p, FILE *out) {
       case A_CALL: {
         uint32_t m = ru32(p->code, &pc), pr = ru32(p->code, &pc), st = ru32(p->code, &pc);
         fprintf(out, "mod=%u proc=%u steps=%u", m, pr, st);
+        break;
+      }
+      case A_PROC2: {
+        uint32_t m = ru32(p->code, &pc), pr = ru32(p->code, &pc);
+        fprintf(out, "mod=%u proc=%u", m, pr);
         break;
       }
       case A_TYPEOP: {

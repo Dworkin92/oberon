@@ -43,6 +43,8 @@ static int operandLen(int op) {
       return 5; /* u8 mod + u32 */
     case OP_CALL:
       return 12;
+    case OP_PROCVAL:
+      return 8;
     default:
       return 0;
   }
@@ -254,6 +256,34 @@ static void emitProc(int gid, int pidx, LProc *lp) {
         E("  rtDispose(vm, pop(vm), %d, %uu);\n", lmod, a);
         break;
       }
+      case OP_PROCVAL: {
+        a = rd32(c, &pc); b = rd32(c, &pc);
+        E("  push(vm, MK_PROC(cur->map[%u], %uu));\n", a, b);
+        break;
+      }
+      case OP_CALLP:
+        E("  { Cell pv = pop(vm);\n"
+          "    if (pv == 0) vmRuntimeError(vm, \"call of NIL procedure\");\n"
+          "    if (ADDR_TAG(pv) != TAG_PROC) vmRuntimeError(vm, \"call of non-procedure value\");\n"
+          "    int g = PROC_GID(pv), procIdx = PROC_IDX(pv);\n"
+          "    VMMod *callee = vm->mods[g];\n"
+          "    LProc *cp = &callee->lm->procs[procIdx];\n"
+          "    int base = vm->sp - cp->nparams;\n"
+          "    int fi = vm->fp - 1;\n"
+          "    if (vm->fp >= vm->frameCap) {\n"
+          "      vm->frameCap *= 2;\n"
+          "      vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));\n"
+          "      fr = &vm->frames[vm->fp - 1];\n"
+          "    }\n"
+          "    Frame *nf = &vm->frames[vm->fp++];\n"
+          "    nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;\n"
+          "    vm->sp = base + cp->nlocals;\n"
+          "    procTab[g][procIdx](vm);\n"
+          "    fr = &vm->frames[vm->fp - 1];\n"
+          "    cur = vm->mods[fr->mod];\n"
+          "    if (!vm->running) return;\n"
+          "  }\n");
+        break;
       case OP_ALLOC_ARRAY: {
         int lmod = c[pc++];
         a = rd32(c, &pc);

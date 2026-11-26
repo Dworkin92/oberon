@@ -43,6 +43,15 @@ static void writeType(Module *m, FILE *f, TypeDef *td) {
     case TK_POINTER:
       wU32(f, typeIndex(m, t->to));
       break;
+    case TK_PROC: {
+      wU32(f, (uint32_t)t->nparams);
+      for (Obj *pa = t->params; pa; pa = pa->nextParam) {
+        wU32(f, typeIndex(m, pa->type));
+        wU8(f, pa->isVarParam);
+      }
+      wU32(f, t->result ? (uint32_t)typeIndex(m, t->result) : 0xFFFFFFFFu);
+      break;
+    }
     default:
       break;
   }
@@ -59,6 +68,10 @@ static void registerTypeDeep(Module *m, Type *t) {
       for (Field *fl = t->fields; fl; fl = fl->next) registerTypeDeep(m, fl->type);
       break;
     case TK_POINTER: registerTypeDeep(m, t->to); break;
+    case TK_PROC:
+      for (Obj *pa = t->params; pa; pa = pa->nextParam) registerTypeDeep(m, pa->type);
+      registerTypeDeep(m, t->result);
+      break;
     default: break;
   }
 }
@@ -224,6 +237,22 @@ LoadedModule *loadModuleFile(const char *path) {
       case TK_POINTER:
         t->to = (Type *)(uintptr_t)rU32(f);
         break;
+      case TK_PROC: {
+        int np = (int)rU32(f);
+        t->nparams = np;
+        Obj **tail = &t->params;
+        for (int j = 0; j < np; j++) {
+          Obj *pa = calloc(1, sizeof(Obj));
+          uint32_t tidx = rU32(f);
+          pa->isVarParam = rU8(f);
+          pa->cls = CL_VAR;
+          pa->type = (Type *)(uintptr_t)(tidx + 1); /* resolve below */
+          *tail = pa; tail = &pa->nextParam;
+        }
+        uint32_t ridx = rU32(f);
+        t->result = (Type *)(uintptr_t)(ridx != 0xFFFFFFFFu ? ridx + 1 : 0); /* resolve below */
+        break;
+      }
       default: break;
     }
   }
@@ -236,6 +265,11 @@ LoadedModule *loadModuleFile(const char *path) {
       t->base = resolveIdx((uintptr_t)t->base, lm->types, nt);
       for (Field *fl = t->fields; fl; fl = fl->next)
         fl->type = resolveIdx((uintptr_t)fl->type, lm->types, nt);
+    }
+    else if (t->kind == TK_PROC) {
+      for (Obj *pa = t->params; pa; pa = pa->nextParam)
+        pa->type = resolveIdx((uintptr_t)pa->type - 1, lm->types, nt);
+      t->result = t->result ? resolveIdx((uintptr_t)t->result - 1, lm->types, nt) : NULL;
     }
   }
   for (Obj *o = lm->exportedVars; o; o = o->next)

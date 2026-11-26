@@ -106,6 +106,8 @@ void vmRun(VM *vm) {
     [OP_NOP] = &&L_OP_NOP,
     [OP_JUMPTABLE] = &&L_OP_JUMPTABLE,
     [OP_DISPOSE] = &&L_OP_DISPOSE,
+    [OP_PROCVAL] = &&L_OP_PROCVAL,
+    [OP_CALLP] = &&L_OP_CALLP,
   };
 #endif
   rtEnterBody(vm);
@@ -304,6 +306,37 @@ void vmRun(VM *vm) {
         pc += 4;
         Cell addr = pop(vm);
         rtDispose(vm, addr, lmod, (int)u32a);
+        break;
+      }
+      case OP_PROCVAL: OPLABEL(OP_PROCVAL) {
+        u32a = (uint32_t)code[pc] | ((uint32_t)code[pc+1] << 8) |
+               ((uint32_t)code[pc+2] << 16) | ((uint32_t)code[pc+3] << 24);
+        u32b = (uint32_t)code[pc+4] | ((uint32_t)code[pc+5] << 8) |
+               ((uint32_t)code[pc+6] << 16) | ((uint32_t)code[pc+7] << 24);
+        pc += 8;
+        int g = cur->map[u32a];
+        push(vm, MK_PROC(g, (int)u32b));
+        break;
+      }
+      case OP_CALLP: OPLABEL(OP_CALLP) {
+        Cell pv = pop(vm);
+        if (pv == 0) vmRuntimeError(vm, "call of NIL procedure");
+        if (ADDR_TAG(pv) != TAG_PROC) vmRuntimeError(vm, "call of non-procedure value");
+        int g = PROC_GID(pv), procIdx = PROC_IDX(pv);
+        fr->pc = pc;
+        VMMod *callee = vm->mods[g];
+        LProc *cp = &callee->lm->procs[procIdx];
+        int base = vm->sp - cp->nparams;
+        int fi = vm->fp - 1; /* module-level procs: caller frame is a fine static link */
+        if (vm->fp >= vm->frameCap) {
+          vm->frameCap *= 2;
+          vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+          fr = &vm->frames[vm->fp - 1]; /* realloc may move */
+        }
+        Frame *nf = &vm->frames[vm->fp++];
+        nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+        vm->sp = base + cp->nlocals;
+        pc = 0;
         break;
       }
       case OP_ALLOC_ARRAY: OPLABEL(OP_ALLOC_ARRAY) {

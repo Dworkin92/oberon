@@ -36,6 +36,11 @@ CONST
   OP_LLT = 79; OP_LLE = 80; OP_LGT = 81; OP_LGE = 82; OP_LEQ = 83; OP_LNE = 84; OP_L2I = 85;
   OP_JUMPTABLE = 86;
   OP_DISPOSE = 87;
+  OP_PROCVAL = 88; OP_CALLP = 89;
+
+  TAG_PROC = 3;                       (* top byte of a procedure-value cell *)
+  SHIFT56 = 72057594037927936;        (* 2^56 *)
+  SHIFT48 = 281474976710656;          (* 2^48 *)
 
   (* --- builtin proc ids (bootstrap/src/parser.c), module id 255 --- *)
   B_OUT_INT = 0; B_OUT_REAL = 1; B_OUT_CHAR = 2; B_OUT_STRING = 3; B_OUT_LN = 4;
@@ -49,7 +54,7 @@ CONST
   B_SYS_TICKS = 49; B_SYS_EXIT = 50; B_SYS_L2I = 51; B_SYS_REALBITS = 52; B_SYS_BITSREAL = 53; B_SYS_I2REAL = 54;
 
   (* --- type kinds (bootstrap/src/model.h) --- *)
-  TK_ARRAY = 7; TK_RECORD = 8; TK_POINTER = 9;
+  TK_ARRAY = 7; TK_RECORD = 8; TK_POINTER = 9; TK_LONGINT = 10; TK_PROC = 11;
 
   FILE_TAG = 1073741824;  (* 0x40000000: reserved runtime tag for Files.FileDesc *)
   MASK32 = 4294967295;    (* 0xFFFFFFFF *)
@@ -405,6 +410,11 @@ BEGIN
       FOR i := 0 TO n-1 DO RStr(tname); RU32(); RU32() END
     ELSIF j = TK_POINTER THEN
       tto[gid, k] := SYSTEM.L2I(RU32())
+    ELSIF j = TK_PROC THEN
+      (* procedural type: skip payload (nparams, per-param type+var flag, result type) *)
+      n := SYSTEM.L2I(RU32());
+      FOR i := 0 TO n-1 DO RU32(); RU8() END;
+      RU32()
     END
   END;
   (* runtime tags for records *)
@@ -710,6 +720,21 @@ BEGIN
             HeapFree(ref, n); MemWrite(a, 0)
           ELSE msgbuf := "DISPOSE on non-pointer type"; Fatal END
         END
+    | OP_PROCVAL: lmod := SYSTEM.L2I(RD32(cofs+pc)); pidx := SYSTEM.L2I(RD32(cofs+pc+4)); pc := pc+8;
+        Push(TAG_PROC * SHIFT56 + map[cur, lmod] * SHIFT48 + pidx)
+    | OP_CALLP:
+        u := Pop();
+        IF u = 0 THEN msgbuf := "call of NIL procedure"; Fatal END;
+        IF SYSTEM.L2I(SYSTEM.LSH(u, -56)) # TAG_PROC THEN msgbuf := "call of non-procedure value"; Fatal END;
+        g := SYSTEM.L2I(SYSTEM.BAND(SYSTEM.LSH(u, -48), 255));
+        pidx := SYSTEM.L2I(SYSTEM.BAND(u, MASK32));
+        fpc[fp-1] := pc;
+        base := sp - pnparams[g, pidx];
+        fi := fp-1;  (* module-level procs: caller frame is a fine static link *)
+        IF fp >= FRAMES THEN msgbuf := "frame overflow"; Fatal END;
+        fmod[fp] := g; fproc[fp] := pidx; fpc[fp] := 0; fbase[fp] := base; fslink[fp] := fi; INC(fp);
+        sp := base + pnlocals[g, pidx];
+        pc := 0
     | OP_ALLOC_ARRAY: lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
         g := map[cur, lmod]; Push(AllocArray(g, SYSTEM.L2I(u)))
     | OP_LEN: u := RD32(cofs+pc); pc := pc+4; a := Pop();

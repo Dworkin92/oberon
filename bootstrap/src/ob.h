@@ -46,6 +46,8 @@ enum {
   OP_L2I,                                       /* LONGINT -> INTEGER (truncate) */
   OP_JUMPTABLE,                                 /* superinstruction: u32 n, u32 base, u32 default, n x u32 targets; pop selector, jump */
   OP_DISPOSE,                                   /* u8 mod, u32 typeidx (pointer type): pop slot addr, free object, store NIL */
+  OP_PROCVAL,                                   /* u32 lmod, u32 procIdx : push procedure value (tagged cell TAG_PROC) */
+  OP_CALLP,                                     /* pop procedure value, indirect call (args already on stack below it) */
   OP_COUNT
 };
 
@@ -53,10 +55,15 @@ enum {
 #define TAG_STACK 0x00
 #define TAG_GLOBAL 0x01
 #define TAG_HEAP 0x02
+#define TAG_PROC 0x03
 #define ADDR_TAG(a) ((uint64_t)(a) >> 56)
 #define MK_STACK_ADDR(idx)   ((Cell)(uint64_t)(idx))
 #define MK_GLOBAL_ADDR(mod, off) ((Cell)(((uint64_t)TAG_GLOBAL << 56) | ((uint64_t)(mod) << 48) | (uint64_t)(off)))
 #define MK_HEAP_ADDR(idx)    ((Cell)(((uint64_t)TAG_HEAP << 56) | (uint64_t)(idx)))
+/* Procedure value: [tag 0x03][gid 8 bits][proc index 32 bits] */
+#define MK_PROC(g, p)        ((Cell)(((uint64_t)TAG_PROC << 56) | ((uint64_t)(g) << 48) | (uint64_t)(uint32_t)(p)))
+#define PROC_GID(c)          ((int)(((uint64_t)(c) >> 48) & 0xFF))
+#define PROC_IDX(c)          ((int)((uint64_t)(c) & 0xFFFFFFFFu))
 
 /* Growable byte buffer */
 typedef struct { unsigned char *b; int len, cap; } Buf;

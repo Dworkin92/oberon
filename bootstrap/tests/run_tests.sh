@@ -113,7 +113,7 @@ run_vmntest() {
   fi
 }
 
-for m in Hello Factorial Arrays Records Sets Control CaseLabels OpenArr UseMath StringsDemo Nested Primes Sem Queens Longint FilesDemo DynArr RealConv WithDemo; do
+for m in Hello Factorial Arrays Records Sets Control CaseLabels OpenArr UseMath StringsDemo Nested Primes Sem Queens Longint FilesDemo DynArr RealConv WithDemo ProcVar; do
   run_test "$m" ""
   run_ctest "$m" ""
   run_vmtest "$m" ""

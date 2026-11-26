@@ -55,6 +55,7 @@ un autre module (`UseMath.Mod`).
 | `ARRAY d1, d2, ... OF T` | tableau multidimensionnel (row-major) | objet heap avec en-tête |
 | `RECORD (Base) champs END` | record avec extension optionnelle | objet heap, tag de type |
 | `POINTER TO Record` | pointeur vers record (`NIL` = 0) | référence heap |
+| `PROCEDURE (params) [: T]` **(ext)** | type procédural (variable de procédure) | cellule taguée `0x03` : [tag][gid module][index proc] |
 
 Déclarations de types :
 
@@ -62,6 +63,7 @@ Déclarations de types :
 Type = "ARRAY" ConstExpr { "," ConstExpr } "OF" Type
      | "RECORD" [ "(" qualident ")" ] [ FieldList ] "END"
      | "POINTER" "TO" ident          (* référence avant possible *)
+     | "PROCEDURE" [ Formals ] [ ":" Type ]   (* type procédural, ext *)
      | qualident .
 FieldList = [ ident { "," ident } ":" Type { ";" ident { "," ident } ":" Type } ] .
 ```
@@ -70,13 +72,21 @@ Règles :
 - `POINTER TO Node` avant la déclaration de `Node` est accepté (listes chaînées).
 - Les variables de type `RECORD` direct sont refusées : utiliser `POINTER TO` + `NEW`.
 - Les tableaux d'éléments scalaires/pointeurs sont supportés (pas de `ARRAY OF Record` en ligne).
+- **Types procéduraux (ext)** : `TYPE Op = PROCEDURE (x, y: INTEGER): INTEGER;` puis
+  `VAR f: Op;` — on assigne une procédure de **signature identique** (mêmes types de
+  paramètres, mêmes marques `VAR`, même type de résultat) : `f := Add;` (ou `f := M.Add`),
+  on copie (`g := f`), on compare à `NIL` (`f = NIL`, `f # NIL`), on appelle indirectement
+  `f(3, 4)` (statement ou expression si la signature a un résultat), et on passe une procédure
+  comme argument là où le paramètre formel est de type procédural. Appeler une variable `NIL`
+  → erreur d'exécution « call of NIL procedure ».
 
 ### Assignabilité
 
-- types identiques ; `NIL` → tout pointeur ;
+- types identiques ; `NIL` → tout pointeur **et toute variable procédurale** ;
 - littéral chaîne → `ARRAY OF CHAR` de taille suffisante ;
 - `INTEGER` → `LONGINT` (promotion, **(ext)**) ;
-- pointeur dérivé → pointeur de base (extension de record).
+- pointeur dérivé → pointeur de base (extension de record) ;
+- type procédural : égalité **structurelle** de signature (paramètres et résultat), ou `NIL`.
 
 ## 3. Expressions
 
@@ -241,6 +251,7 @@ décoder opcodes et adresses taggées, récupérer le `.obc` à exécuter, profi
 10. **Open arrays** en paramètres formels : `ARRAY OF T` accepte tout tableau de `T`,
     `LEN(a, 0)` = taille réelle ; littéraux chaîne acceptés pour `ARRAY OF CHAR`.
 - Pointeurs vers tableaux **(ext)** : `VAR p: POINTER TO ARRAY 100 OF INTEGER` (ou `POINTER TO` un type tableau nommé) ; `NEW(p)` alloue, `p[i]` indexe (déréférencement implicite), `LEN(p, 0)` marche, et `p` est accepté comme argument (valeur ou `VAR`) là où un `ARRAY OF T` ouvert est attendu. `DISPOSE(p)` libère et met `p := NIL`.
+11. **Types procéduraux / variables procédurales (ext)** : `TYPE P = PROCEDURE (x: INTEGER): INTEGER; VAR f: P;` — `f := MaProc;` (signature contrôlée, procédures de niveau module seulement), `f(3)`, `f = NIL`, passage en argument. Nouveaux opcodes `OP_PROCVAL` (88) / `OP_CALLP` (89) ; valeur = cellule taguée `0x03` [gid module 8 bits][index proc 32 bits]. C'est la base du **threaded code** prévu pour la VM en Oberon.
 
 ## 9. Limitations connues (v1)
 
@@ -259,6 +270,10 @@ décoder opcodes et adresses taggées, récupérer le `.obc` à exécuter, profi
 - Max 16 identificateurs par déclaration (`VAR a, b, ... : T`).
 - `RETURN expr` exige un type strictement égal au type de résultat.
 - Bornes de `FOR` : expressions dynamiques OK (évaluées une fois), mais `BY` doit être une constante non nulle.
+- Types procéduraux : seules les **procédures de niveau module** peuvent être mises dans une
+  variable (pas encore de closures sur procédures imbriquées — l'assignation d'une procédure
+  imbriquée est refusée à la compilation). L'appel indirect `f(args)` n'est reconnu que sur un
+  identificateur simple (pas sur `a[i](...)` ou `r.f(...)`).
 - Modules importés : pour `IMPORT M` depuis un fichier situé dans le répertoire `D`, on cherche dans l'ordre `D/M.obc`, `D/M.Mod`, puis `D/../lib/…`, puis `D/../../lib/…` (le `lib/` de la racine du projet). Si seul `M.Mod` est trouvé, il est compilé à la volée en `M.obc` à côté du source. Même recherche côté exécution (`obvm`, `ob2c`, `VM.Mod`). Voir `lib/` (`MathLib`, `Strings`).
 
 ## 10. Exemple complet

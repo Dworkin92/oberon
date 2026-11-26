@@ -6,7 +6,7 @@
 /* Type kinds */
 enum {
   TK_UNDEF = 0, TK_NIL, TK_INT, TK_REAL, TK_BOOL, TK_CHAR, TK_SET,
-  TK_ARRAY, TK_RECORD, TK_POINTER, TK_LONGINT
+  TK_ARRAY, TK_RECORD, TK_POINTER, TK_LONGINT, TK_PROC
 };
 
 typedef struct Type Type;
@@ -35,6 +35,10 @@ struct Type {
   int tag;         /* compile-time tag id (records) */
   /* POINTER */
   Type *to;
+  /* PROC (procedural type): formal parameter list + optional result */
+  struct Obj *params;   /* chain of CL_VAR Objs (nextParam), like Proc params */
+  int nparams;
+  Type *result;         /* NULL for non-function procedure types */
   int visited;     /* internal: stamp == gTypeStamp when registered for the current writeModule */
 };
 
@@ -135,6 +139,7 @@ int typeIndex(Module *m, Type *t);  /* register if needed, return index */
 Type *mkArrayType(Type *elem, int ndim, int *dims);
 Type *mkOpenArrayType(Type *elem); /* formal param "ARRAY OF T" */
 Type *mkPointerType(Type *to);
+Type *mkProcType(void);
 Type *mkRecordType(void);
 void completeRecord(Type *rec, Type *base, Field *fields, int nfields);
 

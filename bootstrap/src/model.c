@@ -35,6 +35,8 @@ int typeSizeCells(Type *t) {
   return 1; /* every variable slot is exactly one cell in this VM */
 }
 
+static int procTypeEquals(Type *a, Type *b);
+
 int typeEquals(Type *a, Type *b) {
   if (a == b) return 1;
   if (!a || !b) return 0;
@@ -45,6 +47,8 @@ int typeEquals(Type *a, Type *b) {
              memcmp(a->dims, b->dims, sizeof(int) * a->ndim) == 0;
     case TK_POINTER:
       return typeEquals(a->to, b->to);
+    case TK_PROC:
+      return procTypeEquals(a, b);
     case TK_RECORD:
       return a == b; /* nominal for records */
     default:
@@ -56,6 +60,7 @@ int typeAssignable(Type *dst, Type *src) {
   if (!dst || !src) return 0;
   if (typeEquals(dst, src)) return 1;
   if (dst->kind == TK_POINTER && src->kind == TK_NIL) return 1;
+  if (dst->kind == TK_PROC && src->kind == TK_NIL) return 1; /* NIL assignable to proc var */
   /* INTEGER widens to LONGINT */
   if (dst->kind == TK_LONGINT && src->kind == TK_INT) return 1;
   /* INTEGER converts implicitly to REAL (ext) */
@@ -175,6 +180,23 @@ Type *mkPointerType(Type *to) {
   Type *t = newType(TK_POINTER);
   t->to = to;
   return t;
+}
+
+Type *mkProcType(void) { return newType(TK_PROC); }
+
+/* structural equality of procedure types: same VAR-ness, param types and result */
+static int procTypeEquals(Type *a, Type *b) {
+  if (a->nparams != b->nparams) return 0;
+  Obj *pa = a->params, *pb = b->params;
+  while (pa && pb) {
+    if (pa->isVarParam != pb->isVarParam) return 0;
+    if (!typeEquals(pa->type, pb->type)) return 0;
+    pa = pa->nextParam; pb = pb->nextParam;
+  }
+  if (pa || pb) return 0;
+  if ((a->result == NULL) != (b->result == NULL)) return 0;
+  if (a->result && !typeEquals(a->result, b->result)) return 0;
+  return 1;
 }
 
 Type *mkRecordType(void) { return newType(TK_RECORD); }

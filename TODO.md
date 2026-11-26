@@ -2,7 +2,7 @@
 
 > ⭐ Après un compactage ou une nouvelle session, repartir de [`docs/REPRISE.md`](docs/REPRISE.md).
 
-État au 25/11/2026 : étapes 0–5 faites, **88/88 tests** (22 exemples × 4 moteurs :
+État au 26/11/2026 : étapes 0–5 faites + types procéduraux, **92/92 tests** (23 exemples × 4 moteurs :
 `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif). Voir
 [`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md) pour la vision d'ensemble.
 
@@ -30,7 +30,7 @@
 - [x] **`NEW(p)` sur `POINTER TO ARRAY OF T` + `DISPOSE`** — fait : `OP_DISPOSE` (87), free-list first-fit avec découpe dans le tas (rt.c + VM.Mod), `p[i]` implicite, `LEN(p,0)`, passage à params ouverts, `DISPOSE` met NIL (double DISPOSE = no-op). Test `DynArr.Mod` + stress 200k NEW/DISPOSE dans le tas borné de VM.Mod → 80/80
 - [x] **Conversion implicite `INTEGER` → `REAL`** — fait : `I2F` émis dans `+ - * /` (mixte), comparaisons, assignation, arguments valeur, `RETURN` ; `7/2 = 3.5` maintenant. Test `RealConv.Mod` → 84/84
 - [x] **`WITH p: T DO … END`** — fait : shadowing de la variable (POINTER TO T) dans le corps + check runtime CHECKTYPE ; multi-gardes OK. Test `WithDemo.Mod` (hiérarchie Shape/Circle/Rect, param, multi-gardes, restauration du type après) → 88/88
-- [ ] Types procéduraux / variables procédurales (threaded code dans `VM.Mod`)
+- [x] **Types procéduraux / variables procédurales** (26/11) — `TYPE P = PROCEDURE(...)[: T]`, `f := Proc` (signature structurelle stricte, niveau module seulement), `f(args)` statement/expression, `f = NIL`, proc en argument ; `OP_PROCVAL`=88 / `OP_CALLP`=89, cellule taguée 0x03 [gid][proc] ; test `ProcVar.Mod` → 92/92. Reste : closures (proc imbriquées) + threaded code dans `VM.Mod`
 - [ ] `VAR` record params, `ARRAY OF RECORD`
 - [ ] `SYSTEM.VAL/ADR/GET/PUT` (à rouvrir seulement si besoin réel)
 
