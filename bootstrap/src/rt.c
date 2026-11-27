@@ -463,6 +463,7 @@ VM *vmLoad(const char *mainObcPath) {
 /* ---------- builtins ---------- */
 void callBuiltin(VM *vm, int id, int base, int nparams) {
   Cell *arg = &vm->stack[base];
+  if (id >= 60) { if (sqliteBuiltin(vm, id, arg, base)) return; }
   switch (id) {
     case 0: /* Out.Int(x, w) */
       printf("%*d", (int)(int32_t)arg[1], (int)(int32_t)arg[0]);
@@ -740,6 +741,7 @@ int builtinHasResult(int id) {
     case 40: case 41: case 42: case 43: case 44: case 45: case 46:
     case 47: case 49:
     case 51: case 52: case 53: case 54:
+    case 60: case 62: case 63: case 64: case 65: case 67: case 68: /* SQLite w/ result */
       return 1;
   }
   return 0;
@@ -762,6 +764,10 @@ int builtinNparams(int id) {
     case 31: case 32: return 1; /* Delete, Exists */
     case 40: case 41: case 42: case 44: case 45: case 46: case 48: return 2; /* SYSTEM */
     case 43: case 50: case 51: case 52: case 53: case 54: return 1; /* BNOT, EXIT, casts */
+    case 60: case 62: case 65: case 67: return 2;         /* SQLite Open/Exec/ColumnInt/ColumnDouble */
+    case 61: case 64: case 68: case 69: return 1;         /* Close/Step/ColumnCount/Finalize */
+    case 63: case 66: return 3;                           /* Prepare/ColumnText */
+    case 70: return 2;                                    /* Errmsg */
     /* 47 (ARGC), 49 (TICKS): 0 params -> default */
   }
   return 0;

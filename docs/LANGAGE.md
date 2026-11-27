@@ -247,6 +247,31 @@ Les arguments programme sont ceux passés à `obvm` après le fichier `.obc`
 Conçu pour la VM auto-hébergée (`VM.Mod`, voir `docs/AUTOHEBERGEMENT.md`) :
 décoder opcodes et adresses taggées, récupérer le `.obc` à exécuter, profiler.
 
+### `SQLite` — base de données embarquée **(ext, builtin ids 60–70)**
+
+L'amalgamation officielle de SQLite est vendue dans `bootstrap/ext/sqlite/`
+(`sqlite3.c`/`sqlite3.h`, compilée une fois en `sqlite3.o` et **linkée statiquement** —
+aucune dépendance à une DLL au runtime, les exécutables restent autonomes).
+Pas de callback C→Oberon : on utilise la boucle `Prepare`/`Step`/`Column*`
+(`Exec` sans callback pour les ordres sans résultat).
+
+```oberon
+TYPE DB = LONGINT; Stmt = LONGINT;   (* handles sqlite3* / sqlite3_stmt* *)
+PROCEDURE Open(path: ARRAY OF CHAR; VAR db: DB): INTEGER;   (* 0 = SQLITE_OK ; ":memory:" = en RAM *)
+PROCEDURE Close(VAR db: DB);                                 (* ferme et remet db à 0 *)
+PROCEDURE Exec(db: DB; sql: ARRAY OF CHAR): INTEGER;         (* ordres sans résultat *)
+PROCEDURE Prepare(db: DB; sql: ARRAY OF CHAR; VAR st: Stmt): INTEGER;
+PROCEDURE Step(st: Stmt): INTEGER;                           (* 100 = ROW, 101 = DONE *)
+PROCEDURE ColumnInt(st: Stmt; i: INTEGER): LONGINT;
+PROCEDURE ColumnText(st: Stmt; i: INTEGER; VAR buf: ARRAY OF CHAR);
+PROCEDURE ColumnDouble(st: Stmt; i: INTEGER): REAL;
+PROCEDURE ColumnCount(st: Stmt): INTEGER;
+PROCEDURE Finalize(st: Stmt);
+PROCEDURE Errmsg(db: DB; VAR buf: ARRAY OF CHAR);
+```
+Voir `examples/SqlDemo.Mod`. Les chaînes Oberon (un `CHAR` par cellule) sont
+converties en `char*` NUL côté C par le builtin.
+
 ## 7. Lexique
 
 - **Commentaires** : `(* ... *)`, imbriqués.

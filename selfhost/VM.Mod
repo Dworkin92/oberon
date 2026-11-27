@@ -10,7 +10,7 @@ MODULE VM;
    The opcode numbers below are generated from bootstrap/src/ob.h and the
    builtin ids from bootstrap/src/parser.c — keep them in sync. *)
 
-IMPORT Out, In, Files, SYSTEM;
+IMPORT Out, In, Files, SYSTEM, SQLite;
 
 CONST
   (* --- opcodes (generated from bootstrap/src/ob.h) --- *)
@@ -52,6 +52,9 @@ CONST
   B_SYS_BAND = 40; B_SYS_BOR = 41; B_SYS_BXOR = 42; B_SYS_BNOT = 43;
   B_SYS_LSH = 44; B_SYS_ROT = 45; B_SYS_BIT = 46; B_SYS_ARGC = 47; B_SYS_ARGV = 48;
   B_SYS_TICKS = 49; B_SYS_EXIT = 50; B_SYS_L2I = 51; B_SYS_REALBITS = 52; B_SYS_BITSREAL = 53; B_SYS_I2REAL = 54;
+  B_SQLITE_OPEN = 60; B_SQLITE_CLOSE = 61; B_SQLITE_EXEC = 62; B_SQLITE_PREPARE = 63; B_SQLITE_STEP = 64;
+  B_SQLITE_COLINT = 65; B_SQLITE_COLTEXT = 66; B_SQLITE_COLDOUBLE = 67; B_SQLITE_COLCOUNT = 68;
+  B_SQLITE_FINALIZE = 69; B_SQLITE_ERRMSG = 70;
 
   (* --- type kinds (bootstrap/src/model.h) --- *)
   TK_ARRAY = 7; TK_RECORD = 8; TK_POINTER = 9; TK_LONGINT = 10; TK_PROC = 11;
@@ -535,6 +538,9 @@ BEGIN
   | 25, 26: RETURN 3
   | 40, 41, 42, 44, 45, 46, 48: RETURN 2
   | 43, 50, 51, 52, 53, 54: RETURN 1
+  | 60, 62, 65, 67, 70: RETURN 2      (* SQLite Open/Exec/ColumnInt/ColumnDouble/Errmsg *)
+  | 61, 64, 68, 69: RETURN 1          (* Close/Step/ColumnCount/Finalize *)
+  | 63, 66: RETURN 3                   (* Prepare/ColumnText *)
   ELSE RETURN 0 (* 4, 47, 49 *)
   END
 END;
@@ -543,15 +549,17 @@ PROCEDURE BuiltinHasResult(id: INTEGER): INTEGER;
 BEGIN
   CASE id OF
     20, 21, 23, 25, 27, 28, 29, 31, 32,
-    40, 41, 42, 43, 44, 45, 46, 47, 49, 51, 52, 53, 54: RETURN 1
+    40, 41, 42, 43, 44, 45, 46, 47, 49, 51, 52, 53, 54,
+    60, 62, 63, 64, 65, 67, 68: RETURN 1   (* SQLite with result *)
   ELSE RETURN 0
   END
 END;
 
 (* ---------- guest builtins (module 255), implemented via the host's Out/In/Files/SYSTEM ---------- *)
 PROCEDURE CallBuiltin(id, base, nparams: INTEGER);
-VAR ref, ndim, total, hdr, i, n, len, h, c, e: INTEGER;
+VAR ref, ndim, total, hdr, i, n, len, h, c, e, rc: INTEGER;
     hf: Files.File; hx: INTEGER; hr: REAL; hc: CHAR;
+    dbh: SQLite.DB; sth: SQLite.Stmt;
     hb: ARRAY 256 OF CHAR; nm: ARRAY 256 OF CHAR;
 BEGIN
   CASE id OF
@@ -654,6 +662,34 @@ BEGIN
   | 52: stack[base] := SYSTEM.REALBITS(SYSTEM.BITSREAL(stack[base]))            (* SYSTEM.REALBITS *)
   | 53: stack[base] := SYSTEM.REALBITS(SYSTEM.BITSREAL(stack[base]))            (* SYSTEM.BITSREAL *)
   | 54: stack[base] := SYSTEM.REALBITS(SYSTEM.I2REAL(SYSTEM.L2I(stack[base])))  (* SYSTEM.I2REAL *)
+  | 60: RefToStr(stack[base], nm); rc := SQLite.Open(nm, dbh);                 (* SQLite.Open *)
+      MemWrite(stack[base+1], dbh); stack[base] := rc
+  | 61: dbh := MemRead(stack[base]);                                            (* SQLite.Close *)
+      SQLite.Close(dbh); MemWrite(stack[base], 0)
+  | 62: RefToStr(stack[base+1], nm);                                            (* SQLite.Exec *)
+      stack[base] := SQLite.Exec(stack[base], nm)
+  | 63: RefToStr(stack[base+1], nm);                                            (* SQLite.Prepare *)
+      rc := SQLite.Prepare(stack[base], nm, sth);
+      MemWrite(stack[base+2], sth); stack[base] := rc
+  | 64: stack[base] := SQLite.Step(stack[base])                                 (* SQLite.Step *)
+  | 65: stack[base] := SQLite.ColumnInt(stack[base], SYSTEM.L2I(stack[base+1])) (* SQLite.ColumnInt *)
+  | 66: SQLite.ColumnText(stack[base], SYSTEM.L2I(stack[base+1]), hb);          (* SQLite.ColumnText *)
+      ref := SYSTEM.L2I(MemRead(stack[base+2]));
+      ndim := -SYSTEM.L2I(heap[ref]); total := SYSTEM.L2I(heap[ref+ndim+1]); hdr := ndim+2;
+      n := 0; WHILE hb[n] # 0X DO INC(n) END;
+      IF n > total - 1 THEN n := total - 1 END;
+      FOR i := 0 TO n-1 DO heap[ref+hdr+i] := ORD(hb[i]) END;
+      heap[ref+hdr+n] := 0
+  | 67: stack[base] := SYSTEM.REALBITS(SQLite.ColumnDouble(stack[base], SYSTEM.L2I(stack[base+1]))) (* ColDouble *)
+  | 68: stack[base] := SQLite.ColumnCount(stack[base])                         (* SQLite.ColumnCount *)
+  | 69: SQLite.Finalize(stack[base])                                            (* SQLite.Finalize *)
+  | 70: SQLite.Errmsg(stack[base], hb);                                         (* SQLite.Errmsg *)
+      ref := SYSTEM.L2I(MemRead(stack[base+1]));
+      ndim := -SYSTEM.L2I(heap[ref]); total := SYSTEM.L2I(heap[ref+ndim+1]); hdr := ndim+2;
+      n := 0; WHILE hb[n] # 0X DO INC(n) END;
+      IF n > total - 1 THEN n := total - 1 END;
+      FOR i := 0 TO n-1 DO heap[ref+hdr+i] := ORD(hb[i]) END;
+      heap[ref+hdr+n] := 0
   ELSE msgbuf := "unknown builtin"; Fatal
   END
 END;

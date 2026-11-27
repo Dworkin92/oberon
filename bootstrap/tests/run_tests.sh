@@ -5,6 +5,11 @@ cd "$(dirname "$0")/.." || exit 1
 ROOT=$(pwd)
 mkdir -p tests/expected tests/out
 rm -f ../lib/*.obc   # force recompilation of library modules from lib/*.Mod
+# vendored SQLite amalgamation object (cached); native binaries link it statically
+if [ ! -f ext/sqlite/sqlite3.o ] || [ ext/sqlite/sqlite3.c -nt ext/sqlite/sqlite3.o ]; then
+  gcc -O2 -std=gnu11 -w -c ext/sqlite/sqlite3.c -o ext/sqlite/sqlite3.o
+fi
+SQLITE_O="ext/sqlite/sqlite3.o src/sqlite_glue.c"
 pass=0; fail=0
 
 # build the Oberon-written VM once (selfhost/VM.Mod -> ../selfhost/VM.obc)
@@ -16,7 +21,7 @@ HAVE_VM=$([ -f ../selfhost/VM.obc ] && echo 1 || echo 0)
 HAVE_VMN=0
 if [ "$HAVE_VM" = 1 ]; then
   if ./ob2c.exe ../selfhost/VM.obc -o tests/out/VM.gen.c 2>/dev/null \
-     && gcc -O2 -std=gnu11 -w -Isrc -o tests/out/vm_native.exe tests/out/VM.gen.c src/rt.c src/ob.c src/model.c src/module.c -lm 2>/dev/null; then
+     && gcc -O2 -std=gnu11 -w -Isrc -o tests/out/vm_native.exe tests/out/VM.gen.c src/rt.c src/ob.c src/model.c src/module.c $SQLITE_O -lm 2>/dev/null; then
     HAVE_VMN=1
   else
     echo "WARN: native VM.Mod build failed (VMN phase skipped)"
@@ -57,7 +62,7 @@ run_ctest() {
   if ! ./ob2c.exe "examples/$name.obc" -o "tests/out/$name.gen.c" 2> "tests/out/$name.ob2c.log"; then
     echo "FAIL-C $name (ob2c)"; cat "tests/out/$name.ob2c.log"; fail=$((fail+1)); return
   fi
-  if ! gcc -O2 -std=gnu11 -w -Isrc -o "tests/out/$name.native.exe" "tests/out/$name.gen.c" src/rt.c src/ob.c src/model.c src/module.c -lm 2> "tests/out/$name.gcc.log"; then
+  if ! gcc -O2 -std=gnu11 -w -Isrc -o "tests/out/$name.native.exe" "tests/out/$name.gen.c" src/rt.c src/ob.c src/model.c src/module.c $SQLITE_O -lm 2> "tests/out/$name.gcc.log"; then
     echo "FAIL-C $name (gcc)"; head -5 "tests/out/$name.gcc.log"; fail=$((fail+1)); return
   fi
   if [ -n "$input" ]; then
@@ -122,6 +127,9 @@ done
 run_test Echo '7\n2.5\nOberon\n';        run_ctest Echo '7\n2.5\nOberon\n';   run_vmtest Echo '7\n2.5\nOberon\n';   run_vmntest Echo '7\n2.5\nOberon\n'
 run_test Bytes 'AB\000\377';             run_ctest Bytes 'AB\000\377';      run_vmtest Bytes 'AB\000\377';      run_vmntest Bytes 'AB\000\377'
 run_test SysDemo '' alpha 42;            run_ctest SysDemo '' alpha 42;     run_vmtest SysDemo '' alpha 42;     run_vmntest SysDemo '' alpha 42
+# SQLite builtin (vendored amalgamation, static link).  VM.Mod phases: guest SQLite
+# calls are forwarded by VM.Mod's CallBuiltin wrappers (ids 60..70) to the host builtins.
+run_test SqlDemo '';                     run_ctest SqlDemo '';              run_vmtest SqlDemo '';              run_vmntest SqlDemo ''
 
 echo "-----------------------------------"
 echo "passed: $pass  failed: $fail"

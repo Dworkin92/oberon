@@ -2,7 +2,7 @@
 
 > ⭐ Après un compactage ou une nouvelle session, repartir de [`docs/REPRISE.md`](docs/REPRISE.md).
 
-État au 27/11/2026 : étapes 0–5 faites + tout le groupe A (types procéduraux, closures, threaded code, records en ligne) + conformité Oberon-07 (WHILE...ELSIF, CASE de type, CAP), **112/112 tests** (28 exemples × 4 moteurs :
+État au 27/11/2026 : étapes 0–5 faites + tout le groupe A (types procéduraux, closures, threaded code, records en ligne) + conformité Oberon-07 (WHILE...ELSIF, CASE de type, CAP) + builtin SQLite (FFI niveau 1), **116/116 tests** (29 exemples × 4 moteurs :
 `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif). Voir
 [`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md) pour la vision d'ensemble. **Groupe A terminé ✅ — prochain gros morceau : OC.Mod.**
 
@@ -56,6 +56,13 @@
 - [ ] Émettre du C à la place du bytecode (pattern `ob2c` : une fonction C par proc, `goto`, `procTab`, `main` embarqué, runtime `rt.c`)
 - [ ] Test ultime : OC.Mod se compile lui-même — `oc.c` → gcc → `oc2` → `oc2.c` ; `diff oc.c oc2.c`
 - [ ] `bootstrap/tests/expected/` comme banc de régression complet
+
+## 🔌 FFI / accès C et SGBDR (niveau 1 fait ✅)
+
+- [x] **SQLite embarqué** (27/11) — amalgamation vendue `bootstrap/ext/sqlite/` (3.54.1, link **statique**, pas de DLL), builtin `SQLite` ids 60–70 dans `src/sqlite_glue.c`, API `DB/Stmt = LONGINT`, wrappers VM.Mod, test `SqlDemo.Mod` → **116/116** sur les 4 moteurs. Docs : LANGAGE.md §6.
+- [ ] **FFI générique** (niveau 2) : `SYSTEM.LOADLIB/SYMBOL` + opcode `OP_CALLC` (appel de pointeur de fonction C, args registres x64 + pile) — pour n'importe quelle DLL. Limites : pas de callback C→Oberon, flottants en XMM (passer les bits via REALBITS ou wrapper C mince).
+- [ ] **Sockets + protocole natif** (niveau 3) : builtin `Net` (winsock `ws2_32.dll` : Socket/Connect/Send/Recv/Close) puis `lib/Pg.Mod` en **pur Oberon** (protocole wire PostgreSQL v3 : startup, auth md5 puis SCRAM-SHA-256 — SHA-256/HMAC/PBKDF2 en Oberon, simple query 'Q', parse DataRow/RowDescription) et `lib/MariaDB.Mod` (protocole MySQL). Zéro dépendance C côté client.
+- [ ] Déclaration `FOREIGN "sym" LIB "dll"` dans le dialecte pour OC.Mod (émettre `extern` + link en C) — seulement si besoin réel, les builtins couvrent le reste.
 
 ## 🧹 Polish / plus tard
 

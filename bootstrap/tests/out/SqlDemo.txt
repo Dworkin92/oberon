@@ -1,0 +1,6 @@
+open rc=0
+exec rc=0
+prep rc=0 cols=2
+bob -> 7
+alice -> 42
+bad rc=1 msg=no such table: nope
