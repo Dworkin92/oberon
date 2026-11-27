@@ -12761,52 +12761,52 @@ L15: ;
   push(vm, (Cell)(int32_t)2);
   rtLeaveFrame(vm);
   return;
-  goto L427;
+  goto L503;
 L26: ;
   push(vm, (Cell)(int32_t)1);
   rtLeaveFrame(vm);
   return;
-  goto L427;
+  goto L503;
 L37: ;
   push(vm, (Cell)(int32_t)2);
   rtLeaveFrame(vm);
   return;
-  goto L427;
+  goto L503;
 L48: ;
   push(vm, (Cell)(int32_t)3);
   rtLeaveFrame(vm);
   return;
-  goto L427;
+  goto L503;
 L59: ;
   push(vm, (Cell)(int32_t)2);
   rtLeaveFrame(vm);
   return;
-  goto L427;
+  goto L503;
 L70: ;
   push(vm, (Cell)(int32_t)1);
   rtLeaveFrame(vm);
   return;
-  goto L427;
+  goto L503;
 L81: ;
-  push(vm, (Cell)(int32_t)2);
+  push(vm, (Cell)(int32_t)10);
   rtLeaveFrame(vm);
   return;
-  goto L427;
+  goto L503;
 L92: ;
   push(vm, (Cell)(int32_t)1);
   rtLeaveFrame(vm);
   return;
-  goto L427;
+  goto L503;
 L103: ;
-  push(vm, (Cell)(int32_t)3);
+  push(vm, (Cell)(int32_t)2);
   rtLeaveFrame(vm);
   return;
-  goto L427;
+  goto L503;
 L114: ;
   push(vm, (Cell)(int32_t)0);
   rtLeaveFrame(vm);
   return;
-  goto L427;
+  goto L503;
 L125: ;
   { int ld = 0, off = 1; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -12874,19 +12874,38 @@ L125: ;
       case 57: goto L114;
       case 58: goto L114;
       case 59: goto L114;
-      case 60: goto L81;
-      case 61: goto L92;
-      case 62: goto L81;
-      case 63: goto L103;
-      case 64: goto L92;
-      case 65: goto L81;
-      case 66: goto L103;
-      case 67: goto L81;
-      case 68: goto L92;
-      case 69: goto L92;
-      case 70: goto L81;
+      case 60: goto L114;
+      case 61: goto L114;
+      case 62: goto L114;
+      case 63: goto L114;
+      case 64: goto L114;
+      case 65: goto L114;
+      case 66: goto L114;
+      case 67: goto L114;
+      case 68: goto L114;
+      case 69: goto L114;
+      case 70: goto L114;
+      case 71: goto L114;
+      case 72: goto L114;
+      case 73: goto L114;
+      case 74: goto L114;
+      case 75: goto L114;
+      case 76: goto L114;
+      case 77: goto L114;
+      case 78: goto L114;
+      case 79: goto L114;
+      case 80: goto L81;
+      case 81: goto L92;
+      case 82: goto L103;
+      case 83: goto L92;
+      case 84: goto L92;
+      case 85: goto L103;
+      case 86: goto L92;
+      case 87: goto L92;
+      case 88: goto L92;
+      case 89: goto L103;
       default: goto L114; } }
-L427: ;
+L503: ;
   rtLeaveFrame(vm);
   return;
   return;
@@ -12909,12 +12928,12 @@ L15: ;
   push(vm, (Cell)(int32_t)1);
   rtLeaveFrame(vm);
   return;
-  goto L251;
+  goto L331;
 L26: ;
   push(vm, (Cell)(int32_t)0);
   rtLeaveFrame(vm);
   return;
-  goto L251;
+  goto L331;
 L37: ;
   { int ld = 0, off = 1; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -12962,17 +12981,37 @@ L37: ;
       case 37: goto L26;
       case 38: goto L26;
       case 39: goto L26;
-      case 40: goto L15;
+      case 40: goto L26;
       case 41: goto L26;
-      case 42: goto L15;
-      case 43: goto L15;
-      case 44: goto L15;
-      case 45: goto L15;
+      case 42: goto L26;
+      case 43: goto L26;
+      case 44: goto L26;
+      case 45: goto L26;
       case 46: goto L26;
-      case 47: goto L15;
-      case 48: goto L15;
+      case 47: goto L26;
+      case 48: goto L26;
+      case 49: goto L26;
+      case 50: goto L26;
+      case 51: goto L26;
+      case 52: goto L26;
+      case 53: goto L26;
+      case 54: goto L26;
+      case 55: goto L26;
+      case 56: goto L26;
+      case 57: goto L26;
+      case 58: goto L26;
+      case 59: goto L26;
+      case 60: goto L15;
+      case 61: goto L15;
+      case 62: goto L15;
+      case 63: goto L26;
+      case 64: goto L15;
+      case 65: goto L26;
+      case 66: goto L15;
+      case 67: goto L26;
+      case 68: goto L15;
       default: goto L26; } }
-L251: ;
+L331: ;
   rtLeaveFrame(vm);
   return;
   return;
@@ -12985,14 +13024,14 @@ static void f0_29(VM *vm) {
   { VMMod *tm = vm->mods[cur->map[0]]; Type *t = tm->lm->types[1u];
     if (t->kind != TK_ARRAY) vmRuntimeError(vm, "ALLOC_ARRAY on non-array");
     push(vm, allocArrayObj(vm, t)); }
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
   { VMMod *tm = vm->mods[cur->map[0]]; Type *t = tm->lm->types[2u];
     if (t->kind != TK_ARRAY) vmRuntimeError(vm, "ALLOC_ARRAY on non-array");
     push(vm, allocArrayObj(vm, t)); }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
@@ -13000,11 +13039,11 @@ static void f0_29(VM *vm) {
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
-  { int ld = 0, off = 22; int fi = vm->fp - 1;
+  { int ld = 0, off = 19; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-  goto L8845;
+  goto L8257;
 L37: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -13135,7 +13174,7 @@ L37: ;
       if (!vm->running) return;
     }
   }
-  goto L9147;
+  goto L8635;
 L141: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -13266,7 +13305,7 @@ L141: ;
       if (!vm->running) return;
     }
   }
-  goto L9147;
+  goto L8635;
 L245: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -13346,7 +13385,7 @@ L245: ;
       if (!vm->running) return;
     }
   }
-  goto L9147;
+  goto L8635;
 L303: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -13690,7 +13729,7 @@ L569: ;
 L654: ;
   goto L481;
 L659: ;
-  goto L9147;
+  goto L8635;
 L664: ;
   { int lmod = 255, procIdx = 4, steps = 0;
     if (lmod == 255) {
@@ -13721,9 +13760,9 @@ L664: ;
       if (!vm->running) return;
     }
   }
-  goto L9147;
+  goto L8635;
 L682: ;
-  { int ld = 0, off = 15; int fi = vm->fp - 1;
+  { int ld = 0, off = 14; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -13776,7 +13815,7 @@ L682: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 15; int fi = vm->fp - 1;
+  { int ld = 0, off = 14; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -13809,9 +13848,9 @@ L682: ;
       if (!vm->running) return;
     }
   }
-  goto L9147;
+  goto L8635;
 L750: ;
-  { int ld = 0, off = 16; int fi = vm->fp - 1;
+  { int ld = 0, off = 15; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -13864,7 +13903,7 @@ L750: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 16; int fi = vm->fp - 1;
+  { int ld = 0, off = 15; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -13926,9 +13965,9 @@ L750: ;
       if (!vm->running) return;
     }
   }
-  goto L9147;
+  goto L8635;
 L831: ;
-  { int ld = 0, off = 17; int fi = vm->fp - 1;
+  { int ld = 0, off = 16; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -13981,7 +14020,7 @@ L831: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 17; int fi = vm->fp - 1;
+  { int ld = 0, off = 16; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -14014,9 +14053,9 @@ L831: ;
       if (!vm->running) return;
     }
   }
-  goto L9147;
+  goto L8635;
 L899: ;
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -14266,7 +14305,7 @@ L899: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L1109: ;
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -14338,7 +14377,7 @@ L1204: ;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
-  { int ld = 0, off = 23; int fi = vm->fp - 1;
+  { int ld = 0, off = 20; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
@@ -14347,7 +14386,7 @@ L1231: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
-  { int ld = 0, off = 23; int fi = vm->fp - 1;
+  { int ld = 0, off = 20; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -14383,7 +14422,7 @@ L1231: ;
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -14449,7 +14488,7 @@ L1332: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L1382: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 15u)); } /* absolute gid */
@@ -14507,7 +14546,7 @@ L1382: ;
     push(vm, MK_GLOBAL_ADDR(g, 14u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L1446: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -14609,7 +14648,7 @@ L1446: ;
       if (!vm->running) return;
     }
   }
-  goto L9147;
+  goto L8635;
 L1537: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -14689,9 +14728,9 @@ L1537: ;
       if (!vm->running) return;
     }
   }
-  goto L9147;
+  goto L8635;
 L1595: ;
-  { int ld = 0, off = 15; int fi = vm->fp - 1;
+  { int ld = 0, off = 14; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -14744,7 +14783,7 @@ L1595: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 15; int fi = vm->fp - 1;
+  { int ld = 0, off = 14; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -14777,7 +14816,7 @@ L1595: ;
       if (!vm->running) return;
     }
   }
-  goto L9147;
+  goto L8635;
 L1663: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -14799,7 +14838,7 @@ L1663: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -14832,11 +14871,11 @@ L1663: ;
       if (!vm->running) return;
     }
   }
-  { int ld = 0, off = 14; int fi = vm->fp - 1;
+  { int ld = 0, off = 13; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -14870,7 +14909,7 @@ L1663: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int ld = 0, off = 14; int fi = vm->fp - 1;
+  { int ld = 0, off = 13; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -14921,7 +14960,7 @@ L1786: ;
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { int ld = 0, off = 14; int fi = vm->fp - 1;
+  { int ld = 0, off = 13; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -14956,7 +14995,7 @@ L1786: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L1832: ;
-  goto L9147;
+  goto L8635;
 L1837: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -14978,7 +15017,7 @@ L1837: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -15011,11 +15050,11 @@ L1837: ;
       if (!vm->running) return;
     }
   }
-  { int ld = 0, off = 14; int fi = vm->fp - 1;
+  { int ld = 0, off = 13; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -15049,7 +15088,7 @@ L1837: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int ld = 0, off = 14; int fi = vm->fp - 1;
+  { int ld = 0, off = 13; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -15100,7 +15139,7 @@ L1960: ;
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { int ld = 0, off = 14; int fi = vm->fp - 1;
+  { int ld = 0, off = 13; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -15135,7 +15174,7 @@ L1960: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L2006: ;
-  goto L9147;
+  goto L8635;
 L2011: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -15274,7 +15313,7 @@ L2011: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L2158: ;
-  goto L9147;
+  goto L8635;
 L2163: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -15514,7 +15553,7 @@ L2395: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L2433: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -15680,7 +15719,7 @@ L2433: ;
     }
   }
 L2587: ;
-  goto L9147;
+  goto L8635;
 L2592: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -16211,7 +16250,7 @@ L3158: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L3196: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -16552,7 +16591,7 @@ L3523: ;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
-  { int ld = 0, off = 24; int fi = vm->fp - 1;
+  { int ld = 0, off = 21; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
@@ -16561,7 +16600,7 @@ L3550: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
-  { int ld = 0, off = 24; int fi = vm->fp - 1;
+  { int ld = 0, off = 21; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -16718,7 +16757,7 @@ L3550: ;
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   goto L3550;
 L3701: ;
-  goto L9147;
+  goto L8635;
 L3706: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -16974,7 +17013,7 @@ L3970: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L4003: ;
-  goto L9147;
+  goto L8635;
 L4008: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -17134,7 +17173,7 @@ L4108: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L4182: ;
-  goto L9147;
+  goto L8635;
 L4187: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -17294,7 +17333,7 @@ L4287: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L4361: ;
-  goto L9147;
+  goto L8635;
 L4366: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -17431,7 +17470,7 @@ L4366: ;
     }
   }
 L4507: ;
-  goto L9147;
+  goto L8635;
 L4512: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -17453,7 +17492,7 @@ L4512: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -17486,7 +17525,7 @@ L4512: ;
       if (!vm->running) return;
     }
   }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -17567,7 +17606,7 @@ L4618: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L4651: ;
-  goto L9147;
+  goto L8635;
 L4656: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -17589,7 +17628,7 @@ L4656: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -17622,7 +17661,7 @@ L4656: ;
       if (!vm->running) return;
     }
   }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -17703,7 +17742,7 @@ L4762: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L4795: ;
-  goto L9147;
+  goto L8635;
 L4800: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -17797,7 +17836,7 @@ L4800: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L4906: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -17891,7 +17930,7 @@ L4906: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L5012: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -17985,7 +18024,7 @@ L5012: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L5118: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -18057,7 +18096,7 @@ L5118: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L5191: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -18151,7 +18190,7 @@ L5191: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L5297: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -18245,7 +18284,7 @@ L5297: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L5403: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -18366,7 +18405,7 @@ L5519: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L5552: ;
-  goto L9147;
+  goto L8635;
 L5557: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -18393,7 +18432,7 @@ L5557: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L5602: ;
   { int ld = 0, off = 7; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -18472,7 +18511,7 @@ L5602: ;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -18507,7 +18546,7 @@ L5602: ;
   }
   goto L5749;
 L5717: ;
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -18748,7 +18787,7 @@ L5749: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L5947: ;
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -18820,7 +18859,7 @@ L6042: ;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
-  { int ld = 0, off = 25; int fi = vm->fp - 1;
+  { int ld = 0, off = 22; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
@@ -18829,7 +18868,7 @@ L6069: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
-  { int ld = 0, off = 25; int fi = vm->fp - 1;
+  { int ld = 0, off = 22; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -18865,7 +18904,7 @@ L6069: ;
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -18931,7 +18970,7 @@ L6170: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L6220: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -18983,7 +19022,7 @@ L6220: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L6266: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 15u)); } /* absolute gid */
@@ -19041,7 +19080,7 @@ L6266: ;
     push(vm, MK_GLOBAL_ADDR(g, 14u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L6330: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -19113,7 +19152,7 @@ L6330: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L6403: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -19214,7 +19253,7 @@ L6403: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L6489: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -19315,7 +19354,7 @@ L6489: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L6575: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -19445,9 +19484,29 @@ L6575: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
+  goto L8635;
 L6674: ;
   { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
   push(vm, (Cell)(int32_t)0);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -19467,7 +19526,286 @@ L6674: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 255, procIdx = 51, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)2);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)3);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)4);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)5);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)6);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)7);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)8);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)9);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 255, procIdx = 80, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L8635;
+L7057: ;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -19500,103 +19838,6 @@ L6674: ;
       if (!vm->running) return;
     }
   }
-  { int ld = 0, off = 13; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { int ld = 0, off = 18; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { int lmod = 255, procIdx = 60, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 18; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { int lmod = 0, procIdx = 13, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -19617,38 +19858,11 @@ L6674: ;
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { int ld = 0, off = 13; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
-L6837: ;
   { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 0, procIdx = 12, steps = 1;
+  { int lmod = 255, procIdx = 81, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -19678,91 +19892,8 @@ L6837: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int ld = 0, off = 18; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { int lmod = 255, procIdx = 61, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  push(vm, (Cell)(int32_t)0);
-  { int lmod = 0, procIdx = 13, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L9147;
-L6951: ;
+  goto L8635;
+L7153: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
   push(vm, (Cell)(int32_t)0);
@@ -19785,7 +19916,7 @@ L6951: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -19858,11 +19989,11 @@ L6951: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
-  { int lmod = 255, procIdx = 62, steps = 0;
+  { int lmod = 255, procIdx = 82, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -19892,8 +20023,8 @@ L6951: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
-L7080: ;
+  goto L8635;
+L7282: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
   push(vm, (Cell)(int32_t)0);
@@ -19901,8 +20032,6 @@ L7080: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)65536);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -19916,7 +20045,58 @@ L7080: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
+  { int lmod = 255, procIdx = 83, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L8635;
+L7327: ;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -19949,123 +20129,6 @@ L7080: ;
       if (!vm->running) return;
     }
   }
-  { int ld = 0, off = 13; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 21; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { int ld = 0, off = 19; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { int lmod = 255, procIdx = 63, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int32_t)2);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 19; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { int lmod = 0, procIdx = 13, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -20086,33 +20149,42 @@ L7080: ;
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { int ld = 0, off = 13; int fi = vm->fp - 1;
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
+  { int lmod = 255, procIdx = 84, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
-L7276: ;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  goto L8635;
+L7423: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
   push(vm, (Cell)(int32_t)0);
@@ -20133,969 +20205,11 @@ L7276: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 255, procIdx = 64, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
-L7349: ;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 255, procIdx = 51, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int lmod = 255, procIdx = 65, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
-L7468: ;
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 255, procIdx = 51, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
-  { int lmod = 255, procIdx = 66, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int ld = 0, off = 3; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int32_t)2);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 0, procIdx = 12, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int lmod = 255, procIdx = 51, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int ld = 0, off = 4; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[0u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 3; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)1048576);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 255, procIdx = 51, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell a = pop(vm); push(vm, (Cell)(int32_t)(-(int32_t)a)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int ld = 0, off = 5; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[0u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 3; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { int ld = 0, off = 4; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)1048576);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 255, procIdx = 51, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int ld = 0, off = 6; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { int ld = 0, off = 4; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int32_t)2);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int ld = 0, off = 8; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  push(vm, (Cell)(int32_t)0);
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L7757: ;
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 8; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)256);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  push(vm, (Cell)(int32_t)0);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
-  if (pop(vm) == 0) goto L7813;
-  { int ld = 0, off = 8; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  push(vm, peek(vm));
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L7757;
-L7813: ;
-  { int ld = 0, off = 8; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { int ld = 0, off = 5; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
-  if (pop(vm) == 0) goto L7852;
-  { int ld = 0, off = 8; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { int ld = 0, off = 5; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L7852: ;
-  { int ld = 0, off = 7; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  push(vm, (Cell)(int32_t)0);
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int ld = 0, off = 8; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
-  { int ld = 0, off = 26; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    vm->stack[slot] = pop(vm); }
-L7879: ;
-  { int ld = 0, off = 7; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { int ld = 0, off = 26; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L7980;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 3; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { int ld = 0, off = 6; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int ld = 0, off = 7; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)1048576);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 7; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)256);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int ld = 0, off = 7; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  push(vm, peek(vm));
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L7879;
-L7980: ;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 3; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { int ld = 0, off = 6; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int ld = 0, off = 8; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)1048576);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, (Cell)(int32_t)0);
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
-L8030: ;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 255, procIdx = 51, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int lmod = 255, procIdx = 67, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int lmod = 255, procIdx = 52, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
-L8162: ;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 255, procIdx = 68, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
-L8235: ;
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 255, procIdx = 69, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L9147;
-L8280: ;
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[3u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)65536);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { int lmod = 255, procIdx = 70, steps = 0;
+  { int lmod = 255, procIdx = 85, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -21342,8 +20456,8 @@ L8280: ;
     push(vm, MK_STACK_ADDR(slot)); }
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L8523: ;
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
+L7666: ;
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -21367,7 +20481,7 @@ L8523: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
-  if (pop(vm) == 0) goto L8579;
+  if (pop(vm) == 0) goto L7722;
   { int ld = 0, off = 8; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -21377,8 +20491,8 @@ L8523: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8523;
-L8579: ;
+  goto L7666;
+L7722: ;
   { int ld = 0, off = 8; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -21390,7 +20504,7 @@ L8579: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
-  if (pop(vm) == 0) goto L8618;
+  if (pop(vm) == 0) goto L7761;
   { int ld = 0, off = 8; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -21402,7 +20516,7 @@ L8579: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L8618: ;
+L7761: ;
   { int ld = 0, off = 7; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -21415,21 +20529,21 @@ L8618: ;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
-  { int ld = 0, off = 27; int fi = vm->fp - 1;
+  { int ld = 0, off = 23; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L8645: ;
+L7788: ;
   { int ld = 0, off = 7; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
-  { int ld = 0, off = 27; int fi = vm->fp - 1;
+  { int ld = 0, off = 23; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L8746;
+  if (pop(vm) == 0) goto L7889;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -21460,7 +20574,7 @@ L8645: ;
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { int ld = 0, off = 20; int fi = vm->fp - 1;
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -21492,8 +20606,8 @@ L8645: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8645;
-L8746: ;
+  goto L7788;
+L7889: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -21526,8 +20640,276 @@ L8746: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L9147;
-L8796: ;
+  goto L8635;
+L7939: ;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 255, procIdx = 86, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L8635;
+L8012: ;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 255, procIdx = 87, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L8635;
+L8057: ;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 255, procIdx = 88, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L8635;
+L8130: ;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 255, procIdx = 89, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L8635;
+L8208: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -21569,9 +20951,9 @@ L8796: ;
       if (!vm->running) return;
     }
   }
-  goto L9147;
-L8845: ;
-  { int ld = 0, off = 22; int fi = vm->fp - 1;
+  goto L8635;
+L8257: ;
+  { int ld = 0, off = 19; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -21590,13 +20972,13 @@ L8845: ;
       case 10: goto L1446;
       case 11: goto L1537;
       case 12: goto L1595;
-      case 13: goto L8796;
-      case 14: goto L8796;
-      case 15: goto L8796;
-      case 16: goto L8796;
-      case 17: goto L8796;
-      case 18: goto L8796;
-      case 19: goto L8796;
+      case 13: goto L8208;
+      case 14: goto L8208;
+      case 15: goto L8208;
+      case 16: goto L8208;
+      case 17: goto L8208;
+      case 18: goto L8208;
+      case 19: goto L8208;
       case 20: goto L1663;
       case 21: goto L1837;
       case 22: goto L2011;
@@ -21610,13 +20992,13 @@ L8845: ;
       case 30: goto L4366;
       case 31: goto L4512;
       case 32: goto L4656;
-      case 33: goto L8796;
-      case 34: goto L8796;
-      case 35: goto L8796;
-      case 36: goto L8796;
-      case 37: goto L8796;
-      case 38: goto L8796;
-      case 39: goto L8796;
+      case 33: goto L8208;
+      case 34: goto L8208;
+      case 35: goto L8208;
+      case 36: goto L8208;
+      case 37: goto L8208;
+      case 38: goto L8208;
+      case 39: goto L8208;
       case 40: goto L4800;
       case 41: goto L4906;
       case 42: goto L5012;
@@ -21632,24 +21014,43 @@ L8845: ;
       case 52: goto L6403;
       case 53: goto L6489;
       case 54: goto L6575;
-      case 55: goto L8796;
-      case 56: goto L8796;
-      case 57: goto L8796;
-      case 58: goto L8796;
-      case 59: goto L8796;
-      case 60: goto L6674;
-      case 61: goto L6837;
-      case 62: goto L6951;
-      case 63: goto L7080;
-      case 64: goto L7276;
-      case 65: goto L7349;
-      case 66: goto L7468;
-      case 67: goto L8030;
-      case 68: goto L8162;
-      case 69: goto L8235;
-      case 70: goto L8280;
-      default: goto L8796; } }
-L9147: ;
+      case 55: goto L8208;
+      case 56: goto L8208;
+      case 57: goto L8208;
+      case 58: goto L8208;
+      case 59: goto L8208;
+      case 60: goto L8208;
+      case 61: goto L8208;
+      case 62: goto L8208;
+      case 63: goto L8208;
+      case 64: goto L8208;
+      case 65: goto L8208;
+      case 66: goto L8208;
+      case 67: goto L8208;
+      case 68: goto L8208;
+      case 69: goto L8208;
+      case 70: goto L8208;
+      case 71: goto L8208;
+      case 72: goto L8208;
+      case 73: goto L8208;
+      case 74: goto L8208;
+      case 75: goto L8208;
+      case 76: goto L8208;
+      case 77: goto L8208;
+      case 78: goto L8208;
+      case 79: goto L8208;
+      case 80: goto L6674;
+      case 81: goto L7057;
+      case 82: goto L7153;
+      case 83: goto L7282;
+      case 84: goto L7327;
+      case 85: goto L7423;
+      case 86: goto L7939;
+      case 87: goto L8012;
+      case 88: goto L8057;
+      case 89: goto L8130;
+      default: goto L8208; } }
+L8635: ;
   rtLeaveFrame(vm);
   return;
   return;
@@ -43527,10 +42928,44 @@ static void f0_124(VM *vm) {
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 13u)); } /* absolute gid */
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 4u)); } /* absolute gid */
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[20u]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    vm->stack[slot] = pop(vm); }
+L52: ;
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
+  if (pop(vm) == 0) goto L397;
+  { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 5u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
-  push(vm, (Cell)(int32_t)0);
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[13u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -43543,13 +42978,17 @@ static void f0_124(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 6u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
-  push(vm, (Cell)(int32_t)0);
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[13u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -43568,7 +43007,8 @@ static void f0_124(VM *vm) {
     push(vm, MK_GLOBAL_ADDR(g, 7u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
-  push(vm, (Cell)(int32_t)0);
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[13u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -43587,7 +43027,8 @@ static void f0_124(VM *vm) {
     push(vm, MK_GLOBAL_ADDR(g, 8u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
-  push(vm, (Cell)(int32_t)0);
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[13u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -43600,13 +43041,15 @@ static void f0_124(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, (Cell)(int32_t)0);
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[4u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 9u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
-  push(vm, (Cell)(int32_t)0);
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[13u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -43626,7 +43069,8 @@ static void f0_124(VM *vm) {
     push(vm, MK_GLOBAL_ADDR(g, 10u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
-  push(vm, (Cell)(int32_t)0);
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[13u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -43645,7 +43089,8 @@ static void f0_124(VM *vm) {
     push(vm, MK_GLOBAL_ADDR(g, 11u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
-  push(vm, (Cell)(int32_t)0);
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[13u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -43662,14 +43107,22 @@ static void f0_124(VM *vm) {
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 13u)); } /* absolute gid */
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 4u)); } /* absolute gid */
   { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[4u]); }
+  { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[38u]); }
   push(vm, (Cell)(int32_t)0);
-  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -43689,12 +43142,24 @@ static void f0_124(VM *vm) {
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L52;
+L397: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 14u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)1);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L304: ;
+L409: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[14u]); }
   { int g = cur->map[0];
@@ -43702,7 +43167,7 @@ L304: ;
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
-  if (pop(vm) == 0) goto L625;
+  if (pop(vm) == 0) goto L730;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 65u)); } /* absolute gid */
   { int g = cur->map[0];
@@ -43853,7 +43318,7 @@ L304: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L620;
+  if (pop(vm) == 0) goto L725;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 7u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -43877,9 +43342,9 @@ L304: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[64u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L620: ;
-  goto L304;
-L625: ;
+L725: ;
+  goto L409;
+L730: ;
   rtLeaveFrame(vm);
   return;
   return;
@@ -44626,7 +44091,10 @@ int main(int argc, char **argv) {
   VM *vm = vmLoad(argv[1]);
   vmSetArgs(argc - 2, argv + 2);
   rtEnterBody(vm);
-  procTab[0][0](vm);
+  while (vm->running && vm->fp > 0) {
+    Frame *fr = &vm->frames[vm->fp - 1];
+    procTab[fr->mod][fr->proc](vm);
+  }
   fflush(stdout);
   return vm->haltCode;
 }

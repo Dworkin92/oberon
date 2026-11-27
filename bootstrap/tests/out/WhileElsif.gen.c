@@ -225,7 +225,10 @@ int main(int argc, char **argv) {
   VM *vm = vmLoad(argv[1]);
   vmSetArgs(argc - 2, argv + 2);
   rtEnterBody(vm);
-  procTab[0][0](vm);
+  while (vm->running && vm->fp > 0) {
+    Frame *fr = &vm->frames[vm->fp - 1];
+    procTab[fr->mod][fr->proc](vm);
+  }
   fflush(stdout);
   return vm->haltCode;
 }

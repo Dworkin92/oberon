@@ -463,7 +463,9 @@ VM *vmLoad(const char *mainObcPath) {
 /* ---------- builtins ---------- */
 void callBuiltin(VM *vm, int id, int base, int nparams) {
   Cell *arg = &vm->stack[base];
-  if (id >= 60) { if (sqliteBuiltin(vm, id, arg, base)) return; }
+  if (id >= 80) { if (ffiBuiltin(vm, id, arg, base)) return; }
+  if (id >= 60 && id <= 70)
+    vmRuntimeError(vm, "builtin SQLite 60-70 removed: use lib/Sqlite.Mod over SYSTEM FFI (CALLC/LOADLIB/SYMBOL)");
   switch (id) {
     case 0: /* Out.Int(x, w) */
       printf("%*d", (int)(int32_t)arg[1], (int)(int32_t)arg[0]);
@@ -741,7 +743,7 @@ int builtinHasResult(int id) {
     case 40: case 41: case 42: case 43: case 44: case 45: case 46:
     case 47: case 49:
     case 51: case 52: case 53: case 54:
-    case 60: case 62: case 63: case 64: case 65: case 67: case 68: /* SQLite w/ result */
+    case 80: case 81: case 82: case 84: case 86: case 88: /* FFI w/ result */
       return 1;
   }
   return 0;
@@ -764,10 +766,9 @@ int builtinNparams(int id) {
     case 31: case 32: return 1; /* Delete, Exists */
     case 40: case 41: case 42: case 44: case 45: case 46: case 48: return 2; /* SYSTEM */
     case 43: case 50: case 51: case 52: case 53: case 54: return 1; /* BNOT, EXIT, casts */
-    case 60: case 62: case 65: case 67: return 2;         /* SQLite Open/Exec/ColumnInt/ColumnDouble */
-    case 61: case 64: case 68: case 69: return 1;         /* Close/Step/ColumnCount/Finalize */
-    case 63: case 66: return 3;                           /* Prepare/ColumnText */
-    case 70: return 2;                                    /* Errmsg */
+    case 80: return 10;                                   /* CALLC(fn, n, a0..a7) */
+    case 81: case 83: case 84: case 86: case 87: case 88: return 1; /* FFI 1 param */
+    case 82: case 85: case 89: return 2;                  /* SYMBOL/STR/POKE */
     /* 47 (ARGC), 49 (TICKS): 0 params -> default */
   }
   return 0;
@@ -775,11 +776,26 @@ int builtinNparams(int id) {
 
 /* ---------- driver ---------- */
 void rtEnterBody(VM *vm) {
-  /* initial frame: module 0, proc 0 (body) */
-  VMMod *main = vm->mods[0];
-  Frame *f0 = &vm->frames[0];
-  f0->mod = 0; f0->proc = 0; f0->pc = 0; f0->base = 0; f0->slink = -1;
-  f0->extra = 0; f0->cref = 0;
-  vm->fp = 1;
-  vm->sp = main->lm->procs[0].nlocals;
+  /* Oberon semantics: EVERY module body (proc 0) runs at startup, dependencies
+     first.  We push one frame per module, main module (0) at the bottom, so the
+     interpreter pops them in order: last loaded (deepest import) runs first,
+     main body runs last; when it RETs, fp == 0 and the VM stops. */
+  vm->fp = 0;
+  vm->sp = 0;
+  for (int m = 0; m < vm->nmods; m++) {
+    VMMod *mm = vm->mods[m];
+    int nl = mm->lm->procs[0].nlocals;
+    if ((size_t)(vm->sp + nl + 1) > vm->stackCap) {
+      while (vm->stackCap < (size_t)(vm->sp + nl + 1)) vm->stackCap *= 2;
+      vm->stack = realloc(vm->stack, vm->stackCap * sizeof(Cell));
+    }
+    if (vm->fp >= vm->frameCap) {
+      vm->frameCap *= 2;
+      vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+    }
+    Frame *f = &vm->frames[vm->fp++];
+    f->mod = m; f->proc = 0; f->pc = 0; f->base = vm->sp; f->slink = -1;
+    f->extra = 0; f->cref = 0;
+    vm->sp += nl;
+  }
 }

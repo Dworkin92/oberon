@@ -74,7 +74,7 @@ Cell rtLeaveFrame(VM *vm);                          /* OP_RET: pop frame (+ capt
 void idivmod(Cell a, Cell b, Cell *q, Cell *r);
 void vmRuntimeError(VM *vm, const char *msg);
 void callBuiltin(VM *vm, int id, int base, int nparams);
-int sqliteBuiltin(VM *vm, int id, Cell *arg, int base); /* src/sqlite_glue.c, ids 60..70 */
+int ffiBuiltin(VM *vm, int id, Cell *arg, int base); /* src/ffi_glue.c, ids 80..89 (FFI: CALLC/LOADLIB/SYMBOL/...) */
 int builtinNparams(int id);
 int builtinHasResult(int id);
 

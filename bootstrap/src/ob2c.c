@@ -447,7 +447,10 @@ int main(int argc, char **argv) {
   E("  VM *vm = vmLoad(argv[1]);\n");
   E("  vmSetArgs(argc - 2, argv + 2);\n");
   E("  rtEnterBody(vm);\n");
-  E("  procTab[0][0](vm);\n");
+  E("  while (vm->running && vm->fp > 0) {\n");
+  E("    Frame *fr = &vm->frames[vm->fp - 1];\n");
+  E("    procTab[fr->mod][fr->proc](vm);\n");
+  E("  }\n");
   E("  fflush(stdout);\n");
   E("  return vm->haltCode;\n");
   E("}\n");

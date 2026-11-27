@@ -8,8 +8,10 @@
 Chaîne complète **compilateur Oberon-07 → bytecode `.obc` → VM maison**, stage-0 en C,
 plus VM réécrite en Oberon **en threaded code** (dispatch par valeurs procédurales).
 **Tests : 116/116** (29 exemples × 4 moteurs : `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm,
-`VM.Mod` natif) — dont `SqlDemo.Mod` (builtin SQLite, amalgamation vendue `bootstrap/ext/sqlite/`,
-link statique, ids 60–70, glue `src/sqlite_glue.c`). Groupe A du TODO terminé ✅ : types procéduraux + closures + threaded code
+`VM.Mod` natif) — dont `SqlDemo.Mod` (SQLite via **FFI pur Oberon** : `lib/Sqlite.Mod` au-dessus de
+`SYSTEM.CALLC/LOADLIB/SYMBOL` ids 80–89, glue C `src/ffi_glue.c`, DLL `sqlite3.dll` chargée à
+l'exécution, aucun link statique). Sémantique : le body de chaque module chargé tourne au
+démarrage (dépendances d'abord) — `rtEnterBody` chaîné, idem ob2c généré et VM.Mod. Groupe A du TODO terminé ✅ : types procéduraux + closures + threaded code
 + records en ligne / `VAR` record / `ARRAY OF RECORD` + conformité Oberon-07 (`WHILE...ELSIF`,
 CASE de type, `CAP` — aucun opcode nouveau) (`OP_PROCVAL`=88 / `OP_CALLP`=89,
 `CLOSURE_TAG`, handlers `H_OP_*`, `telem`/`ElemCells` dans VM.Mod).
@@ -28,15 +30,15 @@ oberon/
 ## Commandes essentielles (toutes depuis `bootstrap/`)
 
 ```sh
-./build.sh                          # rebuild les 4 binaires C (compile d'abord ext/sqlite/sqlite3.o si besoin, en cache)
+./build.sh                          # rebuild les 4 binaires C (ffi_glue.c linké dans obvm.exe)
 ./tests/run_tests.sh                # 116/116 attendu ; « passed: 116  failed: 0 » (lent : lancer en arrière-plan)
 ./obc.exe examples/Hello.Mod        # compile (.obc à côté du .Mod ; imports compilés aussi)
 ./obvm.exe examples/Hello.obc       # exécute sur la VM C
 ./obdis.exe examples/Hello.obc      # désassemble
 ./obvm.exe ../selfhost/VM.obc examples/Hello.obc   # exécute via VM.Mod (Oberon) sur obvm
 # natif : ./ob2c.exe examples/Hello.obc -o /tmp/H.c && gcc -O2 -Isrc -o /tmp/h /tmp/H.c \
-#          src/rt.c src/ob.c src/model.c src/module.c src/sqlite_glue.c ext/sqlite/sqlite3.o -lm && /tmp/h examples/Hello.obc
-#          (toujours ajouter src/sqlite_glue.c ext/sqlite/sqlite3.o : le runtime C référence les builtins SQLite 60–70)
+#          src/rt.c src/ob.c src/model.c src/module.c src/ffi_glue.c -lm && /tmp/h examples/Hello.obc
+#          (toujours ajouter src/ffi_glue.c : le runtime C référence les builtins FFI 80–89)
 ```
 
 Chemin de recherche des imports (dans obc, obvm, ob2c **et** VM.Mod) : `D/M.obc`, `D/M.Mod`,

@@ -57,12 +57,13 @@
 - [ ] Test ultime : OC.Mod se compile lui-même — `oc.c` → gcc → `oc2` → `oc2.c` ; `diff oc.c oc2.c`
 - [ ] `bootstrap/tests/expected/` comme banc de régression complet
 
-## 🔌 FFI / accès C et SGBDR (niveau 1 fait ✅)
+## 🔌 FFI / accès C et SGBDR
 
-- [x] **SQLite embarqué** (27/11) — amalgamation vendue `bootstrap/ext/sqlite/` (3.54.1, link **statique**, pas de DLL), builtin `SQLite` ids 60–70 dans `src/sqlite_glue.c`, API `DB/Stmt = LONGINT`, wrappers VM.Mod, test `SqlDemo.Mod` → **116/116** sur les 4 moteurs. Docs : LANGAGE.md §6.
-- [ ] **FFI générique** (niveau 2) : `SYSTEM.LOADLIB/SYMBOL` + opcode `OP_CALLC` (appel de pointeur de fonction C, args registres x64 + pile) — pour n'importe quelle DLL. Limites : pas de callback C→Oberon, flottants en XMM (passer les bits via REALBITS ou wrapper C mince).
+- [x] **FFI générique** (27/11, niveau 2) — `SYSTEM` ids 80–89 dans `src/ffi_glue.c` (linké dans obvm.exe + natifs) : `CALLC(fn,n,a0..a7)` (prototypes C fixes F0..F8 → ABI Windows x64 correct, retour RAX ; max 8 args entiers/pointeurs, **pas de flottants**), `LOADLIB`/`SYMBOL`/`FREELIB` (LoadLibraryA/GetProcAddress — **DLL chargées à l'exécution**, aucun link statique), `CSTR`/`STR` (chaînes), `MALLOC`/`FREE`/`PEEK`/`POKE` (mémoire C, out-params). Wrappers VM.Mod dans CallBuiltin. L'ancien builtin SQLite statique (ids 60–70, amalgamation vendue) a été **remplacé** par cette approche.
+- [x] **SQLite via FFI, binding pur Oberon** (27/11) — `lib/Sqlite.Mod` : `LOADLIB("sqlite3.dll")` (repli `C:\Local\Tools\sqlite3\sqlite3.dll`) + 10 `SYMBOL` + `CALLC`, handles = LONGINT. Test `examples/SqlDemo.Mod` → 116/116 sur les 4 moteurs.
+- [x] **Sémantique des bodies de modules** (27/11, bug trouvé grâce à Sqlite) : le body (proc 0) de **chaque** module chargé tourne au démarrage, dépendances d'abord — `rtEnterBody` (rt.c) empile une frame par module, `ob2c.c` génère une boucle `while (running && fp>0)`, idem dans `VM.Mod` (Run).
 - [ ] **Sockets + protocole natif** (niveau 3) : builtin `Net` (winsock `ws2_32.dll` : Socket/Connect/Send/Recv/Close) puis `lib/Pg.Mod` en **pur Oberon** (protocole wire PostgreSQL v3 : startup, auth md5 puis SCRAM-SHA-256 — SHA-256/HMAC/PBKDF2 en Oberon, simple query 'Q', parse DataRow/RowDescription) et `lib/MariaDB.Mod` (protocole MySQL). Zéro dépendance C côté client.
-- [ ] Déclaration `FOREIGN "sym" LIB "dll"` dans le dialecte pour OC.Mod (émettre `extern` + link en C) — seulement si besoin réel, les builtins couvrent le reste.
+- [ ] Déclaration `FOREIGN "sym" LIB "dll"` dans le dialecte pour OC.Mod (émettre `extern` + link en C) — seulement si besoin réel, le FFI builtin couvre le reste.
 
 ## 🧹 Polish / plus tard
 

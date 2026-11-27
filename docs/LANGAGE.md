@@ -247,30 +247,29 @@ Les arguments programme sont ceux passés à `obvm` après le fichier `.obc`
 Conçu pour la VM auto-hébergée (`VM.Mod`, voir `docs/AUTOHEBERGEMENT.md`) :
 décoder opcodes et adresses taggées, récupérer le `.obc` à exécuter, profiler.
 
-### `SQLite` — base de données embarquée **(ext, builtin ids 60–70)**
-
-L'amalgamation officielle de SQLite est vendue dans `bootstrap/ext/sqlite/`
-(`sqlite3.c`/`sqlite3.h`, compilée une fois en `sqlite3.o` et **linkée statiquement** —
-aucune dépendance à une DLL au runtime, les exécutables restent autonomes).
-Pas de callback C→Oberon : on utilise la boucle `Prepare`/`Step`/`Column*`
-(`Exec` sans callback pour les ordres sans résultat).
+#### FFI générique **(ext, builtin ids 80–89)** — DLL loadables + appel de fonctions C
 
 ```oberon
-TYPE DB = LONGINT; Stmt = LONGINT;   (* handles sqlite3* / sqlite3_stmt* *)
-PROCEDURE Open(path: ARRAY OF CHAR; VAR db: DB): INTEGER;   (* 0 = SQLITE_OK ; ":memory:" = en RAM *)
-PROCEDURE Close(VAR db: DB);                                 (* ferme et remet db à 0 *)
-PROCEDURE Exec(db: DB; sql: ARRAY OF CHAR): INTEGER;         (* ordres sans résultat *)
-PROCEDURE Prepare(db: DB; sql: ARRAY OF CHAR; VAR st: Stmt): INTEGER;
-PROCEDURE Step(st: Stmt): INTEGER;                           (* 100 = ROW, 101 = DONE *)
-PROCEDURE ColumnInt(st: Stmt; i: INTEGER): LONGINT;
-PROCEDURE ColumnText(st: Stmt; i: INTEGER; VAR buf: ARRAY OF CHAR);
-PROCEDURE ColumnDouble(st: Stmt; i: INTEGER): REAL;
-PROCEDURE ColumnCount(st: Stmt): INTEGER;
-PROCEDURE Finalize(st: Stmt);
-PROCEDURE Errmsg(db: DB; VAR buf: ARRAY OF CHAR);
+PROCEDURE CALLC(fn: LONGINT; n: INTEGER; a0, a1, ..., a7: LONGINT): LONGINT;
+                              (* appelle le pointeur de fonction C fn avec n (0..8) args 64 bits ;
+                                 retour dans RAX.  Args flottants/retour double NON supportés
+                                 (XMM) : prevoir un wrapper C mince pour ces fonctions. *)
+PROCEDURE LOADLIB(path: ARRAY OF CHAR): LONGINT;   (* LoadLibraryA ; 0 si echec *)
+PROCEDURE SYMBOL(lib: LONGINT; name: ARRAY OF CHAR): LONGINT;  (* GetProcAddress ; adresse ou 0 *)
+PROCEDURE FREELIB(lib: LONGINT);
+PROCEDURE CSTR(s: ARRAY OF CHAR): LONGINT;         (* copie C NUL (malloc) de la chaine Oberon *)
+PROCEDURE STR(p: LONGINT; VAR buf: ARRAY OF CHAR); (* copie la chaine C pointée par p dans buf *)
+PROCEDURE MALLOC(size: LONGINT): LONGINT;
+PROCEDURE FREE(p: LONGINT);
+PROCEDURE PEEK(p: LONGINT): LONGINT;               (* lit 8 octets a l'adresse p *)
+PROCEDURE POKE(p, v: LONGINT);                      (* ecrit 8 octets *)
 ```
-Voir `examples/SqlDemo.Mod`. Les chaînes Oberon (un `CHAR` par cellule) sont
-converties en `char*` NUL côté C par le builtin.
+Implémenté en C dans `src/ffi_glue.c` (linké dans `obvm.exe` et les binaires natifs ;
+les DLL sont chargées **à l'exécution**, aucun link statique). Exemple complet :
+`lib/Sqlite.Mod` = binding **pur Oberon** de `sqlite3.dll` au-dessus de ce FFI
+(`LOADLIB` → `SYMBOL` × 10 → `CALLC`/`CSTR`/`MALLOC`/`PEEK`), testé par
+`examples/SqlDemo.Mod`. Voir aussi la sémantique des bodies de modules :
+le body (proc 0) de **chaque** module chargé tourne au démarrage, dépendances d'abord.
 
 ## 7. Lexique
 

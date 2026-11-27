@@ -24,8 +24,7 @@ virtuelle** (`obvm`).
    lib/                     bibliothèque de modules réutilisables (MathLib, Strings, ...)
    bootstrap/               stage-0 : la chaîne d'outils 100 % C
      src/                   obc / obvm / obdis / ob2c + runtime partagé rt.[ch]
-                            + sqlite_glue.c (builtin SQLite, ids 60–70)
-     ext/sqlite/            amalgamation SQLite vendue (sqlite3.c/h → sqlite3.o, link statique)
+                            + ffi_glue.c (FFI SYSTEM ids 80–89 : LOADLIB/SYMBOL/CALLC/...)
      build.sh, Makefile
      examples/              programmes de démo (.Mod)
      tests/                 run_tests.sh + sorties de référence (VM, C natif, VM.Mod)
@@ -85,10 +84,11 @@ Benchmark `bootstrap/examples/Bench.Mod` (boucle arithmétique 20M itérations, 
 
 ```sh
 cd bootstrap && ./build.sh         # ou: make (dans bootstrap/)
-# build.sh compile d'abord l'amalgamation SQLite vendue (ext/sqlite/sqlite3.c → sqlite3.o,
-# mis en cache) et la link statiquement dans obvm.exe : exécutables autonomes, aucune DLL.
-./bootstrap/tests/run_tests.sh     # depuis la racine : compile et exécute tous les exemples (VM + C natif)
+./bootstrap/tests/run_tests.sh     # depuis la racine : compile et exécute tous les exemples (VM + C natif + VM.Mod)
 ```
+FFI : les DLL externes (ex. `sqlite3.dll`) sont chargées **à l'exécution** via
+`SYSTEM.LOADLIB` — aucun link statique. Côté natif, ajouter simplement
+`src/ffi_glue.c` à la ligne gcc (voir ci-dessous). Voir `lib/Sqlite.Mod` + `examples/SqlDemo.Mod`.
 
 ## Exemple
 
@@ -105,7 +105,7 @@ cd bootstrap
 ./obc.exe examples/Hello.Mod     # compiler le module Oberon et ses dépendances
 ./obvm.exe examples/Hello.obc    # exécuter le module dans la VM
 ./obdis.exe examples/Hello.obc   # voir le bytecode
-./ob2c.exe examples/Hello.obc -o /tmp/Hello.c && gcc -O2 -Isrc -o /tmp/hello /tmp/Hello.c src/rt.c src/ob.c src/model.c src/module.c src/sqlite_glue.c ext/sqlite/sqlite3.o -lm && /tmp/hello examples/Hello.obc   # version native C (mêmes sources runtime + SQLite statique)
+./ob2c.exe examples/Hello.obc -o /tmp/Hello.c && gcc -O2 -Isrc -o /tmp/hello /tmp/Hello.c src/rt.c src/ob.c src/model.c src/module.c src/ffi_glue.c -lm && /tmp/hello examples/Hello.obc   # version native C (runtime + FFI)
 ```
 ```
 

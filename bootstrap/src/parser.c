@@ -21,16 +21,17 @@ enum { B_OUT_INT = 0, B_OUT_REAL, B_OUT_CHAR, B_OUT_STRING, B_OUT_LN,
        B_SYS_LSH, B_SYS_ROT, B_SYS_BIT, B_SYS_ARGC, B_SYS_ARGV,
        B_SYS_TICKS, B_SYS_EXIT,
        B_SYS_L2I = 51, B_SYS_REALBITS, B_SYS_BITSREAL, B_SYS_I2REAL,
-       B_SQLITE_OPEN = 60, B_SQLITE_CLOSE, B_SQLITE_EXEC, B_SQLITE_PREPARE,
-       B_SQLITE_STEP, B_SQLITE_COLINT, B_SQLITE_COLTEXT, B_SQLITE_COLDOUBLE,
-       B_SQLITE_COLCOUNT, B_SQLITE_FINALIZE, B_SQLITE_ERRMSG };
+       /* FFI generique (src/ffi_glue.c) : 60..70 reserves (ancien builtin SQLite,
+          remplacé par lib/Sqlite.Mod au-dessus du FFI) */
+       B_FFI_CALLC = 80, B_FFI_LOADLIB, B_FFI_SYMBOL, B_FFI_FREELIB,
+       B_FFI_CSTR, B_FFI_STR, B_FFI_MALLOC, B_FFI_FREE, B_FFI_PEEK, B_FFI_POKE };
 
 #define M_VAL 0
 #define M_ADDR 1
 #define M_VARARG 2
 
 static int curLevel;
-static Obj *builtinOut, *builtinIn, *builtinFiles, *builtinSystem, *builtinSqlite;
+static Obj *builtinOut, *builtinIn, *builtinFiles, *builtinSystem;
 static Obj *withShadows[64]; static int nWithShadows; /* WITH guards: vars shadowed in current scope */
 
 static int isIntLike(Type *t) { return t == typeInt || t == typeLongint; }
@@ -250,41 +251,31 @@ static void makeBuiltinModules(void) {
   *st = mkBuiltinProc("REALBITS", B_SYS_REALBITS, 1, zv, (Type *[]){typeReal}); (*st)->type = typeLongint; st = &(*st)->next;
   *st = mkBuiltinProc("BITSREAL", B_SYS_BITSREAL, 1, zv, (Type *[]){typeLongint}); (*st)->type = typeReal; st = &(*st)->next;
   *st = mkBuiltinProc("I2REAL", B_SYS_I2REAL, 1, zv, (Type *[]){typeInt}); (*st)->type = typeReal; st = &(*st)->next;
+  /* FFI generique (src/ffi_glue.c, ids 80..89) : DLL loadables + appel C + mémoire C */
+  { int z10[10] = {0,0,0,0,0,0,0,0,0,0};
+    Type *callcT[10] = {typeLongint, typeInt, typeLongint, typeLongint, typeLongint,
+                        typeLongint, typeLongint, typeLongint, typeLongint, typeLongint};
+    *st = mkBuiltinProc("CALLC", B_FFI_CALLC, 10, z10, callcT); (*st)->type = typeLongint; st = &(*st)->next; }
+  *st = mkBuiltinProc("LOADLIB", B_FFI_LOADLIB, 1, zv, (Type *[]){typeCharArrayAny}); (*st)->type = typeLongint; st = &(*st)->next;
+  *st = mkBuiltinProc("SYMBOL", B_FFI_SYMBOL, 2, zv, (Type *[]){typeLongint, typeCharArrayAny}); (*st)->type = typeLongint; st = &(*st)->next;
+  *st = mkBuiltinProc("FREELIB", B_FFI_FREELIB, 1, zv, (Type *[]){typeLongint}); st = &(*st)->next;
+  *st = mkBuiltinProc("CSTR", B_FFI_CSTR, 1, zv, (Type *[]){typeCharArrayAny}); (*st)->type = typeLongint; st = &(*st)->next;
+  { int v2[2] = {0, 1};
+    *st = mkBuiltinProc("STR", B_FFI_STR, 2, v2, (Type *[]){typeLongint, typeCharArrayAny}); st = &(*st)->next; }
+  *st = mkBuiltinProc("MALLOC", B_FFI_MALLOC, 1, zv, (Type *[]){typeLongint}); (*st)->type = typeLongint; st = &(*st)->next;
+  *st = mkBuiltinProc("FREE", B_FFI_FREE, 1, zv, (Type *[]){typeLongint}); st = &(*st)->next;
+  *st = mkBuiltinProc("PEEK", B_FFI_PEEK, 1, zv, (Type *[]){typeLongint}); (*st)->type = typeLongint; st = &(*st)->next;
+  *st = mkBuiltinProc("POKE", B_FFI_POKE, 2, zv, (Type *[]){typeLongint, typeLongint}); st = &(*st)->next;
   builtinSystem = system;
-
-  /* SQLite module (builtin ids 60..70, implemented in src/sqlite_glue.c over the
-     vendored amalgamation ext/sqlite/sqlite3.c).  DB and Stmt are LONGINT handles
-     (sqlite3* / sqlite3_stmt* stored in a cell). */
-  Obj *sql = newObj("SQLite", CL_MODULE);
-  sql->modId = 255; sql->builtin = 1;
-  Obj **qt = &sql->members;
-  Obj *dbt = newObj("DB", CL_TYPE); dbt->type = typeLongint; *qt = dbt; qt = &(*qt)->next;
-  Obj *stt = newObj("Stmt", CL_TYPE); stt->type = typeLongint; *qt = stt; qt = &(*qt)->next;
-  int vv1[1] = {1}, zz1[1] = {0}, zz2[2] = {0, 0}, zz3[3] = {0, 0, 0};
-  int pOpen[2] = {0, 1}, pPrep[3] = {0, 0, 1}, pColT[3] = {0, 0, 1}, pErr[2] = {0, 1};
-  *qt = mkBuiltinProc("Open", B_SQLITE_OPEN, 2, pOpen, (Type *[]){typeCharArrayAny, typeLongint}); (*qt)->type = typeInt; qt = &(*qt)->next;
-  *qt = mkBuiltinProc("Close", B_SQLITE_CLOSE, 1, vv1, (Type *[]){typeLongint}); qt = &(*qt)->next;
-  *qt = mkBuiltinProc("Exec", B_SQLITE_EXEC, 2, zz2, (Type *[]){typeLongint, typeCharArrayAny}); (*qt)->type = typeInt; qt = &(*qt)->next;
-  *qt = mkBuiltinProc("Prepare", B_SQLITE_PREPARE, 3, pPrep, (Type *[]){typeLongint, typeCharArrayAny, typeLongint}); (*qt)->type = typeInt; qt = &(*qt)->next;
-  *qt = mkBuiltinProc("Step", B_SQLITE_STEP, 1, zz1, (Type *[]){typeLongint}); (*qt)->type = typeInt; qt = &(*qt)->next;
-  *qt = mkBuiltinProc("ColumnInt", B_SQLITE_COLINT, 2, zz2, (Type *[]){typeLongint, typeInt}); (*qt)->type = typeLongint; qt = &(*qt)->next;
-  *qt = mkBuiltinProc("ColumnText", B_SQLITE_COLTEXT, 3, pColT, (Type *[]){typeLongint, typeInt, typeCharArrayAny}); qt = &(*qt)->next;
-  *qt = mkBuiltinProc("ColumnDouble", B_SQLITE_COLDOUBLE, 2, zz2, (Type *[]){typeLongint, typeInt}); (*qt)->type = typeReal; qt = &(*qt)->next;
-  *qt = mkBuiltinProc("ColumnCount", B_SQLITE_COLCOUNT, 1, zz1, (Type *[]){typeLongint}); (*qt)->type = typeInt; qt = &(*qt)->next;
-  *qt = mkBuiltinProc("Finalize", B_SQLITE_FINALIZE, 1, zz1, (Type *[]){typeLongint}); qt = &(*qt)->next;
-  *qt = mkBuiltinProc("Errmsg", B_SQLITE_ERRMSG, 2, pErr, (Type *[]){typeLongint, typeCharArrayAny}); qt = &(*qt)->next;
-  builtinSqlite = sql;
 }
 
 /* ---------- imports ---------- */
 static void installImport(const char *real, const char *alias, const char *dir) {
   int modId;
-  if (!strcmp(real, "Out") || !strcmp(real, "In") || !strcmp(real, "Files") ||
-      !strcmp(real, "SYSTEM") || !strcmp(real, "SQLite")) {
+  if (!strcmp(real, "Out") || !strcmp(real, "In") || !strcmp(real, "Files") || !strcmp(real, "SYSTEM")) {
     Obj *src = !strcmp(real, "Out") ? builtinOut
              : (!strcmp(real, "In") ? builtinIn
-             : (!strcmp(real, "Files") ? builtinFiles
-             : (!strcmp(real, "SYSTEM") ? builtinSystem : builtinSqlite)));
+             : (!strcmp(real, "Files") ? builtinFiles : builtinSystem));
     Obj *cp = newObj(alias, CL_MODULE);
     cp->modId = 255; cp->builtin = 1; cp->members = src->members;
     insertObj(cp);
