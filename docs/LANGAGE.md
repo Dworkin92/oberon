@@ -70,8 +70,14 @@ FieldList = [ ident { "," ident } ":" Type { ";" ident { "," ident } ":" Type } 
 
 Règles :
 - `POINTER TO Node` avant la déclaration de `Node` est accepté (listes chaînées).
-- Les variables de type `RECORD` direct sont refusées : utiliser `POINTER TO` + `NEW`.
-- Les tableaux d'éléments scalaires/pointeurs sont supportés (pas de `ARRAY OF Record` en ligne).
+- **Variables record en ligne** : `VAR pt: Point;` est accepté (le record occupe `payload` cellules
+  en ligne dans la frame / le segment global) ; accès champs `pt.x`, assignation `q := pt`,
+  passage en **`VAR` record param** (`PROCEDURE P(VAR p: Point)` — l'argument effectif peut être
+  une variable record, `p^`, ou un élément `a[i]` d'un `ARRAY OF Record`). Les **paramètres record
+  valeur** sont refusés (utiliser `VAR`).
+- **`ARRAY OF Record`** supporté : les éléments record sont stockés en ligne dans l'objet heap
+  (taille = `total × payload`, index converti en cellules), `a[i].x`, `a[i] := a[j]`,
+  `NEW`/`DISPOSE` sur `POINTER TO ARRAY n OF Record`.
 - **Types procéduraux (ext)** : `TYPE Op = PROCEDURE (x, y: INTEGER): INTEGER;` puis
   `VAR f: Op;` — on assigne une procédure de **signature identique** (mêmes types de
   paramètres, mêmes marques `VAR`, même type de résultat) : `f := Add;` (ou `f := M.Add`),
@@ -264,9 +270,9 @@ décoder opcodes et adresses taggées, récupérer le `.obc` à exécuter, profi
 
 ## 9. Limitations connues (v1)
 
-- `DISPOSE` existe avec **free-list** (pas de GC) : un bloc libéré est réutilisé par le prochain `NEW`/`ALLOC_ARRAY` de taille compatible (first-fit avec découpe). Pas de `ARRAY OF Record` en ligne.
+- `DISPOSE` existe avec **free-list** (pas de GC) : un bloc libéré est réutilisé par le prochain `NEW`/`ALLOC_ARRAY` de taille compatible (first-fit avec découpe).
 - `WITH p: T DO … END` **(ext)** : `p` (variable `POINTER TO Record`) a le type statique `POINTER TO T` dans le corps, avec vérification de type à l'exécution (`CHECKTYPE`, erreur « type guard failed »). Multi-gardes `WITH a: T, b: U DO … END` supportées.
-- Records uniquement via pointeurs ; pas de `ARRAY OF Record` en ligne.
+- Paramètres record **valeur** refusés (utiliser `VAR`) ; `SYSTEM.VAL/ADR/GET/PUT` non implémentés (pas de besoin réel constaté — `PROCV`/`PROCC` couvrent le besoin de casts).
 - `SET` limité à 32 éléments ; `CHAR` = point de code (32 bits).
 - Conversion implicite `INTEGER` → `REAL` **(ext)** : dans `+ - * /`, les comparaisons, l'assignation, les arguments valeur et `RETURN` — un opérande `INTEGER` est converti (`I2F`) quand l'autre côté est `REAL`. `DIV`/`MOD` restent strictement entiers ; `LONGINT` ne se convertit pas en `REAL` implicitement.
 - Le signe unaire n'est autorisé qu'en tête de `SimpleExpr` (donc `7 DIV (-2)`, pas `7 DIV -2`).

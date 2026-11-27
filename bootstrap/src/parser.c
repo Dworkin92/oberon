@@ -688,19 +688,21 @@ static void parseVarDecl(int isGlobal) {
     Type *t = parseType();
     expect(S_SEMI);
     for (int i = 0; i < nn; i++) {
-      if (t->kind == TK_RECORD) obError(line, "record variables must be pointers (use POINTER TO + NEW)");
       Obj *o = newObj(names[i], CL_VAR);
       o->type = t;
       o->exported = exported;
+      int sz = typeSizeCells(t); /* records occupy their payload inline */
       if (isGlobal) {
         o->level = 0;
-        o->offset = curMod->globalSize++;
+        o->offset = curMod->globalSize;
+        curMod->globalSize += sz;
         o->modId = 0;
         o->nextGlobal = curMod->globals;
         curMod->globals = o;
       } else {
         o->level = curLevel;
-        o->offset = curProc->nlocals++;
+        o->offset = curProc->nlocals;
+        curProc->nlocals += sz;
         if (t->kind == TK_ARRAY) {
           int m, ix; findTypeRef(t, &m, &ix);
           emitTypeOp(OP_ALLOC_ARRAY, m, ix);
@@ -829,9 +831,13 @@ static Obj *readFirstIdent(int *mod) {
 
 /* parse selectors after first ident; mode M_VAL/M_ADDR/M_VARARG.
    st: 0 = stack top is a value, 1 = stack top is a tagged address of storage */
+static int gDesigHdr; /* header cells before the payload of the last designator's record addr (2 heap, 0 inline) */
+
 static Type *parseDesignator(int mode, Obj *o, int mod) {
   Type *t = o->type;
   int st = 0;
+  int hdr = 0; /* 2 if the record address points to a heap object header, 0 if payload start */
+  gDesigHdr = 0;
   switch (o->cls) {
     case CL_CONST:
       if (t->kind == TK_REAL) { emit(OP_CONST_R); bufU64(&curProc->code, (uint64_t)o->cval); }
@@ -840,8 +846,10 @@ static Type *parseDesignator(int mode, Obj *o, int mod) {
       return t;
     case CL_VAR:
       if (o->level == 0) {
-        if (mode == M_VAL) { emitGlobalOp(OP_LOAD_GLOBAL, mod, o->offset); st = 0; }
-        else { emitGlobalOp(OP_ADDR_GLOBAL, mod, o->offset); st = 1; }
+        if (mode == M_VAL) {
+          if (t->kind == TK_RECORD) { emitGlobalOp(OP_ADDR_GLOBAL, mod, o->offset); st = 1; }
+          else { emitGlobalOp(OP_LOAD_GLOBAL, mod, o->offset); st = 0; }
+        } else { emitGlobalOp(OP_ADDR_GLOBAL, mod, o->offset); st = 1; }
       } else {
         uint32_t op = (uint32_t)(((curLevel - o->level) << 16) | (o->offset & 0xFFFF));
         if (o->isVarParam) {
@@ -850,13 +858,15 @@ static Type *parseDesignator(int mode, Obj *o, int mod) {
           st = 1;
           if (mode == M_VAL) {
             if (t->kind == TK_ARRAY || t->kind == TK_POINTER) { emit(OP_LOAD_AT); }
-            else if (t->kind == TK_RECORD) { /* value is obj addr already */ }
+            else if (t->kind == TK_RECORD) { /* value is the record addr already */ }
             else { emit(OP_LOAD_AT); }
             st = 0;
           }
         } else {
-          if (mode == M_VAL) { emit32(OP_LOAD_LOCAL, op); st = 0; }
-          else { emit32(OP_ADDR_LOCAL, op); st = 1; }
+          if (mode == M_VAL) {
+            if (t->kind == TK_RECORD) { emit32(OP_ADDR_LOCAL, op); st = 1; } /* record value = its address */
+            else { emit32(OP_LOAD_LOCAL, op); st = 0; }
+          } else { emit32(OP_ADDR_LOCAL, op); st = 1; }
         }
       }
       break;
@@ -869,24 +879,27 @@ static Type *parseDesignator(int mode, Obj *o, int mod) {
       nextSym();
       char fname[64];
       readIdent(fname);
+      int h = hdr;
       if (t->kind == TK_POINTER && t->to->kind == TK_RECORD) {
         if (st == 1) { emit(OP_LOAD_AT); } /* slot addr -> ref */
         emit(OP_TO_ADDR); /* ref -> obj addr */
         st = 1;
         t = t->to;
+        h = 2; /* heap object: [tag, payload, fields...] */
       }
       if (t->kind != TK_RECORD) obError(line, "field selection on non-record");
       Field *fl = findField(t, fname);
       if (!fl) obError(line, "no field '%s'", fname);
-      emit32(OP_CONST_I, (uint32_t)(2 + fl->offset));
-      emit(OP_AADD); /* obj addr + 2 + off = field addr */
+      emit32(OP_CONST_I, (uint32_t)(h + fl->offset));
+      emit(OP_AADD); /* record addr + hdr + off = field addr */
       st = 1;
       t = fl->type;
+      hdr = 0; /* field addresses are payload starts (inline) */
     } else if (sym == S_CARET) {
       nextSym();
       if (t->kind != TK_POINTER) obError(line, "dereference of non-pointer");
       if (st == 1) emit(OP_LOAD_AT);
-      if (t->to->kind == TK_RECORD) { emit(OP_TO_ADDR); st = 1; }
+      if (t->to->kind == TK_RECORD) { emit(OP_TO_ADDR); st = 1; hdr = 2; }
       else st = 0; /* pointer to array: ref is already the value */
       t = t->to;
     } else if (sym == S_LPAREN) {
@@ -930,16 +943,22 @@ static Type *parseDesignator(int mode, Obj *o, int mod) {
         expect(S_RBRACK);
       }
       if (k != nd) obError(line, "wrong number of indices");
-      /* stack: [ref, acc] */
+      /* stack: [ref, acc] ; for record elements, acc is in elements -> convert to cells */
+      if (t->elem->kind == TK_RECORD) {
+        emit32(OP_CONST_I, (uint32_t)typeElemCells(t->elem));
+        emit(OP_IMUL);
+      }
       emit(OP_ELEM_ADDR);
       st = 1;
       t = t->elem;
+      hdr = 0; /* element addresses are payload starts (no per-element header) */
     } else break;
   }
   /* final mode conversion */
+  gDesigHdr = hdr;
   if (mode == M_VAL) {
     if (st == 1) {
-      if (t->kind == TK_RECORD) { /* record value = obj addr */ }
+      if (t->kind == TK_RECORD) { /* record value = its address */ }
       else emit(OP_LOAD_AT);
       st = 0;
     }
@@ -951,7 +970,7 @@ static Type *parseDesignator(int mode, Obj *o, int mod) {
       emit32(OP_CONST_I, (uint32_t)(t->ndim + 2));
       emit(OP_AADD);
     } else if (t->kind == TK_RECORD) {
-      emit32(OP_CONST_I, 2);
+      emit32(OP_CONST_I, (uint32_t)hdr);
       emit(OP_AADD);
     }
   } /* M_VARARG: leave as-is */
@@ -1400,7 +1419,7 @@ static void parseArgsList(Obj *params, const char *nm) {
         Obj *a = readFirstIdent(&m2);
         if (a->cls != CL_VAR) obError(line, "VAR parameter needs a variable");
         Type *at = parseDesignator(
-          (p->type->kind == TK_RECORD) ? M_VAL : (p->type->kind == TK_ARRAY ? M_VARARG : M_ADDR),
+          (p->type->kind == TK_ARRAY) ? M_VARARG : M_ADDR, /* record VAR arg: payload addr (hdr applied) */
           a, m2);
         int ok = typeEquals(p->type, at) ||
                  (p->type->kind == TK_ARRAY && p->type->anyCharArray &&
@@ -1417,6 +1436,8 @@ static void parseArgsList(Obj *params, const char *nm) {
       } else if (p->type->kind == TK_PROC && tryEmitProcValue(p->type)) {
         /* procedure value passed as actual argument */
       } else {
+        if (p->type->kind == TK_RECORD)
+          obError(line, "record value parameters not supported (use VAR) in '%s'", nm);
         Type *at = parseExpression();
         if (!typeAssignable(p->type, at)) obError(line, "argument type mismatch in '%s'", nm);
         if (p->type == typeReal && at == typeInt) emit(OP_I2F); /* implicit INTEGER -> REAL (ext) */
@@ -1574,11 +1595,11 @@ static void parseStatement(void) {
         emit(OP_TO_ADDR);
         emit32(OP_CONST_I, (uint32_t)(rt->ndim + 2));
         emit(OP_AADD);
-        emit32(OP_COPY, (uint32_t)rt->total);
+        emit32(OP_COPY, (uint32_t)(rt->total * typeElemCells(rt->elem)));
       } else if (lt->kind == TK_RECORD) {
         Type *rt = parseExpression();
         if (rt->kind != TK_RECORD || !typeEquals(lt, rt)) obError(line, "record assignment type mismatch");
-        emit32(OP_CONST_I, 2);
+        emit32(OP_CONST_I, (uint32_t)gDesigHdr); /* rhs: skip heap header if any */
         emit(OP_AADD);
         emit32(OP_COPY, (uint32_t)lt->payload);
       } else if (lt->kind == TK_PROC) {

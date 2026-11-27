@@ -83,6 +83,7 @@ VAR
   gbase, gsize: ARRAY MAXMOD OF INTEGER;
   ntypes: ARRAY MAXMOD OF INTEGER;
   tkind, tbase, tto, tpayload, tndim, ttotal: ARRAY MAXMOD, MAXTYPE OF INTEGER;
+  telem: ARRAY MAXMOD, MAXTYPE OF INTEGER;  (* array elem type idx *)
   tdims: ARRAY MAXMOD, MAXTYPE, MAXDIM OF INTEGER;
   rtTag, rtPtrTag, rtPtrSize: ARRAY MAXMOD, MAXTYPE OF INTEGER;
   (* ---- per-proc tables ---- *)
@@ -176,9 +177,18 @@ BEGIN
   heap[ref] := 0; heap[ref+1] := size; heap[ref+2] := freeHead; freeHead := ref
 END;
 
+(* cells per array element: record elements are stored inline (payload), others 1 cell *)
+PROCEDURE ElemCells(gid, t: INTEGER): INTEGER;
+BEGIN
+  IF (telem[gid, t] >= 0) & (tkind[gid, telem[gid, t]] = TK_RECORD) THEN
+    RETURN tpayload[gid, telem[gid, t]]
+  END;
+  RETURN 1
+END ElemCells;
+
 PROCEDURE ObjSize(gid, t: INTEGER): INTEGER;
 BEGIN
-  IF tkind[gid, t] = TK_ARRAY THEN RETURN tndim[gid, t] + 2 + ttotal[gid, t] END;
+  IF tkind[gid, t] = TK_ARRAY THEN RETURN tndim[gid, t] + 2 + ttotal[gid, t] * ElemCells(gid, t) END;
   IF tkind[gid, t] = TK_RECORD THEN RETURN 2 + tpayload[gid, t] END;
   RETURN 0
 END;
@@ -186,7 +196,7 @@ END;
 PROCEDURE AllocArray(gid, t: INTEGER): INTEGER;
 VAR h, nd, tot, i: INTEGER;
 BEGIN
-  nd := tndim[gid, t]; tot := ttotal[gid, t];
+  nd := tndim[gid, t]; tot := ttotal[gid, t] * ElemCells(gid, t); (* header total = cell count *)
   h := HeapAlloc(nd + 2 + tot);
   heap[h] := -nd;
   FOR i := 0 TO nd-1 DO heap[h+1+i] := tdims[gid, t, i] END;
@@ -412,7 +422,7 @@ BEGIN
   ntypes[gid] := nt;
   FOR k := 0 TO nt-1 DO
     j := RU8(); RStr(tname); RU8(); (* kind, name, exported *)
-    tkind[gid, k] := j; tbase[gid, k] := -1; tto[gid, k] := -1;
+    tkind[gid, k] := j; tbase[gid, k] := -1; tto[gid, k] := -1; telem[gid, k] := -1;
     tpayload[gid, k] := 0; tndim[gid, k] := 0; ttotal[gid, k] := 1;
     IF j = TK_ARRAY THEN
       n := SYSTEM.L2I(RU32());
@@ -425,7 +435,7 @@ BEGIN
         FOR i := 0 TO n-1 DO tdims[gid, k, i] := SYSTEM.L2I(RU32()); v := v * tdims[gid, k, i] END;
         ttotal[gid, k] := SYSTEM.L2I(v)
       END;
-      RU32() (* elem type *)
+      telem[gid, k] := SYSTEM.L2I(RU32()) (* elem type *)
     ELSIF j = TK_RECORD THEN
       tpayload[gid, k] := SYSTEM.L2I(RU32());
       b := SYSTEM.L2I(RU32());

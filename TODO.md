@@ -2,9 +2,9 @@
 
 > ⭐ Après un compactage ou une nouvelle session, repartir de [`docs/REPRISE.md`](docs/REPRISE.md).
 
-État au 27/11/2026 : étapes 0–5 faites + types procéduraux + closures + threaded code VM.Mod, **96/96 tests** (24 exemples × 4 moteurs :
+État au 27/11/2026 : étapes 0–5 faites + tout le groupe A (types procéduraux, closures, threaded code, records en ligne), **100/100 tests** (25 exemples × 4 moteurs :
 `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif). Voir
-[`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md) pour la vision d'ensemble. **Groupe A terminé.**
+[`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md) pour la vision d'ensemble. **Groupe A terminé ✅ — prochain gros morceau : OC.Mod.**
 
 ## ✅ Fait
 
@@ -33,8 +33,8 @@
 - [x] **Types procéduraux / variables procédurales** (26/11) — `TYPE P = PROCEDURE(...)[: T]`, `f := Proc`, `f(args)`, `f = NIL`, proc en argument ; `OP_PROCVAL`=88 (3 u32) / `OP_CALLP`=89 ; test `ProcVar.Mod` → 92/92
 - [x] **Closures** (26/11) — proc imbriquée comme valeur : snapshot de la chaîne de frames dans un objet heap `CLOSURE_TAG` (OP_PROCVAL steps≠-1), matérialisation + réécriture au RET (Frame.extra/cref, `rtProcVal`/`rtCallP`/`rtLeaveFrame` dans rt.c, idem VM.Mod) ; `RETURN ProcIdent` ; test `Closure.Mod` (MakeAdder + compteur à état) → **96/96**
 - [x] **Threaded code dans VM.Mod** (27/11) — dispatch par valeur procédurale (`h := PROCV(code[pc]); h()`), traduction au chargement, handlers `H_OP_*` + `InitHandlers` + `OpLen`, prédéfinis `PROCV`/`PROCC` ; lexer : pushback de tokens (hist/pb) à la place de fseek ; perfs VM.Mod natif ×1,3 sur Queens → **96/96**
-- [ ] `VAR` record params, `ARRAY OF RECORD`
-- [ ] `SYSTEM.VAL/ADR/GET/PUT` (à rouvrir seulement si besoin réel)
+- [x] **`VAR` record params + variables record en ligne + `ARRAY OF RECORD`** (27/11) — `VAR pt: Point` (payload en ligne), `q := pt`, `P(VAR p: Point)` avec arg `pt`/`p^`/`a[i]` ; `ARRAY OF Record` : taille heap = `total × payload` (header `total` en cellules, index × elemCells), `NEW`/`DISPOSE` OK ; test `RecVar.Mod` → **100/100**. Paramètres record *valeur* refusés (utiliser `VAR`).
+- [ ] `SYSTEM.VAL/ADR/GET/PUT` — pas de besoin réel constaté (PROCV/PROCC couvrent les casts) ; à rouvrir si OC.Mod en a besoin
 
 ### B. OC.Mod émettant du bytecode d'abord (plus sûr)
 

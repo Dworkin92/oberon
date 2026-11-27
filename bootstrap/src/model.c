@@ -34,8 +34,15 @@ Type *newType(int kind) {
 }
 
 int typeSizeCells(Type *t) {
-  (void)t;
-  return 1; /* every variable slot is exactly one cell in this VM */
+  /* inline storage size in cells: records occupy their payload, everything else 1 */
+  if (t && t->kind == TK_RECORD) return t->payload;
+  return 1;
+}
+
+/* cells occupied by one array element (records are stored inline) */
+int typeElemCells(Type *e) {
+  if (e && e->kind == TK_RECORD) return e->payload;
+  return 1;
 }
 
 static int procTypeEquals(Type *a, Type *b);

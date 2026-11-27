@@ -7,9 +7,10 @@
 
 Chaîne complète **compilateur Oberon-07 → bytecode `.obc` → VM maison**, stage-0 en C,
 plus VM réécrite en Oberon **en threaded code** (dispatch par valeurs procédurales).
-**Tests : 96/96** (24 exemples × 4 moteurs : `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm,
-`VM.Mod` natif). Groupe A du TODO terminé : types procéduraux + closures + threaded code
-(`OP_PROCVAL`=88 (3 u32) / `OP_CALLP`=89, `CLOSURE_TAG`, handlers `H_OP_*` dans VM.Mod).
+**Tests : 100/100** (25 exemples × 4 moteurs : `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm,
+`VM.Mod` natif). Groupe A du TODO terminé ✅ : types procéduraux + closures + threaded code
++ records en ligne / `VAR` record / `ARRAY OF RECORD` (`OP_PROCVAL`=88 / `OP_CALLP`=89,
+`CLOSURE_TAG`, handlers `H_OP_*`, `telem`/`ElemCells` dans VM.Mod).
 
 ```
 oberon/
@@ -45,6 +46,7 @@ Chemin de recherche des imports (dans obc, obvm, ob2c **et** VM.Mod) : `D/M.obc`
 - `OP_PROCVAL` steps = `0xFFFFFFFF` → valeur simple ; sinon snapshot de `steps` slinks. **Piège lexer** : `lexSave`/`lexRestore` = pushback de **tokens** (hist/pb dans lexer.c), PAS de fseek (pas fiable en mode texte Windows).
 - Threaded code VM.Mod : slot opcode = valeur proc handler (`PROCC(handlers[op])`), opérandes = 1 octet/cellule (**y compris `n` de JUMPTABLE : 4 cellules**). Casts prédéfinis `PROCV`/`PROCC` (identité). Dispatch : `h := PROCV(code[cofs+pc]); INC(pc); h();`.
 - Kinds de types : `TK_LONGINT`=10, **`TK_PROC`=11** (les deux côtés C et VM.Mod doivent d'accord).
+- Records : variables record **en ligne** OK (`VAR pt: Point`, payload cellules inline) ; `hdr` designator = 2 (record heap via pointeur) / 0 (inline/élément) ; `ARRAY OF Record` : header `total` = **cellules** (`total × payload`), index × `ElemCells` avant `OP_ELEM_ADDR`. Params record valeur refusés (VAR uniquement).
 - Cellules 64 bits ; adresses taggées (octet haut : 0x00 pile / 0x01 global / 0x02 tas).
 - **Adresse globale = gid absolu** résolu à la création (pas l'index d'import local) — sinon les `VAR`
   cross-module lisent le mauvais module. Idem dans `VM.Mod`. Max 256 modules.
@@ -67,12 +69,12 @@ module `SYSTEM`
 (BAND/BOR/BXOR/BNOT/LSH/ROT/BIT/ARGC/ARGV/TICKS/EXIT, casts L2I/REALBITS/BITSREAL/I2REAL),
 superinstruction `OP_JUMPTABLE` pour les `CASE` denses.
 
-## Prochaine étape (groupe A terminé ✅ → on passe au compilateur)
+## Prochaine étape — **OC.Mod, le compilateur en Oberon** (groupe A terminé ✅)
 
-1. `VAR` record params, `ARRAY OF RECORD`, `SYSTEM.VAL/ADR/GET/PUT` si besoin réel (groupe A "si besoin")
-2. Puis **OC.Mod** (compilateur en Oberon) : d'abord émetteur de `.obc` identique au stage-0
-   (phase `PASS-OC`), puis backend C et auto-compilation (`oc.obc → oc2.c → gcc`, `diff`),
-   avec `bootstrap/tests/expected/` comme banc de régression.
+1. OC.Mod émetteur de `.obc` identique au stage-0 (phase `PASS-OC` dans run_tests.sh)
+2. Backend C dans OC.Mod + auto-compilation (`oc.obc → oc2.c → gcc`, `diff`),
+   `bootstrap/tests/expected/` comme banc de régression
+3. `SYSTEM.VAL/ADR/GET/PUT` seulement si besoin réel (sinon PROCV/PROCC suffisent)
 
 Détails : `TODO.md` (cases à cocher) · `journal.md` (faits, datés) · `docs/AUTOHEBERGEMENT.md` (vision).
 

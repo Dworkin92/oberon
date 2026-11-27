@@ -117,7 +117,8 @@ extern Type *typeCharArrayAny; /* marker: any ARRAY OF CHAR (Out.String, In.Line
 extern Type *typeAnyPointer;   /* marker: any pointer (DISPOSE param) */
 void initBasicTypes(void);
 extern int gTypeStamp; /* incremented by writeModule; type registration guard */
-int typeSizeCells(Type *t);          /* slots occupied inline (always 1 in v1) */
+int typeSizeCells(Type *t);          /* inline slots: record payload, else 1 */
+int typeElemCells(Type *e);          /* cells per array element (record payload, else 1) */
 int typeEquals(Type *a, Type *b);
 int typeAssignable(Type *dst, Type *src); /* src value assignable to dst var */
 Field *findField(Type *rec, const char *name);

@@ -110,17 +110,18 @@ void heapFree(VM *vm, int ref, int size) {
 
 int heapObjSize(Type *t) {
   if (!t) return 0;
-  if (t->kind == TK_ARRAY) return t->ndim + 2 + t->total;
+  if (t->kind == TK_ARRAY) return t->ndim + 2 + t->total * typeElemCells(t->elem);
   if (t->kind == TK_RECORD) return 2 + t->payload;
   return 0;
 }
 
 int allocArrayObj(VM *vm, Type *t) {
   int hdr = t->ndim + 2;
-  int h = heapAlloc(vm, hdr + t->total);
+  int cells = t->total * typeElemCells(t->elem); /* header 'total' = cell count (bounds check) */
+  int h = heapAlloc(vm, hdr + cells);
   vm->heap[h] = -t->ndim;
   for (int i = 0; i < t->ndim; i++) vm->heap[h + 1 + i] = t->dims[i];
-  vm->heap[h + t->ndim + 1] = t->total;
+  vm->heap[h + t->ndim + 1] = cells;
   return h;
 }
 
