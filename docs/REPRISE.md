@@ -7,9 +7,10 @@
 
 Chaîne complète **compilateur Oberon-07 → bytecode `.obc` → VM maison**, stage-0 en C,
 plus VM réécrite en Oberon **en threaded code** (dispatch par valeurs procédurales).
-**Tests : 100/100** (25 exemples × 4 moteurs : `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm,
+**Tests : 112/112** (28 exemples × 4 moteurs : `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm,
 `VM.Mod` natif). Groupe A du TODO terminé ✅ : types procéduraux + closures + threaded code
-+ records en ligne / `VAR` record / `ARRAY OF RECORD` (`OP_PROCVAL`=88 / `OP_CALLP`=89,
++ records en ligne / `VAR` record / `ARRAY OF RECORD` + conformité Oberon-07 (`WHILE...ELSIF`,
+CASE de type, `CAP` — aucun opcode nouveau) (`OP_PROCVAL`=88 / `OP_CALLP`=89,
 `CLOSURE_TAG`, handlers `H_OP_*`, `telem`/`ElemCells` dans VM.Mod).
 
 ```
@@ -69,12 +70,16 @@ module `SYSTEM`
 (BAND/BOR/BXOR/BNOT/LSH/ROT/BIT/ARGC/ARGV/TICKS/EXIT, casts L2I/REALBITS/BITSREAL/I2REAL),
 superinstruction `OP_JUMPTABLE` pour les `CASE` denses.
 
-## Prochaine étape — **OC.Mod, le compilateur en Oberon** (groupe A terminé ✅)
+## Prochaine étape — **OC.Mod, le compilateur en Oberon** (groupe A terminé ✅, conformité Oberon-07 faite ✅)
 
 1. OC.Mod émetteur de `.obc` identique au stage-0 (phase `PASS-OC` dans run_tests.sh)
 2. Backend C dans OC.Mod + auto-compilation (`oc.obc → oc2.c → gcc`, `diff`),
    `bootstrap/tests/expected/` comme banc de régression
 3. `SYSTEM.VAL/ADR/GET/PUT` seulement si besoin réel (sinon PROCV/PROCC suffisent)
+
+Rappel conformité (rapport Oberon-07 officiel, rev. 3.5.2016) : **pas de LOOP/EXIT/WITH** —
+remplacés par `WHILE...ELSIF` (boucle gardée de Dijkstra) et le CASE de type ; `WITH` gardé
+comme extension chez nous.
 
 Détails : `TODO.md` (cases à cocher) · `journal.md` (faits, datés) · `docs/AUTOHEBERGEMENT.md` (vision).
 

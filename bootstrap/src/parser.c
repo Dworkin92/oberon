@@ -8,7 +8,7 @@
 /* predefined procedure ids (Obj with modId == -1) */
 enum { PD_ABS = 1, PD_ODD, PD_LEN, PD_ORD, PD_CHR, PD_ENTIER, PD_FLOOR,
        PD_NEW = 20, PD_INC, PD_DEC, PD_INCL, PD_EXCL, PD_COPY, PD_HALT, PD_DISPOSE,
-       PD_PROCV, PD_PROCC };
+       PD_PROCV, PD_PROCC, PD_CAP };
 
 /* builtin module proc ids (module id 255) */
 enum { B_OUT_INT = 0, B_OUT_REAL, B_OUT_CHAR, B_OUT_STRING, B_OUT_LN,
@@ -149,6 +149,7 @@ static void installPredefined(void) {
   insertObj(mkPredefProc("EXCL", PD_EXCL, 2, z2, (Type *[]){typeSet, typeInt}));
   insertObj(mkPredefProc("COPY", PD_COPY, 2, z2, (Type *[]){typeCharArrayAny, typeCharArrayAny}));
   insertObj(mkPredefProc("HALT", PD_HALT, 1, z1, (Type *[]){typeInt}));
+  insertObj(mkPredefProc("CAP", PD_CAP, 1, z1, (Type *[]){typeChar}));
   /* bit-casts for threaded code (ext): identity, no code emitted */
   { Obj *o = mkPredefProc("PROCV", PD_PROCV, 1, z1, (Type *[]){typeLongint}); o->type = typeProc0; insertObj(o); }
   { Obj *o = mkPredefProc("PROCC", PD_PROCC, 1, z1, (Type *[]){typeProc0}); o->type = typeLongint; insertObj(o); }
@@ -1313,6 +1314,30 @@ static Type *parseFactor(void) {
             if (!t || t->kind != TK_PROC) obError(line, "PROCC requires a procedure value");
             return typeLongint;
           }
+          case PD_CAP: { /* CAP(ch): uppercase; expanded inline with existing opcodes */
+            expect(S_LPAREN);
+            t = parseExpression();
+            expect(S_RPAREN);
+            if (t != typeChar) obError(line, "CAP requires CHAR");
+            int tmp = allocTemp();
+            emit32(OP_STORE_LOCAL, (uint32_t)tmp);
+            emit32(OP_LOAD_LOCAL, (uint32_t)tmp);
+            emit32(OP_CONST_I, (uint32_t)'a');
+            emit(OP_IGE);                       /* c >= 'a' */
+            emit32(OP_LOAD_LOCAL, (uint32_t)tmp);
+            emit32(OP_CONST_I, (uint32_t)'z');
+            emit(OP_ILE);                       /* c <= 'z' */
+            emit(OP_AND);
+            int jz = emitJump(OP_JZ);
+            emit32(OP_LOAD_LOCAL, (uint32_t)tmp);
+            emit32(OP_CONST_I, 32);
+            emit(OP_ISUB);
+            int jm = emitJump(OP_JMP);
+            patch32(jz, (uint32_t)here());
+            emit32(OP_LOAD_LOCAL, (uint32_t)tmp);
+            patch32(jm, (uint32_t)here());
+            return typeChar;
+          }
           default:
             obError(line, "'%s' cannot be used in an expression", o->name);
         }
@@ -1642,16 +1667,23 @@ static void parseStatement(void) {
       return;
     }
     case S_WHILE: {
+      /* Oberon-07: WHILE c1 DO S1 {ELSIF c2 DO S2} END — Dijkstra's guarded loop:
+         each iteration runs the first true branch, then loops back to c1;
+         the loop exits when every guard is false. */
       nextSym();
       int L = here();
-      Type *t = parseExpression();
-      if (t != typeBool) obError(line, "WHILE condition must be BOOLEAN");
-      int jz = emitJump(OP_JZ);
-      expect(S_DO);
-      parseStatements();
-      int back = emitJump(OP_JMP);
-      patch32(back, (uint32_t)L);
-      patch32(jz, (uint32_t)here());
+      for (;;) {
+        Type *t = parseExpression();
+        if (t != typeBool) obError(line, "WHILE condition must be BOOLEAN");
+        int jz = emitJump(OP_JZ);      /* -> next guard (or END) */
+        expect(S_DO);
+        parseStatements();
+        int back = emitJump(OP_JMP);
+        patch32(back, (uint32_t)L);    /* loop back to the first guard */
+        patch32(jz, (uint32_t)here()); /* next guard, or END if none left */
+        if (sym != S_ELSIF) break;
+        nextSym();
+      }
       expect(S_END);
       return;
     }
@@ -1713,7 +1745,79 @@ static void parseStatement(void) {
     }
     case S_CASE: {
       nextSym();
+      /* peek: if the selector is a plain variable, remember it to narrow its
+         static type inside each type-CASE branch (as Wirth's compiler does) */
+      Obj *selObj = NULL;
+      {
+        LexState ls;
+        lexSave(&ls);
+        int m2;
+        Obj *a = readFirstIdent(&m2);
+        if (a && a->cls == CL_VAR && sym == S_OF) selObj = a;
+        lexRestore(&ls);
+      }
       Type *xt = parseExpression();
+      if (xt->kind == TK_POINTER && xt->to && xt->to->kind == TK_RECORD) {
+        /* Oberon-07 type CASE: CASE p OF T1, T2: S1 | T3: S2 ELSE S3 END.
+           Runtime: p IS Tj in order (walks the extension chain); inside a
+           branch p is statically of the label's type and runtime-checked. */
+        int xtemp = allocTemp();
+        emit32(OP_STORE_LOCAL, (uint32_t)xtemp); /* temp = selector */
+        expect(S_OF);
+        int endJmps[128]; int nEnd = 0;
+        int pendFail[512]; int nPend = 0; /* label-false jumps awaiting the next branch */
+        while (sym != S_ELSE && sym != S_END) {
+          for (int i = 0; i < nPend; i++) patch32(pendFail[i], (uint32_t)here());
+          nPend = 0;
+          int bodyJmps[16]; int nBody = 0;
+          int m0 = 0, ix0 = 0; Type *rt0 = NULL;
+          int lastJz = -1;
+          for (;;) { /* type labels of this branch */
+            Type *rt = parseQualType();
+            Type *rec = (rt->kind == TK_POINTER) ? rt->to : rt;
+            if (rec->kind != TK_RECORD) obError(line, "type CASE label must be a record type");
+            int m, ix;
+            findTypeRef(rec, &m, &ix);
+            if (!rt0) { rt0 = rt; m0 = m; ix0 = ix; }
+            emit32(OP_LOAD_LOCAL, (uint32_t)xtemp);
+            emitTypeOp(OP_ISTYPE, m, ix);
+            int jz = emitJump(OP_JZ);
+            if (nBody >= 16) obError(line, "too many labels in one CASE branch");
+            bodyJmps[nBody++] = emitJump(OP_JMP);
+            if (lastJz >= 0) patch32(lastJz, (uint32_t)here()); /* prev label false -> this label */
+            lastJz = jz;
+            if (!accept(S_COMMA)) break;
+          }
+          expect(S_COLON);
+          if (nPend >= 512) obError(line, "too many CASE branches");
+          pendFail[nPend++] = lastJz; /* all labels false -> next branch */
+          int bodyPos = here();
+          for (int i = 0; i < nBody; i++) patch32(bodyJmps[i], (uint32_t)bodyPos);
+          /* runtime narrowing of the selector slot (check + keep ref) */
+          emit32(OP_LOAD_LOCAL, (uint32_t)xtemp);
+          emitTypeOp(OP_CHECKTYPE, m0, ix0);
+          emit32(OP_STORE_LOCAL, (uint32_t)xtemp);
+          /* static narrowing when the selector is a plain variable */
+          Type *saved = NULL;
+          if (selObj) { saved = selObj->type; selObj->type = rt0; }
+          parseStatements();
+          if (selObj) selObj->type = saved;
+          if (nEnd >= 128) obError(line, "too many CASE branches");
+          endJmps[nEnd++] = emitJump(OP_JMP);
+          if (!accept(S_PIPE)) break;
+        }
+        if (accept(S_ELSE)) {
+          for (int i = 0; i < nPend; i++) patch32(pendFail[i], (uint32_t)here());
+          nPend = 0;
+          parseStatements();
+          endJmps[nEnd++] = emitJump(OP_JMP);
+        }
+        expect(S_END);
+        int after = here();
+        for (int i = 0; i < nPend; i++) patch32(pendFail[i], (uint32_t)after);
+        for (int i = 0; i < nEnd; i++) patch32(endJmps[i], (uint32_t)after);
+        return;
+      }
       if (xt != typeInt && xt != typeChar) obError(line, "CASE expression must be INTEGER or CHAR");
       int xtemp = allocTemp();
       emit32(OP_STORE_LOCAL, (uint32_t)xtemp); /* temp = selector */

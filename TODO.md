@@ -2,7 +2,7 @@
 
 > ⭐ Après un compactage ou une nouvelle session, repartir de [`docs/REPRISE.md`](docs/REPRISE.md).
 
-État au 27/11/2026 : étapes 0–5 faites + tout le groupe A (types procéduraux, closures, threaded code, records en ligne), **100/100 tests** (25 exemples × 4 moteurs :
+État au 27/11/2026 : étapes 0–5 faites + tout le groupe A (types procéduraux, closures, threaded code, records en ligne) + conformité Oberon-07 (WHILE...ELSIF, CASE de type, CAP), **112/112 tests** (28 exemples × 4 moteurs :
 `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif). Voir
 [`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md) pour la vision d'ensemble. **Groupe A terminé ✅ — prochain gros morceau : OC.Mod.**
 
@@ -34,6 +34,11 @@
 - [x] **Closures** (26/11) — proc imbriquée comme valeur : snapshot de la chaîne de frames dans un objet heap `CLOSURE_TAG` (OP_PROCVAL steps≠-1), matérialisation + réécriture au RET (Frame.extra/cref, `rtProcVal`/`rtCallP`/`rtLeaveFrame` dans rt.c, idem VM.Mod) ; `RETURN ProcIdent` ; test `Closure.Mod` (MakeAdder + compteur à état) → **96/96**
 - [x] **Threaded code dans VM.Mod** (27/11) — dispatch par valeur procédurale (`h := PROCV(code[pc]); h()`), traduction au chargement, handlers `H_OP_*` + `InitHandlers` + `OpLen`, prédéfinis `PROCV`/`PROCC` ; lexer : pushback de tokens (hist/pb) à la place de fseek ; perfs VM.Mod natif ×1,3 sur Queens → **96/96**
 - [x] **`VAR` record params + variables record en ligne + `ARRAY OF RECORD`** (27/11) — `VAR pt: Point` (payload en ligne), `q := pt`, `P(VAR p: Point)` avec arg `pt`/`p^`/`a[i]` ; `ARRAY OF Record` : taille heap = `total × payload` (header `total` en cellules, index × elemCells), `NEW`/`DISPOSE` OK ; test `RecVar.Mod` → **100/100**. Paramètres record *valeur* refusés (utiliser `VAR`).
+- [x] **Conformité rapport Oberon-07** (27/11, vérifié contre l'EBNF officiel `Oberon07.Report.pdf` rev. 3.5.2016 : `statement = [assignment | ProcedureCall | IfStatement | CaseStatement | WhileStatement | RepeatStatement | ForStatement]` — **pas de LOOP/EXIT/WITH en Oberon-07**) :
+  - `WHILE c1 DO S1 {ELSIF c2 DO S2} END` — boucle gardée de Dijkstra (chaque itération exécute la première garde vraie puis reboucle ; sortie si toutes fausses) — test `WhileElsif.Mod`
+  - `CASE p OF T1: S1 | T2: S2 ELSE S3 END` (CASE de type, remplace WITH) — `ISTYPE` sur la chaîne d'extension + `CHECKTYPE` + narrowing statique du sélecteur dans la branche — test `TypeCase.Mod`
+  - `CAP(c)` prédéfini — expansion inline (opcodes existants, aucun opcode nouveau) — test `CapDemo.Mod`
+  - → **112/112** (28 ex × 4 moteurs). `WITH` conservé comme extension (hors rapport mais testé).
 - [ ] `SYSTEM.VAL/ADR/GET/PUT` — pas de besoin réel constaté (PROCV/PROCC couvrent les casts) ; à rouvrir si OC.Mod en a besoin
 
 ### B. OC.Mod émettant du bytecode d'abord (plus sûr)

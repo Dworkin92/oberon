@@ -150,7 +150,7 @@ Statement = [ Designator ( ":=" Expression | [ "(" [ ExprList ] ")" ] )  (* appe
            | "IF" Expression "THEN" StatementSequence { "ELSIF" Expression "THEN" StatementSequence }
              [ "ELSE" StatementSequence ] "END"
            | "CASE" Expression "OF" Case { "|" Case } [ "ELSE" StatementSequence ] "END"
-           | "WHILE" Expression "DO" StatementSequence "END"
+           | "WHILE" Expression "DO" StatementSequence { "ELSIF" Expression "DO" StatementSequence } "END"
            | "REPEAT" StatementSequence "UNTIL" Expression
            | "FOR" ident ":=" Expression "TO" Expression [ "BY" ConstExpr ] "DO" StatementSequence "END"
            | "WITH" Guard { "," Guard } "DO" StatementSequence "END"   (* ext *)
@@ -158,10 +158,17 @@ Statement = [ Designator ( ":=" Expression | [ "(" [ ExprList ] ")" ] )  (* appe
 Guard = ident ":" QualType .   (* la variable doit être POINTER TO Record ; le type de garde
                                   doit être le pointé ou une extension ; check runtime (CHECKTYPE) *)
 Case = Label { "," Label } ":" StatementSequence .
-Label = ConstExpr [ ".." ConstExpr ] .
+Label = ConstExpr [ ".." ConstExpr ] | QualType   (* CASE de type si le sélecteur est POINTER TO RECORD *)
 ```
 
-- `CASE` : l'expression est `INTEGER` ou `CHAR` ; étiquettes = constantes ou plages `a..b`.
+- `CASE` sur `INTEGER`/`CHAR` : étiquettes = constantes ou plages `a..b` (table de saut `OP_JUMPTABLE` si dense).
+- `CASE` de type (Oberon-07, remplace `WITH` retiré du langage) : sélecteur `POINTER TO RECORD`,
+  étiquettes = types (record ou pointeur). Runtime : `p IS Tj` dans l'ordre (chaîne d'extension),
+  puis `CHECKTYPE` ; dans une branche, le sélecteur a **statiquement** le type de l'étiquette
+  (narrowing) — ex. `CASE sh OF Circle: ... sh.r ... END`.
+- `WHILE ... {ELSIF ...} END` (Oberon-07) : boucle gardée, forme de Dijkstra — à chaque itération,
+  la première garde vraie est exécutée puis on reboucle ; sortie quand toutes les gardes sont fausses.
+  Remplace `LOOP...EXIT` (Oberon-2, retiré d'Oberon-07).
 - `FOR` : variable de contrôle `INTEGER`, `LONGINT` **(ext)** ou `CHAR` ; `BY` = constante non nulle
   (négative = boucle descendante). La borne `TO` est évaluée une fois.
 - `RETURN expr` uniquement dans une procédure fonction.
@@ -174,6 +181,7 @@ Label = ConstExpr [ ".." ConstExpr ] .
 | `ODD(x)` | INT/LONGINT → BOOLEAN | `x` impair |
 | `LEN(a [, d])` | ARRAY → INTEGER | longueur de la dimension `d` (0 par défaut) |
 | `ORD(c)` | CHAR → INTEGER | code du caractère |
+| `CAP(c)` | CHAR → CHAR | majuscule (`'a'..'z'` → `'A'..'Z'`, sinon inchangé) |
 | `CHR(i)` | INTEGER → CHAR | caractère de code `i` |
 | `ENTIER(x)` | REAL → INTEGER | troncature vers zéro |
 | `FLOOR(x)` | REAL → INTEGER | **(ext)** partie entière vers −∞ |
