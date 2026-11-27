@@ -74,3 +74,11 @@
   - **bug lexer attraqué** : `lexSave`/`lexRestore` restauraient `ch` mais pas la position du `FILE*` → le lookahead consommé entre save et restore était perdu (`MakeAdder(5)` devenait `MakeAdder()`). Corrigé avec `ftell`/`fseek` dans `LexState.fpos`.
   - VM.Mod : `fextra`/`fcref`, `scratch`, branches OP_PROCVAL (snapshot via HeapAlloc) / OP_CALLP (matérialisation) / OP_RET (réécriture), init frame 0.
   - ob2c : `OP_PROCVAL` → `rtProcVal(...)`, `OP_CALLP` → `rtCallP` + `procTab[tf->mod][tf->proc](vm)`, `OP_RET` → `rtLeaveFrame(vm); return;`, `OP_CALL` pose extra/cref = 0 ; obdis : OP_PROCVAL = A_CALL (3 u32).
+
+## 27/11/2026
+
+- **threaded code dans VM.Mod** (dernier item du groupe A) — la boucle `Run` ne décode plus d'opcode : chaque slot d'instruction du code guest contient directement une **valeur procédurale** (handler), et le dispatch fait `h := PROCV(code[cofs+pc]); INC(pc); h()`. **96/96** (24 ex × 4 moteurs).
+  - prédéfinis de cast ajoutés au compilateur (identité, zéro code émis) : `PROCV(LONGINT): PROCEDURE()` et `PROCC(PROCEDURE()): LONGINT` (type `typeProc0` dans model.c) — nécessaires pour lire/écrire les valeurs proc dans un `ARRAY OF LONGINT`.
+  - VM.Mod : les ~90 branches du `CASE` de `Run` extraites en procédures module-level `H_OP_*` (générées par script), table `handlers: ARRAY OP_COUNT OF Handler` remplie par `InitHandlers()` ; variables de `Run` promues en globales ; `OpLen(op)` pour la traduction ; au chargement, chaque proc est traduit : slot opcode → `PROCC(handlers[op])`, opérandes copiés octet par octet (layout identique, les offsets de saut restent valides). **Piège** : JUMPTABLE — `n` doit être recopié en 4 cellules-octet, pas 1 (bug attrapé par dump : « call of NIL procedure »).
+  - **bug lexer réécrit** : `lexSave/lexRestore` avec `ftell`/`fseek` ne marche pas fiable en mode texte Windows (le lookahead était rejoué en double) → remplacé par un **pushback de tokens** (historique `hist[]` + pile `pb[]` dans nextSym ; restore = rejoue les tokens consommés depuis le save, seulement si même fichier — le cas import switch de `src` n'en a pas besoin).
+  - perfs Queens : VM.Mod natif (ob2c+gcc) **569 → 433 ms (×1,3)** ; VM.Mod sur obvm ~inchangé (1080 ms, le coût host domine). Le threaded code ouvre la voie aux superinstructions (fusion d'instructions au chargement).

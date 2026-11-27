@@ -259,7 +259,8 @@ décoder opcodes et adresses taggées, récupérer le `.obc` à exécuter, profi
 10. **Open arrays** en paramètres formels : `ARRAY OF T` accepte tout tableau de `T`,
     `LEN(a, 0)` = taille réelle ; littéraux chaîne acceptés pour `ARRAY OF CHAR`.
 - Pointeurs vers tableaux **(ext)** : `VAR p: POINTER TO ARRAY 100 OF INTEGER` (ou `POINTER TO` un type tableau nommé) ; `NEW(p)` alloue, `p[i]` indexe (déréférencement implicite), `LEN(p, 0)` marche, et `p` est accepté comme argument (valeur ou `VAR`) là où un `ARRAY OF T` ouvert est attendu. `DISPOSE(p)` libère et met `p := NIL`.
-11. **Types procéduraux / variables procédurales + closures (ext)** : `TYPE P = PROCEDURE (x: INTEGER): INTEGER; VAR f: P;` — `f := MaProc;`, `f(3)`, `f = NIL`, passage en argument, `RETURN MaProc`. Opcodes `OP_PROCVAL` (88, **3 opérandes u32** : lmod, proc, steps) / `OP_CALLP` (89) ; valeur simple = cellule taguée `0x03` [gid 8 bits][proc 32 bits], closure = objet heap `CLOSURE_TAG` (snapshot des frames capturées + réécriture au retour). C'est la base du **threaded code** prévu pour la VM en Oberon.
+11. **Types procéduraux / variables procédurales + closures (ext)** : `TYPE P = PROCEDURE (x: INTEGER): INTEGER; VAR f: P;` — `f := MaProc;`, `f(3)`, `f = NIL`, passage en argument, `RETURN MaProc`. Opcodes `OP_PROCVAL` (88, **3 opérandes u32** : lmod, proc, steps) / `OP_CALLP` (89) ; valeur simple = cellule taguée `0x03` [gid 8 bits][proc 32 bits], closure = objet heap `CLOSURE_TAG` (snapshot des frames capturées + réécriture au retour). C'est la base du **threaded code** de la VM en Oberon.
+12. **Casts bit-à-bit (ext)** : `PROCV(x: LONGINT): PROCEDURE()` et `PROCC(p: PROCEDURE()): LONGINT` — identités sans code émis, utiles pour stocker des valeurs procédurales dans des `ARRAY OF LONGINT` (threaded code de `VM.Mod`).
 
 ## 9. Limitations connues (v1)
 

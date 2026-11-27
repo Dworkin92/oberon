@@ -200,21 +200,44 @@ static void readCharLit(void) {
   sym = S_CHAR;
 }
 
-void lexSave(LexState *s) {
-  s->src = src; s->ch = ch; s->line = line; s->sym = sym;
-  s->ival = ival; s->rval = rval; s->cval = cval;
-  memcpy(s->name, name, 64); memcpy(s->sval, sval, 4096); s->slen = slen;
-  s->srcName = obSrcName; s->obLine = obLine;
-  s->fpos = ftell(src); /* file position of the pending lookahead char ch */
+/* ---- token pushback for lexSave/lexRestore ---- */
+#define PBMAX 16
+#define HISTMAX 64
+static LexTok pb[PBMAX]; static int pbN;
+static LexTok hist[HISTMAX]; static long histCount;
+
+static void tokRecord(LexTok *t) {
+  t->sym = sym; t->line = line; t->obLine = obLine;
+  t->ival = ival; t->rval = rval; t->cval = cval;
+  memcpy(t->name, name, 64); memcpy(t->sval, sval, 4096); t->slen = slen;
 }
-void lexRestore(const LexState *s) {
-  src = s->src; ch = s->ch; line = s->line; sym = s->sym;
-  ival = s->ival; rval = s->rval; cval = s->cval;
-  memcpy(name, s->name, 64); memcpy(sval, s->sval, 4096); slen = s->slen;
-  obSrcName = s->srcName; obLine = s->obLine;
-  if (src && s->fpos >= 0) fseek(src, s->fpos, SEEK_SET); /* rewind past any lookahead consumed since save */
+static void tokApply(const LexTok *t) {
+  sym = t->sym; line = t->line; obLine = t->obLine;
+  ival = t->ival; rval = t->rval; cval = t->cval;
+  memcpy(name, t->name, 64); memcpy(sval, t->sval, 4096); slen = t->slen;
 }
 
+void lexSave(LexState *s) {
+  tokRecord(&s->tok);
+  s->src = src; s->ch = ch;
+  s->histMark = histCount;
+  s->srcName = obSrcName; s->obLine = obLine;
+}
+void lexRestore(const LexState *s) {
+  tokApply(&s->tok);
+  obSrcName = s->srcName; obLine = s->obLine;
+  if (s->src == src) {
+    /* same input file: replay the tokens consumed since the save from the
+       history; ch and the file position are already past them, keep them */
+    pbN = 0;
+    for (long i = histCount - 1; i >= s->histMark; i--) {
+      if (pbN < PBMAX) pb[pbN++] = hist[i % HISTMAX];
+    }
+  } else {
+    /* nested-import case: the stream was switched, restore it wholesale */
+    src = s->src; ch = s->ch;
+  }
+}
 const char *symName(int s) {
   static const char *names[] = {
     "EOF", "ident", "int", "real", "char", "string",
@@ -229,7 +252,7 @@ const char *symName(int s) {
   return "?";
 }
 
-void nextSym(void) {
+static void nextSymReal(void) {
   for (;;) {
     if (ch == EOF) { sym = S_EOF; return; }
     if (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n') { adv(); continue; }
@@ -270,4 +293,11 @@ void nextSym(void) {
     default:
       obError(line, "unexpected character '%c' (0x%02x)", ch, ch);
   }
+}
+
+void nextSym(void) {
+  if (pbN > 0) { tokApply(&pb[--pbN]); return; }
+  nextSymReal();
+  tokRecord(&hist[histCount % HISTMAX]);
+  histCount++;
 }

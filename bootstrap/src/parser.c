@@ -7,7 +7,8 @@
 
 /* predefined procedure ids (Obj with modId == -1) */
 enum { PD_ABS = 1, PD_ODD, PD_LEN, PD_ORD, PD_CHR, PD_ENTIER, PD_FLOOR,
-       PD_NEW = 20, PD_INC, PD_DEC, PD_INCL, PD_EXCL, PD_COPY, PD_HALT, PD_DISPOSE };
+       PD_NEW = 20, PD_INC, PD_DEC, PD_INCL, PD_EXCL, PD_COPY, PD_HALT, PD_DISPOSE,
+       PD_PROCV, PD_PROCC };
 
 /* builtin module proc ids (module id 255) */
 enum { B_OUT_INT = 0, B_OUT_REAL, B_OUT_CHAR, B_OUT_STRING, B_OUT_LN,
@@ -148,6 +149,9 @@ static void installPredefined(void) {
   insertObj(mkPredefProc("EXCL", PD_EXCL, 2, z2, (Type *[]){typeSet, typeInt}));
   insertObj(mkPredefProc("COPY", PD_COPY, 2, z2, (Type *[]){typeCharArrayAny, typeCharArrayAny}));
   insertObj(mkPredefProc("HALT", PD_HALT, 1, z1, (Type *[]){typeInt}));
+  /* bit-casts for threaded code (ext): identity, no code emitted */
+  { Obj *o = mkPredefProc("PROCV", PD_PROCV, 1, z1, (Type *[]){typeLongint}); o->type = typeProc0; insertObj(o); }
+  { Obj *o = mkPredefProc("PROCC", PD_PROCC, 1, z1, (Type *[]){typeProc0}); o->type = typeLongint; insertObj(o); }
 }
 
 static Obj *mkBuiltinProc(const char *nm, int id, int nparams, int *varFlags, Type **ptypes) {
@@ -1275,6 +1279,20 @@ static Type *parseFactor(void) {
             if (t != typeReal) obError(line, "FLOOR requires REAL");
             emit(OP_FFLOOR);
             return typeInt;
+          }
+          case PD_PROCV: { /* LONGINT cell -> procedure value (identity, ext) */
+            expect(S_LPAREN);
+            t = parseExpression();
+            expect(S_RPAREN);
+            if (t != typeLongint) obError(line, "PROCV requires LONGINT");
+            return typeProc0;
+          }
+          case PD_PROCC: { /* procedure value -> LONGINT cell (identity, ext) */
+            expect(S_LPAREN);
+            t = parseExpression();
+            expect(S_RPAREN);
+            if (!t || t->kind != TK_PROC) obError(line, "PROCC requires a procedure value");
+            return typeLongint;
           }
           default:
             obError(line, "'%s' cannot be used in an expression", o->name);

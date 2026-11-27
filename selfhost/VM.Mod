@@ -36,7 +36,7 @@ CONST
   OP_LLT = 79; OP_LLE = 80; OP_LGT = 81; OP_LGE = 82; OP_LEQ = 83; OP_LNE = 84; OP_L2I = 85;
   OP_JUMPTABLE = 86;
   OP_DISPOSE = 87;
-  OP_PROCVAL = 88; OP_CALLP = 89;
+  OP_PROCVAL = 88; OP_CALLP = 89; OP_COUNT = 90;
 
   TAG_PROC = 3;                       (* top byte of a procedure-value cell *)
   SHIFT56 = 72057594037927936;        (* 2^56 *)
@@ -99,6 +99,27 @@ VAR
   impNames: ARRAY MAXMOD, 256 OF CHAR; impCount: INTEGER;  (* deferred imports (fbuf is shared) *)
 
 (* ---------- errors ---------- *)
+TYPE Handler = PROCEDURE();
+VAR handlers: ARRAY OP_COUNT OF Handler;
+VAR op, pc, cur, cofs, oldfp, slot, fi, ld, off, lmod, pidx, steps, base: INTEGER;
+    g, st, n, i, tag, hres, ok, to, ref: INTEGER;
+    e, cr, jb, cf, nl, capBase, bi, bas, prev, k, j, total: INTEGER;
+    u, a, b, rv, t, tg: LONGINT; x, y: REAL;
+
+(* operand byte length per opcode (for threaded-code translation at load) *)
+PROCEDURE OpLen(op: INTEGER): INTEGER;
+BEGIN
+  CASE op OF
+    OP_CONST_I, OP_CONST_S, OP_LOAD_LOCAL, OP_STORE_LOCAL, OP_ADDR_LOCAL, OP_LEN, OP_COPY,
+    OP_JMP, OP_JZ, OP_JNZ: RETURN 4
+  | OP_CONST_R, OP_CONST_L: RETURN 8
+  | OP_LOAD_GLOBAL, OP_STORE_GLOBAL, OP_ADDR_GLOBAL, OP_NEW, OP_ALLOC_ARRAY,
+    OP_ISTYPE, OP_CHECKTYPE, OP_DISPOSE: RETURN 5
+  | OP_CALL, OP_PROCVAL: RETURN 12
+  ELSE RETURN 0
+  END
+END OpLen;
+
 PROCEDURE Fatal;
 BEGIN Out.String("vm: "); Out.String(msgbuf); Out.Ln; SYSTEM.EXIT(1)
 END;
@@ -461,7 +482,25 @@ BEGIN
     pnparams[gid, k] := npar; pnlocals[gid, k] := nloc;
     IF codeUsed + clen > CODESIZE THEN msgbuf := "code overflow"; Fatal END;
     pcofs[gid, k] := codeUsed; pclen[gid, k] := clen;
-    FOR i := 0 TO clen-1 DO code[codeUsed] := RU8(); INC(codeUsed) END
+    (* translate bytecode to threaded code: opcode slot -> handler proc value, operands verbatim *)
+    i := 0;
+    WHILE i < clen DO
+      op := SYSTEM.L2I(RU8()); INC(i);
+      IF (op < 0) OR (op >= OP_COUNT) THEN msgbuf := "bad opcode"; Fatal END;
+      code[codeUsed] := PROCC(handlers[op]); INC(codeUsed);
+      IF op = OP_JUMPTABLE THEN
+        n := SYSTEM.L2I(RU32()); i := i + 4;
+        (* keep n verbatim as 4 byte-cells (threaded layout = 1 byte per cell) *)
+        code[codeUsed] := n MOD 256; INC(codeUsed);
+        code[codeUsed] := (n DIV 256) MOD 256; INC(codeUsed);
+        code[codeUsed] := (n DIV 65536) MOD 256; INC(codeUsed);
+        code[codeUsed] := (n DIV 16777216) MOD 256; INC(codeUsed);
+        FOR j := 0 TO (n+2)*4-1 DO code[codeUsed] := RU8(); INC(codeUsed); INC(i) END
+      ELSE
+        FOR j := 0 TO OpLen(op)-1 DO code[codeUsed] := RU8(); INC(codeUsed); INC(i) END
+      END
+    END
+
   END;
   (* string pool *)
   ns := SYSTEM.L2I(RU32());
@@ -622,29 +661,36 @@ BEGIN
 END;
 
 (* ---------- the interpreter ---------- *)
-PROCEDURE Run();
-VAR op, pc, cur, cofs, oldfp, slot, fi, ld, off, lmod, pidx, steps, base: INTEGER;
-    g, st, n, i, tag, hres, ok, to, ref: INTEGER;
-    e, cr, jb, cf, nl, capBase, bi, bas, prev, k, j, total: INTEGER;
-    u, a, b, rv, t, tg: LONGINT; x, y: REAL;
+
+
+(* ---------- threaded-code handlers (generated from the former CASE branches) ---------- *)
+PROCEDURE H_OP_LOAD_LOCAL();
 BEGIN
-  fmod[0] := 0; fproc[0] := 0; fpc[0] := 0; fbase[0] := 0; fslink[0] := -1;
-  fextra[0] := 0; fcref[0] := 0;
-  fp := 1; sp := pnlocals[0, 0]; running := TRUE;
-  WHILE running & (fp > 0) DO
-    cur := fmod[fp-1]; cofs := pcofs[cur, fproc[fp-1]]; pc := fpc[fp-1]; oldfp := fp;
-    op := SYSTEM.L2I(code[cofs + pc]); INC(pc);
-    CASE op OF
-      (* --- branches ordered by expected frequency (CASE compiles to a linear compare chain) --- *)
-      OP_LOAD_LOCAL: u := RD32(cofs+pc); pc := pc+4;
+ u := RD32(cofs+pc); pc := pc+4;
         ld := SYSTEM.L2I(SYSTEM.LSH(u, -16)); off := SYSTEM.L2I(SYSTEM.BAND(u, 65535));
         fi := fp-1; WHILE ld > 0 DO fi := fslink[fi]; DEC(ld) END;
         IF fi < 0 THEN msgbuf := "bad static link"; Fatal END;
         slot := fbase[fi] + off; Push(stack[slot])
-    | OP_CONST_I: u := RD32(cofs+pc); pc := pc+4; Push(ToI32(u))
-    | OP_IADD: b := Pop(); a := Pop(); Push(ToI32(a + b))
-    | OP_JZ: u := RD32(cofs+pc); pc := pc+4; IF Pop() = 0 THEN pc := SYSTEM.L2I(u) END
-    | OP_CALL:
+END H_OP_LOAD_LOCAL;
+
+PROCEDURE H_OP_CONST_I();
+BEGIN
+ u := RD32(cofs+pc); pc := pc+4; Push(ToI32(u))
+END H_OP_CONST_I;
+
+PROCEDURE H_OP_IADD();
+BEGIN
+ b := Pop(); a := Pop(); Push(ToI32(a + b))
+END H_OP_IADD;
+
+PROCEDURE H_OP_JZ();
+BEGIN
+ u := RD32(cofs+pc); pc := pc+4; IF Pop() = 0 THEN pc := SYSTEM.L2I(u) END
+END H_OP_JZ;
+
+PROCEDURE H_OP_CALL();
+BEGIN
+
         lmod := SYSTEM.L2I(code[cofs+pc]); pidx := SYSTEM.L2I(RD32(cofs+pc+4)); steps := SYSTEM.L2I(RD32(cofs+pc+8));
         pc := pc+12;
         IF lmod = 255 THEN
@@ -663,42 +709,121 @@ BEGIN
           sp := base + pnlocals[g, pidx];
           pc := 0
         END
-    | OP_STORE_LOCAL: u := RD32(cofs+pc); pc := pc+4;
+END H_OP_CALL;
+
+PROCEDURE H_OP_STORE_LOCAL();
+BEGIN
+ u := RD32(cofs+pc); pc := pc+4;
         ld := SYSTEM.L2I(SYSTEM.LSH(u, -16)); off := SYSTEM.L2I(SYSTEM.BAND(u, 65535));
         fi := fp-1; WHILE ld > 0 DO fi := fslink[fi]; DEC(ld) END;
         slot := fbase[fi] + off; stack[slot] := Pop()
-    | OP_INE: b := Pop(); a := Pop(); IF a # b THEN Push(1) ELSE Push(0) END
-    | OP_ADDR_LOCAL: u := RD32(cofs+pc); pc := pc+4;
+END H_OP_STORE_LOCAL;
+
+PROCEDURE H_OP_INE();
+BEGIN
+ b := Pop(); a := Pop(); IF a # b THEN Push(1) ELSE Push(0) END
+END H_OP_INE;
+
+PROCEDURE H_OP_ADDR_LOCAL();
+BEGIN
+ u := RD32(cofs+pc); pc := pc+4;
         ld := SYSTEM.L2I(SYSTEM.LSH(u, -16)); off := SYSTEM.L2I(SYSTEM.BAND(u, 65535));
         fi := fp-1; WHILE ld > 0 DO fi := fslink[fi]; DEC(ld) END;
         slot := fbase[fi] + off; Push(slot)
-    | OP_ILT: b := Pop(); a := Pop(); IF a < b THEN Push(1) ELSE Push(0) END
-    | OP_JMP: pc := SYSTEM.L2I(RD32(cofs+pc))
-    | OP_ELEM_ADDR: b := Pop(); a := Pop();
+END H_OP_ADDR_LOCAL;
+
+PROCEDURE H_OP_ILT();
+BEGIN
+ b := Pop(); a := Pop(); IF a < b THEN Push(1) ELSE Push(0) END
+END H_OP_ILT;
+
+PROCEDURE H_OP_JMP();
+BEGIN
+ pc := SYSTEM.L2I(RD32(cofs+pc))
+END H_OP_JMP;
+
+PROCEDURE H_OP_ELEM_ADDR();
+BEGIN
+ b := Pop(); a := Pop();
         IF a = 0 THEN msgbuf := "nil pointer dereference"; Fatal END;
         tg := heap[SYSTEM.L2I(a)];
         IF tg >= 0 THEN msgbuf := "indexing non-array"; Fatal END;
         n := SYSTEM.L2I(-tg); t := heap[SYSTEM.L2I(a) + n + 1];
         IF (b < 0) OR (b >= t) THEN msgbuf := "index out of range"; Fatal END;
         Push(SYSTEM.LSH(2, 56) + a + n + 2 + b)
-    | OP_IEQ: b := Pop(); a := Pop(); IF a = b THEN Push(1) ELSE Push(0) END
-    | OP_AADD: b := Pop(); a := Pop(); Push(a + b)
-    | OP_LOAD_AT: a := Pop(); Push(MemRead(a))
-    | OP_STORE_AT: b := Pop(); a := Pop(); MemWrite(a, b)
-    | OP_LOAD_GLOBAL: lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
+END H_OP_ELEM_ADDR;
+
+PROCEDURE H_OP_IEQ();
+BEGIN
+ b := Pop(); a := Pop(); IF a = b THEN Push(1) ELSE Push(0) END
+END H_OP_IEQ;
+
+PROCEDURE H_OP_AADD();
+BEGIN
+ b := Pop(); a := Pop(); Push(a + b)
+END H_OP_AADD;
+
+PROCEDURE H_OP_LOAD_AT();
+BEGIN
+ a := Pop(); Push(MemRead(a))
+END H_OP_LOAD_AT;
+
+PROCEDURE H_OP_STORE_AT();
+BEGIN
+ b := Pop(); a := Pop(); MemWrite(a, b)
+END H_OP_STORE_AT;
+
+PROCEDURE H_OP_LOAD_GLOBAL();
+BEGIN
+ lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
         g := map[cur, lmod]; Push(globals[gbase[g] + SYSTEM.L2I(u)])
-    | OP_ISUB: b := Pop(); a := Pop(); Push(ToI32(a - b))
-    | OP_IMUL: b := Pop(); a := Pop(); Push(ToI32(a * b))
-    | OP_STORE_GLOBAL: lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
+END H_OP_LOAD_GLOBAL;
+
+PROCEDURE H_OP_ISUB();
+BEGIN
+ b := Pop(); a := Pop(); Push(ToI32(a - b))
+END H_OP_ISUB;
+
+PROCEDURE H_OP_IMUL();
+BEGIN
+ b := Pop(); a := Pop(); Push(ToI32(a * b))
+END H_OP_IMUL;
+
+PROCEDURE H_OP_STORE_GLOBAL();
+BEGIN
+ lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
         g := map[cur, lmod]; globals[gbase[g] + SYSTEM.L2I(u)] := Pop()
-    | OP_ADDR_GLOBAL: lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
-        (* absolute gid, resolved now: the address stays valid across modules *)
+END H_OP_STORE_GLOBAL;
+
+PROCEDURE H_OP_ADDR_GLOBAL();
+BEGIN
+ lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
         Push(SYSTEM.LSH(1, 56) + SYSTEM.LSH(map[cur, lmod], 48) + u)
-    | OP_CONST_R: u := RD64(cofs+pc); pc := pc+8; Push(u)
-    | OP_CONST_S: u := RD32(cofs+pc); pc := pc+4; Push(strRefs[cur, SYSTEM.L2I(u)])
-    | OP_CONST_L: u := RD64(cofs+pc); pc := pc+8; Push(u)
-    | OP_TO_ADDR: a := Pop(); Push(SYSTEM.LSH(2, 56) + a)
-    | OP_RET: hres := phasResult[fmod[fp-1], fproc[fp-1]];
+END H_OP_ADDR_GLOBAL;
+
+PROCEDURE H_OP_CONST_R();
+BEGIN
+ u := RD64(cofs+pc); pc := pc+8; Push(u)
+END H_OP_CONST_R;
+
+PROCEDURE H_OP_CONST_S();
+BEGIN
+ u := RD32(cofs+pc); pc := pc+4; Push(strRefs[cur, SYSTEM.L2I(u)])
+END H_OP_CONST_S;
+
+PROCEDURE H_OP_CONST_L();
+BEGIN
+ u := RD64(cofs+pc); pc := pc+8; Push(u)
+END H_OP_CONST_L;
+
+PROCEDURE H_OP_TO_ADDR();
+BEGIN
+ a := Pop(); Push(SYSTEM.LSH(2, 56) + a)
+END H_OP_TO_ADDR;
+
+PROCEDURE H_OP_RET();
+BEGIN
+ hres := phasResult[fmod[fp-1], fproc[fp-1]];
         IF hres = 1 THEN rv := Pop() ELSE rv := 0 END;
         sp := fbase[fp-1]; e := fextra[fp-1]; cr := fcref[fp-1];
         IF cr # 0 THEN  (* closure: write captured frames back into the closure object *)
@@ -713,7 +838,11 @@ BEGIN
         IF fp = 0 THEN running := FALSE
         ELSE IF hres = 1 THEN Push(rv) END
         END
-    | OP_NEW: lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
+END H_OP_RET;
+
+PROCEDURE H_OP_NEW();
+BEGIN
+ lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
         g := map[cur, lmod];
         IF tkind[g, SYSTEM.L2I(u)] # TK_POINTER THEN msgbuf := "NEW on non-pointer type"; Fatal END;
         to := tto[g, SYSTEM.L2I(u)];
@@ -726,7 +855,11 @@ BEGIN
           IF ttotal[g, to] = 1073741823 THEN msgbuf := "NEW on open array pointer"; Fatal END;
           Push(AllocArray(g, to))
         ELSE msgbuf := "NEW on unsupported pointee"; Fatal END
-    | OP_DISPOSE: lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
+END H_OP_NEW;
+
+PROCEDURE H_OP_DISPOSE();
+BEGIN
+ lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
         g := map[cur, lmod]; a := Pop(); ref := SYSTEM.L2I(MemRead(a));
         IF ref # 0 THEN
           IF (tkind[g, SYSTEM.L2I(u)] = TK_POINTER) & (tto[g, SYSTEM.L2I(u)] >= 0) THEN
@@ -735,7 +868,11 @@ BEGIN
             HeapFree(ref, n); MemWrite(a, 0)
           ELSE msgbuf := "DISPOSE on non-pointer type"; Fatal END
         END
-    | OP_PROCVAL: lmod := SYSTEM.L2I(RD32(cofs+pc)); pidx := SYSTEM.L2I(RD32(cofs+pc+4));
+END H_OP_DISPOSE;
+
+PROCEDURE H_OP_PROCVAL();
+BEGIN
+ lmod := SYSTEM.L2I(RD32(cofs+pc)); pidx := SYSTEM.L2I(RD32(cofs+pc+4));
         steps := SYSTEM.L2I(RD32(cofs+pc+8)); pc := pc+12;
         g := map[cur, lmod];
         IF steps < 0 THEN  (* 0xFFFFFFFF sentinel: module-level proc -> plain value *)
@@ -758,11 +895,14 @@ BEGIN
           END;
           Push(ref)
         END
-    | OP_CALLP:
+END H_OP_PROCVAL;
+
+PROCEDURE H_OP_CALLP();
+BEGIN
+
         u := Pop();
         IF u = 0 THEN msgbuf := "call of NIL procedure"; Fatal END;
         IF SYSTEM.L2I(SYSTEM.LSH(u, -56)) = TAG_PROC THEN
-          (* plain module-level proc value: caller frame is a fine static link *)
           g := SYSTEM.L2I(SYSTEM.BAND(SYSTEM.LSH(u, -48), 255));
           pidx := SYSTEM.L2I(SYSTEM.BAND(u, MASK32));
           fpc[fp-1] := pc;
@@ -806,16 +946,28 @@ BEGIN
           sp := capBase + total;
           pc := 0
         END
-    | OP_ALLOC_ARRAY: lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
+END H_OP_CALLP;
+
+PROCEDURE H_OP_ALLOC_ARRAY();
+BEGIN
+ lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
         g := map[cur, lmod]; Push(AllocArray(g, SYSTEM.L2I(u)))
-    | OP_LEN: u := RD32(cofs+pc); pc := pc+4; a := Pop();
+END H_OP_ALLOC_ARRAY;
+
+PROCEDURE H_OP_LEN();
+BEGIN
+ u := RD32(cofs+pc); pc := pc+4; a := Pop();
         IF a = 0 THEN msgbuf := "LEN of nil"; Fatal END;
         tg := heap[SYSTEM.L2I(a)];
         IF tg >= 0 THEN msgbuf := "LEN of non-array"; Fatal END;
         n := SYSTEM.L2I(-tg);
         IF (SYSTEM.L2I(u) < 0) OR (SYSTEM.L2I(u) >= n) THEN msgbuf := "bad LEN dimension"; Fatal END;
         Push(heap[SYSTEM.L2I(a) + 1 + SYSTEM.L2I(u)])
-    | OP_ISTYPE, OP_CHECKTYPE: lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
+END H_OP_LEN;
+
+PROCEDURE H_OP_ISTYPE_B();
+BEGIN
+ lmod := SYSTEM.L2I(code[cofs+pc]); u := RD32(cofs+pc+1); pc := pc+5;
         g := map[cur, lmod]; tag := rtTag[g, SYSTEM.L2I(u)];
         a := Pop(); ok := 0;
         IF a # 0 THEN
@@ -829,85 +981,428 @@ BEGIN
           Push(a)
         ELSE Push(ok)
         END
-    | OP_COPY: u := RD32(cofs+pc); pc := pc+4; b := Pop(); a := Pop();
+END H_OP_ISTYPE_B;
+PROCEDURE H_OP_ISTYPE();
+BEGIN op := OP_ISTYPE; H_OP_ISTYPE_B() END H_OP_ISTYPE;
+PROCEDURE H_OP_CHECKTYPE();
+BEGIN op := OP_CHECKTYPE; H_OP_ISTYPE_B() END H_OP_CHECKTYPE;
+
+PROCEDURE H_OP_COPY();
+BEGIN
+ u := RD32(cofs+pc); pc := pc+4; b := Pop(); a := Pop();
         FOR i := 0 TO SYSTEM.L2I(u)-1 DO MemWrite(a + i, MemRead(b + i)) END
-    | OP_COPY_STR: a := Pop(); b := Pop(); (* a = dstRef, b = srcRef *)
+END H_OP_COPY;
+
+PROCEDURE H_OP_COPY_STR();
+BEGIN
+ a := Pop(); b := Pop(); (* a = dstRef, b = srcRef *)
         IF (b = 0) OR (a = 0) THEN msgbuf := "COPY with nil array"; Fatal END;
         i := SYSTEM.L2I(-heap[SYSTEM.L2I(b)]); n := SYSTEM.L2I(-heap[SYSTEM.L2I(a)]);
         ld := SYSTEM.L2I(heap[SYSTEM.L2I(b) + i + 1]); off := SYSTEM.L2I(heap[SYSTEM.L2I(a) + n + 1]);
         IF ld < off THEN off := ld END;
         FOR i := 0 TO off-1 DO heap[SYSTEM.L2I(a) + n + 2 + i] := heap[SYSTEM.L2I(b) + SYSTEM.L2I(-heap[SYSTEM.L2I(b)]) + 2 + i] END
-    | OP_DUP: Push(stack[sp-1])
-    | OP_DROP: u := Pop()
-    | OP_SWAP: b := Pop(); a := Pop(); Push(b); Push(a)
-    | OP_SHL: b := Pop(); a := Pop(); Push(ToI32(SYSTEM.LSH(SYSTEM.BAND(a, MASK32), SYSTEM.BAND(b, 31))))
-    | OP_SHR: b := Pop(); a := Pop(); Push(ToI32(SYSTEM.LSH(SYSTEM.BAND(a, MASK32), -SYSTEM.BAND(b, 31))))
-    | OP_IDIV: b := Pop(); a := Pop();
+END H_OP_COPY_STR;
+
+PROCEDURE H_OP_DUP();
+BEGIN
+ Push(stack[sp-1])
+END H_OP_DUP;
+
+PROCEDURE H_OP_DROP();
+BEGIN
+ u := Pop()
+END H_OP_DROP;
+
+PROCEDURE H_OP_SWAP();
+BEGIN
+ b := Pop(); a := Pop(); Push(b); Push(a)
+END H_OP_SWAP;
+
+PROCEDURE H_OP_SHL();
+BEGIN
+ b := Pop(); a := Pop(); Push(ToI32(SYSTEM.LSH(SYSTEM.BAND(a, MASK32), SYSTEM.BAND(b, 31))))
+END H_OP_SHL;
+
+PROCEDURE H_OP_SHR();
+BEGIN
+ b := Pop(); a := Pop(); Push(ToI32(SYSTEM.LSH(SYSTEM.BAND(a, MASK32), -SYSTEM.BAND(b, 31))))
+END H_OP_SHR;
+
+PROCEDURE H_OP_IDIV();
+BEGIN
+ b := Pop(); a := Pop();
         IF b = 0 THEN msgbuf := "division by zero"; Fatal END; Push(a DIV b)
-    | OP_IMOD: b := Pop(); a := Pop();
+END H_OP_IDIV;
+
+PROCEDURE H_OP_IMOD();
+BEGIN
+ b := Pop(); a := Pop();
         IF b = 0 THEN msgbuf := "division by zero"; Fatal END; Push(a MOD b)
-    | OP_ILE: b := Pop(); a := Pop(); IF a <= b THEN Push(1) ELSE Push(0) END
-    | OP_IGT: b := Pop(); a := Pop(); IF a > b THEN Push(1) ELSE Push(0) END
-    | OP_IGE: b := Pop(); a := Pop(); IF a >= b THEN Push(1) ELSE Push(0) END
-    | OP_JNZ: u := RD32(cofs+pc); pc := pc+4; IF Pop() # 0 THEN pc := SYSTEM.L2I(u) END
-    | OP_INEG: a := Pop(); Push(ToI32(-a))
-    | OP_IABS: a := Pop(); IF a < 0 THEN Push(ToI32(-a)) ELSE Push(a) END
-    | OP_IODD: a := Pop(); Push(SYSTEM.BAND(a, 1))
-    | OP_FADD: b := Pop(); a := Pop(); Push(SYSTEM.REALBITS(SYSTEM.BITSREAL(a) + SYSTEM.BITSREAL(b)))
-    | OP_FSUB: b := Pop(); a := Pop(); Push(SYSTEM.REALBITS(SYSTEM.BITSREAL(a) - SYSTEM.BITSREAL(b)))
-    | OP_FMUL: b := Pop(); a := Pop(); Push(SYSTEM.REALBITS(SYSTEM.BITSREAL(a) * SYSTEM.BITSREAL(b)))
-    | OP_FDIV: b := Pop(); a := Pop(); Push(SYSTEM.REALBITS(SYSTEM.BITSREAL(a) / SYSTEM.BITSREAL(b)))
-    | OP_FNEG: a := Pop(); Push(SYSTEM.REALBITS(-SYSTEM.BITSREAL(a)))
-    | OP_FABS: a := Pop(); x := SYSTEM.BITSREAL(a); IF x < 0.0 THEN Push(SYSTEM.REALBITS(-x)) ELSE Push(a) END
-    | OP_FFLOOR: a := Pop(); Push(FLOOR(SYSTEM.BITSREAL(a)))
-    | OP_I2F: a := Pop(); Push(SYSTEM.REALBITS(SYSTEM.I2REAL(SYSTEM.L2I(a))))
-    | OP_F2I: a := Pop(); Push(ENTIER(SYSTEM.BITSREAL(a)))
-    | OP_FLT: b := Pop(); a := Pop(); x := SYSTEM.BITSREAL(a); y := SYSTEM.BITSREAL(b); IF x < y THEN Push(1) ELSE Push(0) END
-    | OP_FLE: b := Pop(); a := Pop(); x := SYSTEM.BITSREAL(a); y := SYSTEM.BITSREAL(b); IF x <= y THEN Push(1) ELSE Push(0) END
-    | OP_FGT: b := Pop(); a := Pop(); x := SYSTEM.BITSREAL(a); y := SYSTEM.BITSREAL(b); IF x > y THEN Push(1) ELSE Push(0) END
-    | OP_FGE: b := Pop(); a := Pop(); x := SYSTEM.BITSREAL(a); y := SYSTEM.BITSREAL(b); IF x >= y THEN Push(1) ELSE Push(0) END
-    | OP_FEQ: b := Pop(); a := Pop(); x := SYSTEM.BITSREAL(a); y := SYSTEM.BITSREAL(b); IF x = y THEN Push(1) ELSE Push(0) END
-    | OP_FNE: b := Pop(); a := Pop(); x := SYSTEM.BITSREAL(a); y := SYSTEM.BITSREAL(b); IF x # y THEN Push(1) ELSE Push(0) END
-    | OP_EQ: b := Pop(); a := Pop(); IF a = b THEN Push(1) ELSE Push(0) END
-    | OP_NE: b := Pop(); a := Pop(); IF a # b THEN Push(1) ELSE Push(0) END
-    | OP_AND: b := Pop(); a := Pop(); IF (a # 0) & (b # 0) THEN Push(1) ELSE Push(0) END
-    | OP_OR: b := Pop(); a := Pop(); IF (a # 0) OR (b # 0) THEN Push(1) ELSE Push(0) END
-    | OP_NOT: a := Pop(); IF a = 0 THEN Push(1) ELSE Push(0) END
-    | OP_SET_UNION: b := Pop(); a := Pop(); Push(SYSTEM.BAND(SYSTEM.BOR(a, b), MASK32))
-    | OP_SET_DIFF: b := Pop(); a := Pop(); Push(SYSTEM.BAND(SYSTEM.BAND(a, SYSTEM.BNOT(b)), MASK32))
-    | OP_SET_INTER: b := Pop(); a := Pop(); Push(SYSTEM.BAND(SYSTEM.BAND(a, b), MASK32))
-    | OP_SET_MEMBER: a := Pop(); b := Pop();
+END H_OP_IMOD;
+
+PROCEDURE H_OP_ILE();
+BEGIN
+ b := Pop(); a := Pop(); IF a <= b THEN Push(1) ELSE Push(0) END
+END H_OP_ILE;
+
+PROCEDURE H_OP_IGT();
+BEGIN
+ b := Pop(); a := Pop(); IF a > b THEN Push(1) ELSE Push(0) END
+END H_OP_IGT;
+
+PROCEDURE H_OP_IGE();
+BEGIN
+ b := Pop(); a := Pop(); IF a >= b THEN Push(1) ELSE Push(0) END
+END H_OP_IGE;
+
+PROCEDURE H_OP_JNZ();
+BEGIN
+ u := RD32(cofs+pc); pc := pc+4; IF Pop() # 0 THEN pc := SYSTEM.L2I(u) END
+END H_OP_JNZ;
+
+PROCEDURE H_OP_INEG();
+BEGIN
+ a := Pop(); Push(ToI32(-a))
+END H_OP_INEG;
+
+PROCEDURE H_OP_IABS();
+BEGIN
+ a := Pop(); IF a < 0 THEN Push(ToI32(-a)) ELSE Push(a) END
+END H_OP_IABS;
+
+PROCEDURE H_OP_IODD();
+BEGIN
+ a := Pop(); Push(SYSTEM.BAND(a, 1))
+END H_OP_IODD;
+
+PROCEDURE H_OP_FADD();
+BEGIN
+ b := Pop(); a := Pop(); Push(SYSTEM.REALBITS(SYSTEM.BITSREAL(a) + SYSTEM.BITSREAL(b)))
+END H_OP_FADD;
+
+PROCEDURE H_OP_FSUB();
+BEGIN
+ b := Pop(); a := Pop(); Push(SYSTEM.REALBITS(SYSTEM.BITSREAL(a) - SYSTEM.BITSREAL(b)))
+END H_OP_FSUB;
+
+PROCEDURE H_OP_FMUL();
+BEGIN
+ b := Pop(); a := Pop(); Push(SYSTEM.REALBITS(SYSTEM.BITSREAL(a) * SYSTEM.BITSREAL(b)))
+END H_OP_FMUL;
+
+PROCEDURE H_OP_FDIV();
+BEGIN
+ b := Pop(); a := Pop(); Push(SYSTEM.REALBITS(SYSTEM.BITSREAL(a) / SYSTEM.BITSREAL(b)))
+END H_OP_FDIV;
+
+PROCEDURE H_OP_FNEG();
+BEGIN
+ a := Pop(); Push(SYSTEM.REALBITS(-SYSTEM.BITSREAL(a)))
+END H_OP_FNEG;
+
+PROCEDURE H_OP_FABS();
+BEGIN
+ a := Pop(); x := SYSTEM.BITSREAL(a); IF x < 0.0 THEN Push(SYSTEM.REALBITS(-x)) ELSE Push(a) END
+END H_OP_FABS;
+
+PROCEDURE H_OP_FFLOOR();
+BEGIN
+ a := Pop(); Push(FLOOR(SYSTEM.BITSREAL(a)))
+END H_OP_FFLOOR;
+
+PROCEDURE H_OP_I2F();
+BEGIN
+ a := Pop(); Push(SYSTEM.REALBITS(SYSTEM.I2REAL(SYSTEM.L2I(a))))
+END H_OP_I2F;
+
+PROCEDURE H_OP_F2I();
+BEGIN
+ a := Pop(); Push(ENTIER(SYSTEM.BITSREAL(a)))
+END H_OP_F2I;
+
+PROCEDURE H_OP_FLT();
+BEGIN
+ b := Pop(); a := Pop(); x := SYSTEM.BITSREAL(a); y := SYSTEM.BITSREAL(b); IF x < y THEN Push(1) ELSE Push(0) END
+END H_OP_FLT;
+
+PROCEDURE H_OP_FLE();
+BEGIN
+ b := Pop(); a := Pop(); x := SYSTEM.BITSREAL(a); y := SYSTEM.BITSREAL(b); IF x <= y THEN Push(1) ELSE Push(0) END
+END H_OP_FLE;
+
+PROCEDURE H_OP_FGT();
+BEGIN
+ b := Pop(); a := Pop(); x := SYSTEM.BITSREAL(a); y := SYSTEM.BITSREAL(b); IF x > y THEN Push(1) ELSE Push(0) END
+END H_OP_FGT;
+
+PROCEDURE H_OP_FGE();
+BEGIN
+ b := Pop(); a := Pop(); x := SYSTEM.BITSREAL(a); y := SYSTEM.BITSREAL(b); IF x >= y THEN Push(1) ELSE Push(0) END
+END H_OP_FGE;
+
+PROCEDURE H_OP_FEQ();
+BEGIN
+ b := Pop(); a := Pop(); x := SYSTEM.BITSREAL(a); y := SYSTEM.BITSREAL(b); IF x = y THEN Push(1) ELSE Push(0) END
+END H_OP_FEQ;
+
+PROCEDURE H_OP_FNE();
+BEGIN
+ b := Pop(); a := Pop(); x := SYSTEM.BITSREAL(a); y := SYSTEM.BITSREAL(b); IF x # y THEN Push(1) ELSE Push(0) END
+END H_OP_FNE;
+
+PROCEDURE H_OP_EQ();
+BEGIN
+ b := Pop(); a := Pop(); IF a = b THEN Push(1) ELSE Push(0) END
+END H_OP_EQ;
+
+PROCEDURE H_OP_NE();
+BEGIN
+ b := Pop(); a := Pop(); IF a # b THEN Push(1) ELSE Push(0) END
+END H_OP_NE;
+
+PROCEDURE H_OP_AND();
+BEGIN
+ b := Pop(); a := Pop(); IF (a # 0) & (b # 0) THEN Push(1) ELSE Push(0) END
+END H_OP_AND;
+
+PROCEDURE H_OP_OR();
+BEGIN
+ b := Pop(); a := Pop(); IF (a # 0) OR (b # 0) THEN Push(1) ELSE Push(0) END
+END H_OP_OR;
+
+PROCEDURE H_OP_NOT();
+BEGIN
+ a := Pop(); IF a = 0 THEN Push(1) ELSE Push(0) END
+END H_OP_NOT;
+
+PROCEDURE H_OP_SET_UNION();
+BEGIN
+ b := Pop(); a := Pop(); Push(SYSTEM.BAND(SYSTEM.BOR(a, b), MASK32))
+END H_OP_SET_UNION;
+
+PROCEDURE H_OP_SET_DIFF();
+BEGIN
+ b := Pop(); a := Pop(); Push(SYSTEM.BAND(SYSTEM.BAND(a, SYSTEM.BNOT(b)), MASK32))
+END H_OP_SET_DIFF;
+
+PROCEDURE H_OP_SET_INTER();
+BEGIN
+ b := Pop(); a := Pop(); Push(SYSTEM.BAND(SYSTEM.BAND(a, b), MASK32))
+END H_OP_SET_INTER;
+
+PROCEDURE H_OP_SET_MEMBER();
+BEGIN
+ a := Pop(); b := Pop();
         IF (b < 0) OR (b > 31) THEN msgbuf := "set element out of range"; Fatal END;
         Push(SYSTEM.BAND(SYSTEM.LSH(a, -b), 1))
-    | OP_LADD: b := Pop(); a := Pop(); Push(a + b)
-    | OP_LSUB: b := Pop(); a := Pop(); Push(a - b)
-    | OP_LMUL: b := Pop(); a := Pop(); Push(a * b)
-    | OP_LDIV: b := Pop(); a := Pop();
+END H_OP_SET_MEMBER;
+
+PROCEDURE H_OP_LADD();
+BEGIN
+ b := Pop(); a := Pop(); Push(a + b)
+END H_OP_LADD;
+
+PROCEDURE H_OP_LSUB();
+BEGIN
+ b := Pop(); a := Pop(); Push(a - b)
+END H_OP_LSUB;
+
+PROCEDURE H_OP_LMUL();
+BEGIN
+ b := Pop(); a := Pop(); Push(a * b)
+END H_OP_LMUL;
+
+PROCEDURE H_OP_LDIV();
+BEGIN
+ b := Pop(); a := Pop();
         IF b = 0 THEN msgbuf := "division by zero"; Fatal END; Push(a DIV b)
-    | OP_LMOD: b := Pop(); a := Pop();
+END H_OP_LDIV;
+
+PROCEDURE H_OP_LMOD();
+BEGIN
+ b := Pop(); a := Pop();
         IF b = 0 THEN msgbuf := "division by zero"; Fatal END; Push(a MOD b)
-    | OP_LNEG: a := Pop(); Push(-a)
-    | OP_LABS: a := Pop(); IF a < 0 THEN Push(-a) ELSE Push(a) END
-    | OP_LODD: a := Pop(); Push(SYSTEM.BAND(a, 1))
-    | OP_LLT: b := Pop(); a := Pop(); IF a < b THEN Push(1) ELSE Push(0) END
-    | OP_LLE: b := Pop(); a := Pop(); IF a <= b THEN Push(1) ELSE Push(0) END
-    | OP_LGT: b := Pop(); a := Pop(); IF a > b THEN Push(1) ELSE Push(0) END
-    | OP_LGE: b := Pop(); a := Pop(); IF a >= b THEN Push(1) ELSE Push(0) END
-    | OP_LEQ: b := Pop(); a := Pop(); IF a = b THEN Push(1) ELSE Push(0) END
-    | OP_LNE: b := Pop(); a := Pop(); IF a # b THEN Push(1) ELSE Push(0) END
-    | OP_L2I: a := Pop(); Push(ToI32(a))
-    | OP_JUMPTABLE: u := RD32(cofs+pc); a := RD32(cofs+pc+4); b := RD32(cofs+pc+8); pc := pc+12;
+END H_OP_LMOD;
+
+PROCEDURE H_OP_LNEG();
+BEGIN
+ a := Pop(); Push(-a)
+END H_OP_LNEG;
+
+PROCEDURE H_OP_LABS();
+BEGIN
+ a := Pop(); IF a < 0 THEN Push(-a) ELSE Push(a) END
+END H_OP_LABS;
+
+PROCEDURE H_OP_LODD();
+BEGIN
+ a := Pop(); Push(SYSTEM.BAND(a, 1))
+END H_OP_LODD;
+
+PROCEDURE H_OP_LLT();
+BEGIN
+ b := Pop(); a := Pop(); IF a < b THEN Push(1) ELSE Push(0) END
+END H_OP_LLT;
+
+PROCEDURE H_OP_LLE();
+BEGIN
+ b := Pop(); a := Pop(); IF a <= b THEN Push(1) ELSE Push(0) END
+END H_OP_LLE;
+
+PROCEDURE H_OP_LGT();
+BEGIN
+ b := Pop(); a := Pop(); IF a > b THEN Push(1) ELSE Push(0) END
+END H_OP_LGT;
+
+PROCEDURE H_OP_LGE();
+BEGIN
+ b := Pop(); a := Pop(); IF a >= b THEN Push(1) ELSE Push(0) END
+END H_OP_LGE;
+
+PROCEDURE H_OP_LEQ();
+BEGIN
+ b := Pop(); a := Pop(); IF a = b THEN Push(1) ELSE Push(0) END
+END H_OP_LEQ;
+
+PROCEDURE H_OP_LNE();
+BEGIN
+ b := Pop(); a := Pop(); IF a # b THEN Push(1) ELSE Push(0) END
+END H_OP_LNE;
+
+PROCEDURE H_OP_L2I();
+BEGIN
+ a := Pop(); Push(ToI32(a))
+END H_OP_L2I;
+
+PROCEDURE H_OP_JUMPTABLE();
+BEGIN
+ u := RD32(cofs+pc); a := RD32(cofs+pc+4); b := RD32(cofs+pc+8); pc := pc+12;
         rv := Pop(); i := SYSTEM.L2I(rv - a);
         IF (i >= 0) & (i < SYSTEM.L2I(u)) THEN pc := SYSTEM.L2I(RD32(cofs + pc + 4*i))
         ELSE pc := SYSTEM.L2I(b) END
-    | OP_NOP: (* nothing *)
-    ELSE msgbuf := "bad opcode"; Fatal
-    END;
+END H_OP_JUMPTABLE;
+
+PROCEDURE H_OP_NOP();
+BEGIN
+ (* nothing *)
+END H_OP_NOP;
+
+
+PROCEDURE InitHandlers();
+BEGIN
+  handlers[OP_LOAD_LOCAL] := H_OP_LOAD_LOCAL;
+  handlers[OP_CONST_I] := H_OP_CONST_I;
+  handlers[OP_IADD] := H_OP_IADD;
+  handlers[OP_JZ] := H_OP_JZ;
+  handlers[OP_CALL] := H_OP_CALL;
+  handlers[OP_STORE_LOCAL] := H_OP_STORE_LOCAL;
+  handlers[OP_INE] := H_OP_INE;
+  handlers[OP_ADDR_LOCAL] := H_OP_ADDR_LOCAL;
+  handlers[OP_ILT] := H_OP_ILT;
+  handlers[OP_JMP] := H_OP_JMP;
+  handlers[OP_ELEM_ADDR] := H_OP_ELEM_ADDR;
+  handlers[OP_IEQ] := H_OP_IEQ;
+  handlers[OP_AADD] := H_OP_AADD;
+  handlers[OP_LOAD_AT] := H_OP_LOAD_AT;
+  handlers[OP_STORE_AT] := H_OP_STORE_AT;
+  handlers[OP_LOAD_GLOBAL] := H_OP_LOAD_GLOBAL;
+  handlers[OP_ISUB] := H_OP_ISUB;
+  handlers[OP_IMUL] := H_OP_IMUL;
+  handlers[OP_STORE_GLOBAL] := H_OP_STORE_GLOBAL;
+  handlers[OP_ADDR_GLOBAL] := H_OP_ADDR_GLOBAL;
+  handlers[OP_CONST_R] := H_OP_CONST_R;
+  handlers[OP_CONST_S] := H_OP_CONST_S;
+  handlers[OP_CONST_L] := H_OP_CONST_L;
+  handlers[OP_TO_ADDR] := H_OP_TO_ADDR;
+  handlers[OP_RET] := H_OP_RET;
+  handlers[OP_NEW] := H_OP_NEW;
+  handlers[OP_DISPOSE] := H_OP_DISPOSE;
+  handlers[OP_PROCVAL] := H_OP_PROCVAL;
+  handlers[OP_CALLP] := H_OP_CALLP;
+  handlers[OP_ALLOC_ARRAY] := H_OP_ALLOC_ARRAY;
+  handlers[OP_LEN] := H_OP_LEN;
+  handlers[OP_ISTYPE] := H_OP_ISTYPE;
+  handlers[OP_CHECKTYPE] := H_OP_CHECKTYPE;
+  handlers[OP_COPY] := H_OP_COPY;
+  handlers[OP_COPY_STR] := H_OP_COPY_STR;
+  handlers[OP_DUP] := H_OP_DUP;
+  handlers[OP_DROP] := H_OP_DROP;
+  handlers[OP_SWAP] := H_OP_SWAP;
+  handlers[OP_SHL] := H_OP_SHL;
+  handlers[OP_SHR] := H_OP_SHR;
+  handlers[OP_IDIV] := H_OP_IDIV;
+  handlers[OP_IMOD] := H_OP_IMOD;
+  handlers[OP_ILE] := H_OP_ILE;
+  handlers[OP_IGT] := H_OP_IGT;
+  handlers[OP_IGE] := H_OP_IGE;
+  handlers[OP_JNZ] := H_OP_JNZ;
+  handlers[OP_INEG] := H_OP_INEG;
+  handlers[OP_IABS] := H_OP_IABS;
+  handlers[OP_IODD] := H_OP_IODD;
+  handlers[OP_FADD] := H_OP_FADD;
+  handlers[OP_FSUB] := H_OP_FSUB;
+  handlers[OP_FMUL] := H_OP_FMUL;
+  handlers[OP_FDIV] := H_OP_FDIV;
+  handlers[OP_FNEG] := H_OP_FNEG;
+  handlers[OP_FABS] := H_OP_FABS;
+  handlers[OP_FFLOOR] := H_OP_FFLOOR;
+  handlers[OP_I2F] := H_OP_I2F;
+  handlers[OP_F2I] := H_OP_F2I;
+  handlers[OP_FLT] := H_OP_FLT;
+  handlers[OP_FLE] := H_OP_FLE;
+  handlers[OP_FGT] := H_OP_FGT;
+  handlers[OP_FGE] := H_OP_FGE;
+  handlers[OP_FEQ] := H_OP_FEQ;
+  handlers[OP_FNE] := H_OP_FNE;
+  handlers[OP_EQ] := H_OP_EQ;
+  handlers[OP_NE] := H_OP_NE;
+  handlers[OP_AND] := H_OP_AND;
+  handlers[OP_OR] := H_OP_OR;
+  handlers[OP_NOT] := H_OP_NOT;
+  handlers[OP_SET_UNION] := H_OP_SET_UNION;
+  handlers[OP_SET_DIFF] := H_OP_SET_DIFF;
+  handlers[OP_SET_INTER] := H_OP_SET_INTER;
+  handlers[OP_SET_MEMBER] := H_OP_SET_MEMBER;
+  handlers[OP_LADD] := H_OP_LADD;
+  handlers[OP_LSUB] := H_OP_LSUB;
+  handlers[OP_LMUL] := H_OP_LMUL;
+  handlers[OP_LDIV] := H_OP_LDIV;
+  handlers[OP_LMOD] := H_OP_LMOD;
+  handlers[OP_LNEG] := H_OP_LNEG;
+  handlers[OP_LABS] := H_OP_LABS;
+  handlers[OP_LODD] := H_OP_LODD;
+  handlers[OP_LLT] := H_OP_LLT;
+  handlers[OP_LLE] := H_OP_LLE;
+  handlers[OP_LGT] := H_OP_LGT;
+  handlers[OP_LGE] := H_OP_LGE;
+  handlers[OP_LEQ] := H_OP_LEQ;
+  handlers[OP_LNE] := H_OP_LNE;
+  handlers[OP_L2I] := H_OP_L2I;
+  handlers[OP_JUMPTABLE] := H_OP_JUMPTABLE;
+  handlers[OP_NOP] := H_OP_NOP;
+END InitHandlers;
+
+(* ---------- the interpreter: threaded-code dispatch ----------
+   Each guest instruction slot holds a handler procedure value (TAG_PROC cell);
+   the loop fetches it and calls it indirectly: no opcode decode, no linear CASE. *)
+PROCEDURE Run();
+VAR h: Handler; oldfp: INTEGER;
+BEGIN
+  fmod[0] := 0; fproc[0] := 0; fpc[0] := 0; fbase[0] := 0; fslink[0] := -1;
+  fextra[0] := 0; fcref[0] := 0;
+  fp := 1; sp := pnlocals[0, 0]; running := TRUE;
+  WHILE running & (fp > 0) DO
+    cur := fmod[fp-1]; cofs := pcofs[cur, fproc[fp-1]]; pc := fpc[fp-1]; oldfp := fp;
+    h := PROCV(code[cofs + pc]); INC(pc);
+    h();
     IF fp = oldfp THEN fpc[fp-1] := pc END
   END
 END;
 
+
 (* ---------- main ---------- *)
+
+
 PROCEDURE Main();
 VAR i, j, lastSep: INTEGER;
 BEGIN
@@ -931,7 +1426,9 @@ BEGIN
   name[j] := 0X;
   nmods := 0; heapUsed := 1; freeHead := 0; codeUsed := 0; globalsUsed := 0; tagCounter := 0;
   fp := 0; sp := 0; running := FALSE; haltCode := 0;
+  InitHandlers();
   LoadMod(name, dir);
+
   Run();
   SYSTEM.EXIT(haltCode)
 END;

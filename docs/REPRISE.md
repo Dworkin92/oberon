@@ -3,13 +3,13 @@
 > **Règle d'or** : mettre ce fichier à jour à chaque fin de session (état, tests, prochaine étape).
 > Tout l'état du projet vit dans le dépôt ; une nouvelle session repart d'ici.
 
-## État actuel (26/11/2026, vérifié ce jour)
+## État actuel (27/11/2026, vérifié ce jour)
 
 Chaîne complète **compilateur Oberon-07 → bytecode `.obc` → VM maison**, stage-0 en C,
-plus VM réécrite en Oberon. **Tests : 96/96** (24 exemples × 4 moteurs : `obvm` C,
-natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif). Derniers ajouts : **types procéduraux
-+ closures** (`TYPE P = PROCEDURE(...)[: T]`, `f := Proc`, `f(args)`, `RETURN Proc`,
-`OP_PROCVAL`=88 (3 u32) / `OP_CALLP`=89, closures = snapshot heap `CLOSURE_TAG` + réécriture au RET).
+plus VM réécrite en Oberon **en threaded code** (dispatch par valeurs procédurales).
+**Tests : 96/96** (24 exemples × 4 moteurs : `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm,
+`VM.Mod` natif). Groupe A du TODO terminé : types procéduraux + closures + threaded code
+(`OP_PROCVAL`=88 (3 u32) / `OP_CALLP`=89, `CLOSURE_TAG`, handlers `H_OP_*` dans VM.Mod).
 
 ```
 oberon/
@@ -42,7 +42,8 @@ Chemin de recherche des imports (dans obc, obvm, ob2c **et** VM.Mod) : `D/M.obc`
 
 - **Opcodes append-only** dans `bootstrap/src/ob.h` (derniers = `OP_PROCVAL` 88, `OP_CALLP` 89 ; `OP_DISPOSE` 87 ; `OP_JUMPTABLE` 86). **Piège** : `OP_PROCVAL` = **trois opérandes u32** (12 octets : lmod, proc, steps), pas u8+u32.
 - Valeur procédurale simple = cellule taguée `TAG_PROC=0x03` : [tag][gid 8 bits][proc 32 bits] (`MK_PROC`/`PROC_GID`/`PROC_IDX`). **Closure** = ref heap nue vers objet `CLOSURE_TAG=0x40000001` : `[tag][gid][proc][nframes][par frame: nlocals, cellules...]` ; matérialisée à `OP_CALLP`, réécrite au `OP_RET` (Frame.extra/cref ; helpers `rtProcVal`/`rtCallP`/`rtLeaveFrame` dans rt.c partagés obvm/ob2c ; idem VM.Mod avec fextra/fcref).
-- `OP_PROCVAL` steps = `0xFFFFFFFF` → valeur simple ; sinon snapshot de `steps` slinks. **Piège lexer** : `lexSave/lexRestore` doit aussi `fseek` (champ `fpos`) sinon le lookahead est perdu.
+- `OP_PROCVAL` steps = `0xFFFFFFFF` → valeur simple ; sinon snapshot de `steps` slinks. **Piège lexer** : `lexSave`/`lexRestore` = pushback de **tokens** (hist/pb dans lexer.c), PAS de fseek (pas fiable en mode texte Windows).
+- Threaded code VM.Mod : slot opcode = valeur proc handler (`PROCC(handlers[op])`), opérandes = 1 octet/cellule (**y compris `n` de JUMPTABLE : 4 cellules**). Casts prédéfinis `PROCV`/`PROCC` (identité). Dispatch : `h := PROCV(code[cofs+pc]); INC(pc); h();`.
 - Kinds de types : `TK_LONGINT`=10, **`TK_PROC`=11** (les deux côtés C et VM.Mod doivent d'accord).
 - Cellules 64 bits ; adresses taggées (octet haut : 0x00 pile / 0x01 global / 0x02 tas).
 - **Adresse globale = gid absolu** résolu à la création (pas l'index d'import local) — sinon les `VAR`
@@ -66,12 +67,10 @@ module `SYSTEM`
 (BAND/BOR/BXOR/BNOT/LSH/ROT/BIT/ARGC/ARGV/TICKS/EXIT, casts L2I/REALBITS/BITSREAL/I2REAL),
 superinstruction `OP_JUMPTABLE` pour les `CASE` denses.
 
-## Prochaine étape (TODO groupe A restant)
+## Prochaine étape (groupe A terminé ✅ → on passe au compilateur)
 
-1. **Threaded code dans `VM.Mod`** (maintenant rendu exprimable par les variables procédurales :
-   chaque instruction = valeur proc, dispatch sans décodage d'opcode)
-2. `VAR` record params, `ARRAY OF RECORD`, `SYSTEM.VAL/ADR/GET/PUT` si besoin réel
-3. Puis **OC.Mod** (compilateur en Oberon) : d'abord émetteur de `.obc` identique au stage-0
+1. `VAR` record params, `ARRAY OF RECORD`, `SYSTEM.VAL/ADR/GET/PUT` si besoin réel (groupe A "si besoin")
+2. Puis **OC.Mod** (compilateur en Oberon) : d'abord émetteur de `.obc` identique au stage-0
    (phase `PASS-OC`), puis backend C et auto-compilation (`oc.obc → oc2.c → gcc`, `diff`),
    avec `bootstrap/tests/expected/` comme banc de régression.
 

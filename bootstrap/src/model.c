@@ -1,6 +1,7 @@
 #include "model.h"
 
 Type *typeInt, *typeReal, *typeBool, *typeChar, *typeSet, *typeNil, *typeLongint;
+Type *typeProc0;
 Type *typeCharArrayAny;
 Type *typeAnyPointer;
 int gTypeStamp = 0;
@@ -22,6 +23,8 @@ void initBasicTypes(void) {
   typeAnyPointer = newType(TK_POINTER);
   strcpy(typeAnyPointer->name, "ANYPOINTER");
   typeAnyPointer->anyPointer = 1;
+  typeProc0 = newType(TK_PROC); /* PROCEDURE() with no params/result: for PROCV/PROCC casts */
+  strcpy(typeProc0->name, "PROCEDURE()");
 }
 
 Type *newType(int kind) {

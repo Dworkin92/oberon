@@ -2,9 +2,9 @@
 
 > ⭐ Après un compactage ou une nouvelle session, repartir de [`docs/REPRISE.md`](docs/REPRISE.md).
 
-État au 26/11/2026 : étapes 0–5 faites + types procéduraux + closures, **96/96 tests** (24 exemples × 4 moteurs :
+État au 27/11/2026 : étapes 0–5 faites + types procéduraux + closures + threaded code VM.Mod, **96/96 tests** (24 exemples × 4 moteurs :
 `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif). Voir
-[`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md) pour la vision d'ensemble.
+[`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md) pour la vision d'ensemble. **Groupe A terminé.**
 
 ## ✅ Fait
 
@@ -22,7 +22,7 @@
 
 ## 🎯 Prochaine grosse étape : OC.Mod (étape 6, le compilateur en Oberon)
 
-### A. Fondations langage manquantes (dans le stage-0 d'abord)
+### A. Fondations langage manquantes (dans le stage-0 d'abord) — ✅ toutes faites le 27/11
 
 - [x] **Open arrays** : `PROCEDURE P(VAR a: ARRAY OF CHAR)` (paramètre de taille dynamique, `LEN(a,0)` = taille réelle passée) — fait : flag `isOpen` sur `Type`, sentinelle `0xFFFFFFFF` dans le `.obc`, tests `OpenArr.Mod` + `MathLib.SumArr` (72/72)
 - [x] **Bibliothèque `lib/`** : `MathLib` déplacé, `Strings` ajouté, chemin de recherche `D/`, `D/../lib/`, `D/../../lib/` dans obc/obvm/ob2c/VM.Mod (76/76)
@@ -31,7 +31,8 @@
 - [x] **Conversion implicite `INTEGER` → `REAL`** — fait : `I2F` émis dans `+ - * /` (mixte), comparaisons, assignation, arguments valeur, `RETURN` ; `7/2 = 3.5` maintenant. Test `RealConv.Mod` → 84/84
 - [x] **`WITH p: T DO … END`** — fait : shadowing de la variable (POINTER TO T) dans le corps + check runtime CHECKTYPE ; multi-gardes OK. Test `WithDemo.Mod` (hiérarchie Shape/Circle/Rect, param, multi-gardes, restauration du type après) → 88/88
 - [x] **Types procéduraux / variables procédurales** (26/11) — `TYPE P = PROCEDURE(...)[: T]`, `f := Proc`, `f(args)`, `f = NIL`, proc en argument ; `OP_PROCVAL`=88 (3 u32) / `OP_CALLP`=89 ; test `ProcVar.Mod` → 92/92
-- [x] **Closures** (26/11) — proc imbriquée comme valeur : snapshot de la chaîne de frames dans un objet heap `CLOSURE_TAG` (OP_PROCVAL steps≠-1), matérialisation + réécriture au RET (Frame.extra/cref, `rtProcVal`/`rtCallP`/`rtLeaveFrame` dans rt.c, idem VM.Mod) ; `RETURN ProcIdent` ; test `Closure.Mod` (MakeAdder + compteur à état) → **96/96**. Reste : threaded code dans `VM.Mod`
+- [x] **Closures** (26/11) — proc imbriquée comme valeur : snapshot de la chaîne de frames dans un objet heap `CLOSURE_TAG` (OP_PROCVAL steps≠-1), matérialisation + réécriture au RET (Frame.extra/cref, `rtProcVal`/`rtCallP`/`rtLeaveFrame` dans rt.c, idem VM.Mod) ; `RETURN ProcIdent` ; test `Closure.Mod` (MakeAdder + compteur à état) → **96/96**
+- [x] **Threaded code dans VM.Mod** (27/11) — dispatch par valeur procédurale (`h := PROCV(code[pc]); h()`), traduction au chargement, handlers `H_OP_*` + `InitHandlers` + `OpLen`, prédéfinis `PROCV`/`PROCC` ; lexer : pushback de tokens (hist/pb) à la place de fseek ; perfs VM.Mod natif ×1,3 sur Queens → **96/96**
 - [ ] `VAR` record params, `ARRAY OF RECORD`
 - [ ] `SYSTEM.VAL/ADR/GET/PUT` (à rouvrir seulement si besoin réel)
 

@@ -32,13 +32,22 @@ extern int line;
 void lexInit(FILE *f, const char *srcName);
 void nextSym(void);
 
-/* save/restore lexer state (nested compilations of imported modules) */
+/* a recorded token (for lexSave/lexRestore pushback) */
 typedef struct {
-  FILE *src; int ch; int line; int sym;
+  int sym, line, obLine;
   long long ival; double rval; int cval;
   char name[64]; char sval[4096]; int slen;
+} LexTok;
+
+/* save/restore lexer state (nested compilations of imported modules,
+   and speculative parsing e.g. procedure-value detection).
+   Restore replays the tokens consumed since the save (token pushback),
+   but only if the input file has not changed (import case). */
+typedef struct {
+  LexTok tok;          /* current token at save time */
+  FILE *src; int ch;   /* input stream + lookahead char */
+  long histMark;       /* token-history position at save time */
   const char *srcName; int obLine;
-  long fpos; /* ftell(src) at save time: rewind point for lexRestore */
 } LexState;
 void lexSave(LexState *s);
 void lexRestore(const LexState *s);

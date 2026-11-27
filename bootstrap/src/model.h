@@ -112,6 +112,7 @@ typedef struct Module {
 /* ---- model.c ---- */
 Type *newType(int kind);
 extern Type *typeInt, *typeReal, *typeBool, *typeChar, *typeSet, *typeNil, *typeLongint;
+extern Type *typeProc0; /* PROCEDURE() with no params/result (PROCV/PROCC casts) */
 extern Type *typeCharArrayAny; /* marker: any ARRAY OF CHAR (Out.String, In.Line, COPY) */
 extern Type *typeAnyPointer;   /* marker: any pointer (DISPOSE param) */
 void initBasicTypes(void);
