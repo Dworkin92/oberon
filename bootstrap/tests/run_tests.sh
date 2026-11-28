@@ -127,6 +127,8 @@ done
 run_test Echo '7\n2.5\nOberon\n';        run_ctest Echo '7\n2.5\nOberon\n';   run_vmtest Echo '7\n2.5\nOberon\n';   run_vmntest Echo '7\n2.5\nOberon\n'
 run_test Bytes 'AB\000\377';             run_ctest Bytes 'AB\000\377';      run_vmtest Bytes 'AB\000\377';      run_vmntest Bytes 'AB\000\377'
 run_test SysDemo '' alpha 42;            run_ctest SysDemo '' alpha 42;     run_vmtest SysDemo '' alpha 42;     run_vmntest SysDemo '' alpha 42
+# LexDump : test du scanner Oberon selfhost/OCS.Mod (dump des tokens de Hello.Mod)
+run_test LexDump '' examples/Hello.Mod; run_ctest LexDump '' examples/Hello.Mod; run_vmtest LexDump '' examples/Hello.Mod; run_vmntest LexDump '' examples/Hello.Mod
 # SqlDemo passe par lib/Sqlite.Mod : binding PUR Oberon au-dessus du FFI SYSTEM
 # (LOADLIB "sqlite3.dll" -> C:\Local\Tools\sqlite3\sqlite3.dll en repli, SYMBOL, CALLC).
 

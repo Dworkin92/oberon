@@ -113,3 +113,12 @@
 - **bugs trouvés en passant** :
   - `gTypeStamp` initialisé à 1 (0 faisait échouer le garde `visited` à la parse : types composites des variables LOCALES non enregistrés → .obc corrompu, « truncated .obc string » ; fix : findTypeRef fallback appelle registerTypeDeep en profondeur).
   - adressage d'un élément de tableau comme param VAR array pas fiable → VM.Mod n'utilise plus de ARRAY OF ARRAY local (tableau plat + helpers). Note : indexation `a[i][j]` non supportée (seulement `a[i, j]`).
+- **28/11 (soir) — OCS.Mod : le scanner en Oberon (début de l'auto-hébergement)** :
+  - `selfhost/OCS.Mod` (~430 lignes, 26 procs) : port fidèle de `lexer.c` — constantes `S_*` exportées (valeurs = enum lexer.h), `Token`/`LexState`, pushback 1 char + hist[8]/pb[8] de Token, commentaires imbriqués, nombres (hex `H`/`X`, réel, `..`), identifiants + chaîne de IF pour les mots-clés (pas de `=` sur chaînes), `ReadString`/`ReadCharLit`, vars exportées `sym/line/ival/rval/cval/name/sval/slen`. `RecordTok`/`ApplyTok` en boucles manuelles (ne PAS passer un champ tableau inline de record en param open array).
+  - `examples/LexDump.Mod` : dump des tokens du fichier en argv[0] ; test ajouté aux 4 phases de run_tests.sh → **120/120** (30 exemples × 4 moteurs).
+  - **3 bugs attrapés et corrigés** (ne pas régresser, voir REPRISE.md) :
+    1. `LoadMod` (VM.Mod) utilisait `nc` non déclaré (section consts ajoutée la veille) → VM.Mod ne recompilait plus.
+    2. `RefToStr` (VM.Mod) : `IF … (heap[…]=0) THEN i := total` → `n = total` → `buf[n]` hors limites. Remplacé par `WHILE (i<total)&(i<LEN(buf,0)-1)&(heap[…]#0)`.
+    3. **payload des records avec champs tableau** : `completeRecord` utilisait `typeSizeCells` (slot : array = 1 réf) → `Token` avait payload=8 au lieu de 4166 → `hist: ARRAY 8 OF Token` alloué trop petit → écrasement de l'en-tête du tas. Fix : nouvelle fonction `typeInlineCells` (array = `total × ElemCells(elem)`) utilisée pour les offsets de champs. La VM C avait survécu par chance (ordre d'allocation), VM.Mod crashait.
+    4. **indexation tableau inline** (champ record / élément record) : `parseDesignator` émet désormais `OP_AADD` (payload + index) au lieu de `OP_ELEM_ADDR` (qui exige une réf heap nue) — flag `addrIsPayload`. Crash `OCS.RecordTok` sur `t.name[i]` sinon.
+  - vérifié : LexDump sur VM.Mod (Oberon) = sortie identique à obvm C (31 lignes sur Hello.Mod).

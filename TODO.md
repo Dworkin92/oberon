@@ -2,9 +2,9 @@
 
 > ⭐ Après un compactage ou une nouvelle session, repartir de [`docs/REPRISE.md`](docs/REPRISE.md).
 
-État au 28/11/2026 : étapes 0–5 faites + tout le groupe A (types procéduraux, closures, threaded code, records en ligne) + conformité Oberon-07 (WHILE...ELSIF, CASE de type, CAP) + builtin SQLite (FFI niveau 1), **116/116 tests** (29 exemples × 4 moteurs :
+État au 28/11/2026 (soir) : étapes 0–5 faites + tout le groupe A (types procéduraux, closures, threaded code, records en ligne) + conformité Oberon-07 (WHILE...ELSIF, CASE de type, CAP) + FFI/DLL + `lib/Sqlite.Mod` + **OCS.Mod (lexer en Oberon)**, **120/120 tests** (30 exemples × 4 moteurs :
 `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif). Voir
-[`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md) pour la vision d'ensemble. **Groupe A terminé ✅ — prochain gros morceau : OC.Mod.**
+[`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md) pour la vision d'ensemble. **Groupe A terminé ✅ — OC.Mod en cours : scanner OK ✅, reste le parser.**
 
 ## ✅ Fait
 
@@ -43,7 +43,7 @@
 
 ### B. OC.Mod émettant du bytecode d'abord (plus sûr)
 
-- [ ] Porter le lexer en Oberon (`OCS.Mod` ou section de OC.Mod)
+- [x] Porter le lexer en Oberon — **`selfhost/OCS.Mod` fait le 28/11** (26 procs, pushback tokens, test `LexDump.Mod` sur les 4 moteurs → 120/120)
 - [ ] Porter le parser single-pass en Oberon, émission `.obc` identique au stage-0
 - [ ] Tables de symboles (hash simple), gestion des types, scopes
 - [ ] Buffers extensibles (code, chaînes) via NEW/DISPOSE sur tableaux

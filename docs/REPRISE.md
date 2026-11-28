@@ -3,11 +3,14 @@
 > **Règle d'or** : mettre ce fichier à jour à chaque fin de session (état, tests, prochaine étape).
 > Tout l'état du projet vit dans le dépôt ; une nouvelle session repart d'ici.
 
-## État actuel (27/11/2026, vérifié ce jour)
+## État actuel (28/11/2026, vérifié ce jour)
 
 Chaîne complète **compilateur Oberon-07 → bytecode `.obc` → VM maison**, stage-0 en C,
-plus VM réécrite en Oberon **en threaded code** (dispatch par valeurs procédurales).
-**Tests : 116/116** (29 exemples × 4 moteurs : `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm,
+plus VM réécrite en Oberon **en threaded code** (dispatch par valeurs procédurales),
+et début d'auto-hébergement : **`selfhost/OCS.Mod` = le lexer/scanner en Oberon** (port fidèle
+de `lexer.c`, mêmes constantes `S_*` exportées, pushback de tokens) — testé par
+`examples/LexDump.Mod` (dump des tokens d'un fichier passé en argument).
+**Tests : 120/120** (30 exemples × 4 moteurs : `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm,
 `VM.Mod` natif) — dont `SqlDemo.Mod` (SQLite via **FFI pur Oberon** : `lib/Sqlite.Mod` au-dessus de
 `SYSTEM.CALLC/LOADLIB/SYMBOL` ids 80–89, glue C `src/ffi_glue.c`, DLL `sqlite3.dll` chargée à
 l'exécution, aucun link statique). Sémantique : le body de chaque module chargé tourne au
@@ -56,6 +59,15 @@ les entrées de la variable d'environnement (séparateur `;` Windows / `:` POSIX
 - Threaded code VM.Mod : slot opcode = valeur proc handler (`PROCC(handlers[op])`), opérandes = 1 octet/cellule (**y compris `n` de JUMPTABLE : 4 cellules**). Casts prédéfinis `PROCV`/`PROCC` (identité). Dispatch : `h := PROCV(code[cofs+pc]); INC(pc); h();`.
 - Kinds de types : `TK_LONGINT`=10, **`TK_PROC`=11** (les deux côtés C et VM.Mod doivent d'accord).
 - Records : variables record **en ligne** OK (`VAR pt: Point`, payload cellules inline) ; `hdr` designator = 2 (record heap via pointeur) / 0 (inline/élément) ; `ARRAY OF Record` : header `total` = **cellules** (`total × payload`), index × `ElemCells` avant `OP_ELEM_ADDR`. Params record valeur refusés (VAR uniquement).
+- **Taille inline des champs record** : un champ `ARRAY n OF T` occupe `n × ElemCells(T)` cellules
+  dans le payload (fonction `typeInlineCells` dans model.c, utilisée par `completeRecord`) —
+  ne PAS confondre avec `typeSizeCells` (taille de **slot** de variable : un tableau = 1 réf).
+  Bug 28/11 : `Token = RECORD … name: ARRAY 64 OF CHAR; sval: ARRAY 4096 OF CHAR …` avait
+  payload=8 → débordement du tas. Corrigé côté C ; VM.Mod lit `payload` depuis le .obc (OK).
+- **Indexation d'un tableau en ligne** (champ record ou élément record) : l'adresse est déjà
+  le payload → le parser émet `OP_AADD` (payload + index), PAS `OP_ELEM_ADDR` (qui attend une
+  réf heap nue) — flag `addrIsPayload` dans `parseDesignator` (parser.c). Bug 28/11 (crash
+  `OCS.RecordTok` sur `t.name[i]`).
 - Cellules 64 bits ; adresses taggées (octet haut : 0x00 pile / 0x01 global / 0x02 tas).
 - **Adresse globale = gid absolu** résolu à la création (pas l'index d'import local) — sinon les `VAR`
   cross-module lisent le mauvais module. Idem dans `VM.Mod`. Max 256 modules.
@@ -78,12 +90,18 @@ module `SYSTEM`
 (BAND/BOR/BXOR/BNOT/LSH/ROT/BIT/ARGC/ARGV/TICKS/EXIT, casts L2I/REALBITS/BITSREAL/I2REAL),
 superinstruction `OP_JUMPTABLE` pour les `CASE` denses.
 
-## Prochaine étape — **OC.Mod, le compilateur en Oberon** (groupe A terminé ✅, conformité Oberon-07 faite ✅)
+## Prochaine étape — **OC.Mod, le compilateur en Oberon** (groupe A terminé ✅, conformité Oberon-07 faite ✅, **OCS.Mod = lexer OK ✅**)
 
-1. OC.Mod émetteur de `.obc` identique au stage-0 (phase `PASS-OC` dans run_tests.sh)
+1. **OC.Mod** : parser single-pass en Oberon sur OCS.Mod, émettant un `.obc` identique au
+   stage-0 (phase `PASS-OC` dans run_tests.sh ; `LexDump` sert déjà de test du scanner)
 2. Backend C dans OC.Mod + auto-compilation (`oc.obc → oc2.c → gcc`, `diff`),
    `bootstrap/tests/expected/` comme banc de régression
 3. `SYSTEM.VAL/ADR/GET/PUT` seulement si besoin réel (sinon PROCV/PROCC suffisent)
+
+Bugs corrigés le 28/11 (ne pas régresser) : `nc` non déclaré dans `LoadMod` (VM.Mod) ;
+`RefToStr` (VM.Mod) : sur `NUL` faire `i := total` → `buf[256]` hors limites, remplacé par
+une boucle `WHILE (i < total) & (i < LEN(buf,0)-1) & (heap[…] # 0)` ; champ record tableau =
+`typeInlineCells` (voir invariants) ; indexation tableau inline = `AADD` pas `ELEM_ADDR`.
 
 Rappel conformité (rapport Oberon-07 officiel, rev. 3.5.2016) : **pas de LOOP/EXIT/WITH** —
 remplacés par `WHILE...ELSIF` (boucle gardée de Dijkstra) et le CASE de type ; `WITH` gardé

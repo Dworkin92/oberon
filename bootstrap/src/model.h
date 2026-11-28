@@ -72,6 +72,7 @@ typedef struct Obj {
   struct Obj *next;
   struct Obj *nextGlobal; /* chain for Module.globals (insertObj reuses ->next) */
   struct Obj *nextParam;  /* chain for Proc/Obj params list */
+  struct Obj *nextConst;  /* chain for Module.consts */
 } Obj;
 
 /* Procedure in a module */
@@ -102,6 +103,7 @@ typedef struct Module {
   TypeDef *types;
   int ntypes, captypes;
   Obj *globals;         /* global var Objs (linked) */
+  Obj *consts;          /* const Objs (linked via nextConst) */
   int globalSize;       /* cells */
   char **strings;       /* string literal pool */
   int nstrings, capstrings;
@@ -117,7 +119,8 @@ extern Type *typeCharArrayAny; /* marker: any ARRAY OF CHAR (Out.String, In.Line
 extern Type *typeAnyPointer;   /* marker: any pointer (DISPOSE param) */
 void initBasicTypes(void);
 extern int gTypeStamp; /* incremented by writeModule; type registration guard */
-int typeSizeCells(Type *t);          /* inline slots: record payload, else 1 */
+int typeSizeCells(Type *t);          /* var slot size: record payload, else 1 (arrays are refs) */
+int typeInlineCells(Type *t);        /* inline storage size (record fields): arrays occupy total*elemCells */
 int typeElemCells(Type *e);          /* cells per array element (record payload, else 1) */
 int typeEquals(Type *a, Type *b);
 int typeAssignable(Type *dst, Type *src); /* src value assignable to dst var */

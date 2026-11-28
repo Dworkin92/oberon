@@ -1,0 +1,31 @@
+MODULE
+ident Hello
+;
+IMPORT
+ident Out
+;
+BEGIN
+ident Out
+.
+ident String
+(
+string "Hello, World!"
+)
+;
+ident Out
+.
+ident Ln
+;
+ident Out
+.
+ident String
+(
+string "Oberon-07 -> bytecode -> VM"
+)
+;
+ident Out
+.
+ident Ln
+END
+ident Hello
+.

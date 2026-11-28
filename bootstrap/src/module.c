@@ -58,6 +58,7 @@ int obSearchDirs(const char *fromDir, char dirs[][600], int maxDirs) {
   ADDD(fromDir);
   snprintf(b, sizeof b, "%s/../lib", fromDir); ADDD(b);
   snprintf(b, sizeof b, "%s/../../lib", fromDir); ADDD(b);
+  snprintf(b, sizeof b, "%s/../../selfhost", fromDir); ADDD(b);
   /* OBERON_PATH: "." (CWD) en tete */
   ADDD(".");
   char home[600], libdir[600];
@@ -91,6 +92,9 @@ void wU8(FILE *f, int v) { fputc(v & 0xFF, f); }
 void wU32(FILE *f, uint32_t v) {
   fputc(v & 0xFF, f); fputc((v >> 8) & 0xFF, f);
   fputc((v >> 16) & 0xFF, f); fputc((v >> 24) & 0xFF, f);
+}
+void wU64(FILE *f, uint64_t v) {
+  for (int i = 0; i < 8; i++) fputc((int)(v >> (8 * i)) & 0xFF, f);
 }
 void wStr(FILE *f, const char *s) {
   int n = (int)strlen(s);
@@ -210,11 +214,26 @@ void writeModule(Module *m, FILE *f) {
   }
   wU32(f, m->nstrings);
   for (int i = 0; i < m->nstrings; i++) wStr(f, m->strings[i]);
+  /* consts section (appended at the end; old readers stop after strings) */
+  int nc = 0;
+  for (Obj *o = m->consts; o; o = o->nextConst) nc++;
+  wU32(f, (uint32_t)nc);
+  for (Obj *o = m->consts; o; o = o->nextConst) {
+    wStr(f, o->name);
+    wU32(f, (uint32_t)typeIndex(m, o->type));
+    wU64(f, (uint64_t)o->cval);
+    wU8(f, o->exported);
+  }
 }
 
 /* ---------- read ---------- */
 
 int rU8(FILE *f) { return fgetc(f); }
+uint64_t rU64(FILE *f) {
+  uint64_t v = 0;
+  for (int i = 0; i < 8; i++) v |= (uint64_t)fgetc(f) << (8 * i);
+  return v;
+}
 uint32_t rU32(FILE *f) {
   int a = fgetc(f), b = fgetc(f), c = fgetc(f), d = fgetc(f);
   if (d == EOF) obError(obLine, "truncated .obc file");
@@ -403,6 +422,26 @@ LoadedModule *loadModuleFile(const char *path) {
   lm->nstrings = ns;
   lm->strings = calloc(ns ? ns : 1, sizeof(char *));
   for (int i = 0; i < ns; i++) lm->strings[i] = rStr(f);
+  /* consts section (optional, appended after strings; absent in old .obc) */
+  int cbyte = fgetc(f);
+  if (cbyte != EOF) {
+    ungetc(cbyte, f);
+    int nc = (int)rU32(f);
+    for (int i = 0; i < nc; i++) {
+      Obj *o = calloc(1, sizeof(Obj));
+      s = rStr(f); strncpy(o->name, s, 63); free(s);
+      uint32_t tidx = rU32(f);
+      o->cval = (Cell)rU64(f);
+      o->exported = rU8(f);
+      o->cls = CL_CONST;
+      o->type = (Type *)(uintptr_t)(tidx + 1); /* resolve after types are read */
+      o->nextConst = lm->consts;
+      lm->consts = o;
+    }
+    /* types are already read at this point (consts come after strings) */
+    for (Obj *o = lm->consts; o; o = o->nextConst)
+      o->type = resolveIdx((uintptr_t)o->type - 1, lm->types, lm->ntypes);
+  }
   fclose(f);
 
   /* build members list of exported items for import resolution */
@@ -439,6 +478,13 @@ LoadedModule *loadModuleFile(const char *path) {
     cp->type = o->type;
     cp->offset = o->offset;
     cp->level = 0;
+    *tail = cp; tail = &cp->next;
+  }
+  for (Obj *o = lm->consts; o; o = o->nextConst) {
+    if (!o->exported) continue;
+    Obj *cp = newObj(o->name, CL_CONST);
+    cp->type = o->type;
+    cp->cval = o->cval;
     *tail = cp; tail = &cp->next;
   }
   return lm;

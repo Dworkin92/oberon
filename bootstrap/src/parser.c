@@ -651,6 +651,7 @@ static void parseConstDecl(void) {
     expect(S_SEMI);
     Obj *o = newObj(n, CL_CONST);
     o->type = t; o->cval = v; o->exported = exported;
+    o->nextConst = curMod->consts; curMod->consts = o;
     insertObj(o);
   }
 }
@@ -903,6 +904,8 @@ static Type *parseDesignator(int mode, Obj *o, int mod) {
       obError(line, "'%s' is not a variable", o->name);
   }
   /* selectors */
+  int addrIsPayload = 0; /* st==1 but the address is already a payload start
+                            (inline array field / array element), not a slot holding a ref */
   for (;;) {
     if (sym == S_DOT) {
       nextSym();
@@ -924,6 +927,7 @@ static Type *parseDesignator(int mode, Obj *o, int mod) {
       st = 1;
       t = fl->type;
       hdr = 0; /* field addresses are payload starts (inline) */
+      addrIsPayload = (t->kind == TK_ARRAY); /* inline array field: addr is its payload start */
     } else if (sym == S_CARET) {
       nextSym();
       if (t->kind != TK_POINTER) obError(line, "dereference of non-pointer");
@@ -950,7 +954,7 @@ static Type *parseDesignator(int mode, Obj *o, int mod) {
         t = t->to;
       }
       if (t->kind != TK_ARRAY) obError(line, "indexing non-array");
-      if (st == 1) { emit(OP_LOAD_AT); st = 0; } /* slot addr -> ref */
+      if (st == 1 && !addrIsPayload) { emit(OP_LOAD_AT); st = 0; } /* slot addr -> ref (inline field: already payload) */
       int nd = t->ndim;
       emit32(OP_CONST_I, 0); /* accumulator */
       int k = 0;
@@ -977,10 +981,17 @@ static Type *parseDesignator(int mode, Obj *o, int mod) {
         emit32(OP_CONST_I, (uint32_t)typeElemCells(t->elem));
         emit(OP_IMUL);
       }
-      emit(OP_ELEM_ADDR);
+      if (addrIsPayload) {
+        /* inline array (record field / record element): the address on the stack is
+           already the payload start -> elem addr = payload + acc (acc already in cells) */
+        emit(OP_AADD);
+      } else {
+        emit(OP_ELEM_ADDR);
+      }
       st = 1;
       t = t->elem;
       hdr = 0; /* element addresses are payload starts (no per-element header) */
+      addrIsPayload = (t->kind == TK_ARRAY); /* element that is itself an inline array */
     } else break;
   }
   /* final mode conversion */
@@ -993,11 +1004,15 @@ static Type *parseDesignator(int mode, Obj *o, int mod) {
     }
   } else if (mode == M_ADDR) {
     if (t->kind == TK_ARRAY) {
-      /* st==1 slot addr (or elem addr); get ref then payload addr */
-      if (st == 1) emit(OP_LOAD_AT); /* -> ref */
-      emit(OP_TO_ADDR);
-      emit32(OP_CONST_I, (uint32_t)(t->ndim + 2));
-      emit(OP_AADD);
+      if (addrIsPayload) {
+        /* inline array field/element: the address on the stack IS the payload start */
+      } else {
+        /* st==1 slot addr (or elem addr); get ref then payload addr */
+        if (st == 1) emit(OP_LOAD_AT); /* -> ref */
+        emit(OP_TO_ADDR);
+        emit32(OP_CONST_I, (uint32_t)(t->ndim + 2));
+        emit(OP_AADD);
+      }
     } else if (t->kind == TK_RECORD) {
       emit32(OP_CONST_I, (uint32_t)hdr);
       emit(OP_AADD);

@@ -34,8 +34,17 @@ Type *newType(int kind) {
 }
 
 int typeSizeCells(Type *t) {
-  /* inline storage size in cells: records occupy their payload, everything else 1 */
+  /* var slot size in cells: records occupy their payload inline, arrays are heap refs (1) */
   if (t && t->kind == TK_RECORD) return t->payload;
+  return 1;
+}
+
+/* full inline size in cells when the type is stored inline (record field):
+   arrays occupy their whole data area, records their payload */
+int typeInlineCells(Type *t) {
+  if (!t) return 1;
+  if (t->kind == TK_RECORD) return t->payload;
+  if (t->kind == TK_ARRAY && !t->isOpen) return t->total * typeElemCells(t->elem);
   return 1;
 }
 
@@ -218,7 +227,7 @@ void completeRecord(Type *rec, Type *base, Field *fields, int nfields) {
   int payload = base ? base->payload : 0;
   for (Field *f = fields; f; f = f->next) {
     f->offset = payload;
-    payload += typeSizeCells(f->type);
+    payload += typeInlineCells(f->type);
   }
   rec->payload = payload;
   rec->tag = ++curMod->tagCounter;

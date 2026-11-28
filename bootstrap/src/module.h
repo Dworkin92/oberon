@@ -23,6 +23,7 @@ typedef struct LoadedModule {
   int nimports;
   int globalSize;
   Obj *exportedVars;   /* linked list of CL_VAR */
+  Obj *consts;         /* linked list of CL_CONST (nextConst) */
   Type **types;
   int ntypes;
   LProc *procs;

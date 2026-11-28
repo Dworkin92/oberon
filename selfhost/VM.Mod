@@ -259,9 +259,8 @@ BEGIN
     r := SYSTEM.L2I(ref);
     ndim := -SYSTEM.L2I(heap[r]); total := SYSTEM.L2I(heap[r+ndim+1]);
     i := 0;
-    WHILE i < total DO
-      IF (i >= LEN(buf, 0) - 1) OR (heap[r+ndim+2+i] = 0) THEN i := total
-      ELSE buf[i] := CHR(SYSTEM.L2I(heap[r+ndim+2+i])); INC(i) END
+    WHILE (i < total) & (i < LEN(buf, 0) - 1) & (heap[r+ndim+2+i] # 0) DO
+      buf[i] := CHR(SYSTEM.L2I(heap[r+ndim+2+i])); INC(i)
     END;
     n := i
   END;
@@ -409,6 +408,7 @@ BEGIN
   PutDir(0, d); INC(nd);
   CatDir(d, dir2, "/../lib"); PutDir(nd*256, dir2); INC(nd);
   CatDir(d, dir2, "/../../lib"); PutDir(nd*256, dir2); INC(nd);
+  CatDir(d, dir2, "/../../selfhost"); PutDir(nd*256, dir2); INC(nd);
   dirs[nd*256] := CHR(46); dirs[nd*256+1] := 0X; INC(nd);   (* "." = CWD en tete de OBERON_PATH *)
   OberonHome;
   CatDir(home, libd, "/lib");
@@ -460,7 +460,7 @@ BEGIN
 END;
 
 PROCEDURE LoadMod(VAR nm: ARRAY 256 OF CHAR; VAR d: ARRAY 256 OF CHAR): INTEGER;
-VAR gid, i, j, k, n, nt, np, ns, b, npar, nloc, clen: INTEGER; v: LONGINT;
+VAR gid, i, j, k, n, nt, np, ns, nc, b, npar, nloc, clen: INTEGER; v: LONGINT;
 BEGIN
   gid := FindMod(nm);
   IF gid >= 0 THEN RETURN gid END;
@@ -596,6 +596,12 @@ BEGIN
   ns := SYSTEM.L2I(RU32());
   IF ns > MAXSTR THEN msgbuf := "too many strings"; Fatal END;
   FOR k := 0 TO ns-1 DO RStr(tname); strRefs[gid, k] := AllocString(tname) END;
+  (* consts section (appended after strings; absent in old .obc) — skip it:
+     const values were folded at compile time by the host compiler *)
+  IF fcur < flen THEN
+    nc := SYSTEM.L2I(RU32());
+    FOR k := 0 TO nc-1 DO RStr(tname); RU32(); v := RU32(); v := v + RU32()*4294967296; RU8() END
+  END;
   (* now load the imports (recursion reuses fbuf, safe: this module is fully parsed) *)
   FOR i := 0 TO impCount-1 DO
     j := 0; WHILE impNames[i, j] # 0X DO tname[j] := impNames[i, j]; INC(j) END;

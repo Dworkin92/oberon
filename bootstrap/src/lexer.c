@@ -58,12 +58,12 @@ static void skipComment(void) {
     if (ch == EOF) obError(line, "unterminated comment");
     if (ch == '(') {
       int c2 = fgetc(src);
-      if (c2 == '*') { depth++; adv(); adv(); continue; }
+      if (c2 == '*') { depth++; adv(); continue; } /* ch='(' et c2='*' déjà consommés : un seul adv suffit */
       ungetc(c2, src);
       adv();
     } else if (ch == '*') {
       int c2 = fgetc(src);
-      if (c2 == ')') { depth--; adv(); adv(); continue; }
+      if (c2 == ')') { depth--; adv(); continue; } /* idem après '*' ')' : ne pas manger le caractère suivant */
       ungetc(c2, src);
       adv();
     } else {
