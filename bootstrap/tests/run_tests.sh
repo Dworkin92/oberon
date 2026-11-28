@@ -3,6 +3,8 @@
 # usage: tests/run_tests.sh   (from the project root)
 cd "$(dirname "$0")/.." || exit 1
 ROOT=$(pwd)
+BIN=build/bin
+export OBERON_HOME="$ROOT/build"   # exercise the OBERON_HOME/lib search path
 mkdir -p tests/expected tests/out
 rm -f ../lib/*.obc   # force recompilation of library modules from lib/*.Mod
 # FFI : les binaires natifs linkent src/ffi_glue.c (LoadLibrary/GetProcAddress/CALLC) ;
@@ -12,13 +14,13 @@ pass=0; fail=0
 
 # build the Oberon-written VM once (selfhost/VM.Mod -> ../selfhost/VM.obc)
 if [ ! -f ../selfhost/VM.obc ] || [ ../selfhost/VM.Mod -nt ../selfhost/VM.obc ]; then
-  ./obc.exe ../selfhost/VM.Mod > /dev/null 2>&1 || echo "WARN: cannot compile ../selfhost/VM.Mod (VM phases skipped)"
+  $BIN/obc.exe ../selfhost/VM.Mod > /dev/null 2>&1 || echo "WARN: cannot compile ../selfhost/VM.Mod (VM phases skipped)"
 fi
 HAVE_VM=$([ -f ../selfhost/VM.obc ] && echo 1 || echo 0)
 # and its native version: ob2c + gcc (étape 5) -> tests/out/vm_native.exe
 HAVE_VMN=0
 if [ "$HAVE_VM" = 1 ]; then
-  if ./ob2c.exe ../selfhost/VM.obc -o tests/out/VM.gen.c 2>/dev/null \
+  if $BIN/ob2c.exe ../selfhost/VM.obc -o tests/out/VM.gen.c 2>/dev/null \
      && gcc -O2 -std=gnu11 -w -Isrc -o tests/out/vm_native.exe tests/out/VM.gen.c src/rt.c src/ob.c src/model.c src/module.c $FFI_O -lm 2>/dev/null; then
     HAVE_VMN=1
   else
@@ -29,13 +31,13 @@ fi
 run_test() {
   local name=$1; local input=$2; shift 2   # extra args = program args (SYSTEM.ARGV)
   rm -f "examples/$name.obc"
-  if ! ./obc.exe "examples/$name.Mod" > "tests/out/$name.compile.log" 2>&1; then
+  if ! $BIN/obc.exe "examples/$name.Mod" > "tests/out/$name.compile.log" 2>&1; then
     echo "FAIL $name (compile)"; cat "tests/out/$name.compile.log"; fail=$((fail+1)); return
   fi
   if [ -n "$input" ]; then
-    printf '%b' "$input" | ./obvm.exe "examples/$name.obc" "$@" > "tests/out/$name.txt" 2>&1
+    printf '%b' "$input" | $BIN/obvm.exe "examples/$name.obc" "$@" > "tests/out/$name.txt" 2>&1
   else
-    ./obvm.exe "examples/$name.obc" "$@" > "tests/out/$name.txt" 2>&1
+    $BIN/obvm.exe "examples/$name.obc" "$@" > "tests/out/$name.txt" 2>&1
   fi
   local rc=$?
   # normalize CRLF
@@ -57,7 +59,7 @@ run_test() {
 # C-backend phase: transpile the .obc to C (ob2c), compile with gcc, run, diff vs the same reference
 run_ctest() {
   local name=$1; local input=$2; shift 2
-  if ! ./ob2c.exe "examples/$name.obc" -o "tests/out/$name.gen.c" 2> "tests/out/$name.ob2c.log"; then
+  if ! $BIN/ob2c.exe "examples/$name.obc" -o "tests/out/$name.gen.c" 2> "tests/out/$name.ob2c.log"; then
     echo "FAIL-C $name (ob2c)"; cat "tests/out/$name.ob2c.log"; fail=$((fail+1)); return
   fi
   if ! gcc -O2 -std=gnu11 -w -Isrc -o "tests/out/$name.native.exe" "tests/out/$name.gen.c" src/rt.c src/ob.c src/model.c src/module.c $FFI_O -lm 2> "tests/out/$name.gcc.log"; then
@@ -83,9 +85,9 @@ run_vmtest() {
   local name=$1; local input=$2; shift 2
   if [ "$HAVE_VM" != 1 ]; then return; fi
   if [ -n "$input" ]; then
-    printf '%b' "$input" | ./obvm.exe ../selfhost/VM.obc "examples/$name.obc" "$@" > "tests/out/$name.vm.txt" 2>&1
+    printf '%b' "$input" | $BIN/obvm.exe ../selfhost/VM.obc "examples/$name.obc" "$@" > "tests/out/$name.vm.txt" 2>&1
   else
-    ./obvm.exe ../selfhost/VM.obc "examples/$name.obc" "$@" > "tests/out/$name.vm.txt" 2>&1
+    $BIN/obvm.exe ../selfhost/VM.obc "examples/$name.obc" "$@" > "tests/out/$name.vm.txt" 2>&1
   fi
   sed -i 's/\r$//' "tests/out/$name.vm.txt"
   if diff -q "tests/expected/$name.txt" "tests/out/$name.vm.txt" > /dev/null; then

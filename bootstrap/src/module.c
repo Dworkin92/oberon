@@ -1,4 +1,89 @@
 #include "module.h"
+#include <ctype.h>
+#include <stdlib.h>
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
+#endif
+
+/* ---------- install layout: OBERON_HOME / OBERON_PATH ----------
+ *
+ * Module search order (first match wins, so OBERON_PATH can override):
+ *   1. dir of the current .Mod/.obc file (D)
+ *   2. D/../lib, D/../../lib            (legacy project layout)
+ *   3. OBERON_PATH entries, built as: "." (CWD) first, then the env var
+ *      entries in order (separator ';' on Windows, ':' on POSIX),
+ *      then $OBERON_HOME/lib appended if not already present.
+ * OBERON_HOME defaults to the directory of the running executable with a
+ * trailing /bin (or \bin) stripped.
+ */
+
+int obExePath(char *buf, int cap) {
+#ifdef _WIN32
+  return GetModuleFileNameA(NULL, buf, (DWORD)cap) > 0;
+#else
+  ssize_t n = readlink("/proc/self/exe", buf, (size_t)cap - 1);
+  if (n <= 0) return 0;
+  buf[n] = 0;
+  return 1;
+#endif
+}
+
+void obOberonHome(char *buf, int cap) {
+  const char *h = getenv("OBERON_HOME");
+  if (h && h[0]) { snprintf(buf, (size_t)cap, "%s", h); return; }
+  char exe[600];
+  if (obExePath(exe, sizeof exe)) {
+    char *sep = strrchr(exe, '/');
+    char *bs = strrchr(exe, '\\');
+    if (bs && bs > sep) sep = bs;
+    if (sep) *sep = 0; else snprintf(exe, sizeof exe, ".");
+    size_t n = strlen(exe);
+    if (n >= 4 && (exe[n-4] == '/' || exe[n-4] == '\\') &&
+        tolower((unsigned char)exe[n-3]) == 'b' &&
+        tolower((unsigned char)exe[n-2]) == 'i' &&
+        tolower((unsigned char)exe[n-1]) == 'n')
+      exe[n-4] = 0; /* strip trailing /bin */
+    snprintf(buf, (size_t)cap, "%s", exe);
+  } else {
+    snprintf(buf, (size_t)cap, ".");
+  }
+}
+
+int obSearchDirs(const char *fromDir, char dirs[][600], int maxDirs) {
+  int n = 0;
+#define ADDD(d) do { if (n < maxDirs) snprintf(dirs[n++], 600, "%s", (d)); } while (0)
+  char b[600];
+  ADDD(fromDir);
+  snprintf(b, sizeof b, "%s/../lib", fromDir); ADDD(b);
+  snprintf(b, sizeof b, "%s/../../lib", fromDir); ADDD(b);
+  /* OBERON_PATH: "." (CWD) en tete */
+  ADDD(".");
+  char home[600], libdir[600];
+  obOberonHome(home, sizeof home);
+  snprintf(libdir, sizeof libdir, "%s/lib", home);
+  int haveLib = 0;
+  const char *pth = getenv("OBERON_PATH");
+  if (pth && pth[0]) {
+#ifdef _WIN32
+    const char *sep = ";";   /* ':' existe dans les lettres de lecteur Windows */
+#else
+    const char *sep = ":";
+#endif
+    char tmp[2048];
+    snprintf(tmp, sizeof tmp, "%s", pth);
+    char *save = NULL;
+    for (char *tok = strtok_r(tmp, sep, &save); tok; tok = strtok_r(NULL, sep, &save)) {
+      if (!tok[0]) continue;      /* entree vide = CWD, deja ajoute via "." */
+      ADDD(tok);
+      if (strcmp(tok, libdir) == 0) haveLib = 1;
+    }
+  }
+  if (!haveLib) ADDD(libdir);
+#undef ADDD
+  return n;
+}
 
 /* ---------- write ---------- */
 
@@ -57,7 +142,7 @@ static void writeType(Module *m, FILE *f, TypeDef *td) {
   }
 }
 
-static void registerTypeDeep(Module *m, Type *t) {
+void registerTypeDeep(Module *m, Type *t) {
   if (!t || t->visited == gTypeStamp) return;
   t->visited = gTypeStamp;
   typeIndex(m, t);
@@ -150,13 +235,21 @@ static Type *resolveIdx(uintptr_t raw, Type **types, int nt) {
   return typeNil;
 }
 
-int findModuleFile(const char *name, const char *dir, char *out, int outsz) {
-  static const char *rel[3] = { "", "/../lib", "/../../lib" };
-  for (int i = 0; i < 3; i++) {
-    char p[600];
-    snprintf(p, sizeof p, "%s%s/%s.obc", dir, rel[i], name);
+/* find name.obc (runtime) or name.obc/name.Mod (compile, allowMod=1) in the
+   search dirs built by obSearchDirs; first match wins */
+int findModuleFile(const char *name, const char *dir, int allowMod, char *out, int outsz) {
+  static char dirs[80][600];
+  int n = obSearchDirs(dir, dirs, 80);
+  for (int i = 0; i < n; i++) {
+    char p[700];
+    snprintf(p, sizeof p, "%s/%s.obc", dirs[i], name);
     FILE *f = fopen(p, "rb");
-    if (f) { fclose(f); snprintf(out, outsz, "%s", p); return 1; }
+    if (f) { fclose(f); snprintf(out, (size_t)outsz, "%s", p); return 1; }
+    if (allowMod) {
+      snprintf(p, sizeof p, "%s/%s.Mod", dirs[i], name);
+      f = fopen(p, "rb");
+      if (f) { fclose(f); snprintf(out, (size_t)outsz, "%s", p); return 1; }
+    }
   }
   return 0;
 }

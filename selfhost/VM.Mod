@@ -55,6 +55,7 @@ CONST
   (* FFI generique (src/ffi_glue.c) ; 60..70 reserves (ancien builtin SQLite) *)
   B_FFI_CALLC = 80; B_FFI_LOADLIB = 81; B_FFI_SYMBOL = 82; B_FFI_FREELIB = 83;
   B_FFI_CSTR = 84; B_FFI_STR = 85; B_FFI_MALLOC = 86; B_FFI_FREE = 87; B_FFI_PEEK = 88; B_FFI_POKE = 89;
+  B_FFI_GETENV = 90; B_FFI_EXEPATH = 91;
 
   (* --- type kinds (bootstrap/src/model.h) --- *)
   TK_ARRAY = 7; TK_RECORD = 8; TK_POINTER = 9; TK_LONGINT = 10; TK_PROC = 11;
@@ -99,6 +100,8 @@ VAR
   fbuf: ARRAY BUFSIZE OF LONGINT; flen, fcur: INTEGER;
   (* ---- scratch ---- *)
   path, dir, name, msgbuf, dir2: ARRAY 256 OF CHAR; tname: ARRAY 256 OF CHAR;
+  (* OBERON_PATH search dirs, flat: 80 entries x 256 chars *)
+  dirs: ARRAY 20480 OF CHAR; pth, tok, libd, home, ex: ARRAY 256 OF CHAR;
   gOff, gTidx, gExp: ARRAY MAXGLOB OF INTEGER; gNg: INTEGER;
   impNames: ARRAY MAXMOD, 256 OF CHAR; impCount: INTEGER;  (* deferred imports (fbuf is shared) *)
 
@@ -360,6 +363,88 @@ BEGIN
   RETURN FALSE
 END;
 
+(* ---------- install layout: OBERON_HOME / OBERON_PATH (mirror of module.c) ----------
+   NB: on n'utilise PAS de tableau-de-tableaux ni de parametre VAR tableau local
+   (l'adressage d'element de tableau comme VAR array n'est pas fiable) :
+   les repertoires sont mis a plat dans le global `dirs` (80 x 256 chars). *)
+
+PROCEDURE PutDir(base: INTEGER; VAR src: ARRAY 256 OF CHAR);  (* dirs[base..] := src *)
+VAR i: INTEGER;
+BEGIN i := 0; WHILE (src[i] # 0X) & (i < 255) DO dirs[base+i] := src[i]; INC(i) END; dirs[base+i] := 0X
+END;
+
+PROCEDURE StrEq(VAR a, b: ARRAY 256 OF CHAR): BOOLEAN;
+VAR i: INTEGER;
+BEGIN i := 0; WHILE (a[i] # 0X) & (a[i] = b[i]) DO INC(i) END; RETURN (a[i] = 0X) & (b[i] = 0X) END;
+
+PROCEDURE EndsWithBin(VAR s: ARRAY 256 OF CHAR): BOOLEAN;  (* finit par /bin ou \bin, toute casse *)
+VAR n: INTEGER;
+BEGIN
+  n := 0; WHILE s[n] # 0X DO INC(n) END;
+  IF n < 4 THEN RETURN FALSE END;
+  IF (s[n-4] # CHR(47)) & (s[n-4] # CHR(92)) THEN RETURN FALSE END;
+  RETURN (CAP(s[n-3]) = 'B') & (CAP(s[n-2]) = 'I') & (CAP(s[n-1]) = 'N')
+END;
+
+(* home := OBERON_HOME, ou chemin de l'exe sans le /bin final *)
+PROCEDURE OberonHome;
+VAR n, i, k: INTEGER;
+BEGIN
+  IF SYSTEM.GETENV("OBERON_HOME", home) THEN RETURN END;
+  n := SYSTEM.EXEPATH(ex);
+  i := n; WHILE (i > 0) & (ex[i-1] # CHR(47)) & (ex[i-1] # CHR(92)) DO DEC(i) END;
+  IF i = 0 THEN home[0] := CHR(46); home[1] := 0X       (* pas de sep -> "." *)
+  ELSE
+    k := 0; WHILE k < i DO home[k] := ex[k]; INC(k) END; home[k] := 0X;
+    IF EndsWithBin(home) THEN home[k-4] := 0X END        (* strip /bin *)
+  END
+END;
+
+(* essaie nm dans: d, d/../lib, d/../../lib, puis OBERON_PATH
+   ("." d'abord, entrees env dans l'ordre, $OBERON_HOME/lib en fin si absent) *)
+PROCEDURE TryDirs(VAR d, nm: ARRAY 256 OF CHAR): BOOLEAN;
+VAR nd, i, j, k, n: INTEGER; sep: CHAR; haveLib: BOOLEAN;
+BEGIN
+  nd := 0;
+  PutDir(0, d); INC(nd);
+  CatDir(d, dir2, "/../lib"); PutDir(nd*256, dir2); INC(nd);
+  CatDir(d, dir2, "/../../lib"); PutDir(nd*256, dir2); INC(nd);
+  dirs[nd*256] := CHR(46); dirs[nd*256+1] := 0X; INC(nd);   (* "." = CWD en tete de OBERON_PATH *)
+  OberonHome;
+  CatDir(home, libd, "/lib");
+  haveLib := FALSE;
+  IF SYSTEM.GETENV("OBERON_PATH", pth) THEN
+    n := SYSTEM.EXEPATH(ex);
+    sep := CHR(58); i := 0;                            (* ':' par defaut (POSIX) *)
+    WHILE ex[i] # 0X DO IF ex[i] = CHR(92) THEN sep := CHR(59) END; INC(i) END;  (* '\' -> Windows -> ';' *)
+    i := 0; j := 0;
+    WHILE pth[i] # 0X DO
+      IF pth[i] = sep THEN
+        tok[j] := 0X;
+        IF (j > 0) & (nd < 80) THEN
+          PutDir(nd*256, tok); INC(nd);
+          IF StrEq(tok, libd) THEN haveLib := TRUE END
+        END;
+        j := 0
+      ELSIF j < 255 THEN tok[j] := pth[i]; INC(j) END;
+      INC(i)
+    END;
+    tok[j] := 0X;
+    IF (j > 0) & (nd < 80) THEN
+      PutDir(nd*256, tok); INC(nd);
+      IF StrEq(tok, libd) THEN haveLib := TRUE END
+    END
+  END;
+  IF ~haveLib THEN PutDir(nd*256, libd); INC(nd) END;
+  i := 0;
+  WHILE i < nd DO
+    k := 0; WHILE dirs[i*256+k] # 0X DO dir2[k] := dirs[i*256+k]; INC(k) END; dir2[k] := 0X;
+    IF TryDir(dir2, nm) THEN RETURN TRUE END;
+    INC(i)
+  END;
+  RETURN FALSE
+END;
+
 (* ---------- module loading ---------- *)
 PROCEDURE FindMod(VAR nm: ARRAY 256 OF CHAR): INTEGER;
 VAR g, i: INTEGER;
@@ -382,17 +467,9 @@ BEGIN
   IF nmods >= MAXMOD THEN msgbuf := "too many modules"; Fatal END;
   gid := nmods; INC(nmods);
   i := 0; WHILE (i < 63) & (nm[i] # 0X) DO modName[gid, i] := nm[i]; INC(i) END; modName[gid, i] := 0X;
-  (* search path: d, then d/../lib, then d/../../lib (project lib/) *)
-  IF TryDir(d, nm) THEN
-  ELSE
-    CatDir(d, dir2, "/../lib");
-    IF TryDir(dir2, nm) THEN
-    ELSE
-      CatDir(d, dir2, "/../../lib");
-      IF ~TryDir(dir2, nm) THEN
-        Out.String("vm: cannot open "); Out.String(nm); Out.Ln; SYSTEM.EXIT(1)
-      END
-    END
+  (* search path: d, d/../lib, d/../../lib, puis OBERON_PATH ("." + env + $OBERON_HOME/lib) *)
+  IF ~TryDirs(d, nm) THEN
+    Out.String("vm: cannot open "); Out.String(nm); Out.Ln; SYSTEM.EXIT(1)
   END;
   (* magic "OBC7" + version 1 *)
   IF (RU8() # 79) OR (RU8() # 66) OR (RU8() # 67) OR (RU8() # 55) OR (RU32() # 1) THEN
@@ -539,8 +616,8 @@ BEGIN
   | 40, 41, 42, 44, 45, 46, 48: RETURN 2
   | 43, 50, 51, 52, 53, 54: RETURN 1
   | 80: RETURN 10                      (* FFI CALLC(fn, n, a0..a7) *)
-  | 81, 83, 84, 86, 87, 88: RETURN 1   (* LOADLIB/FREELIB/CSTR/MALLOC/FREE/PEEK *)
-  | 82, 85, 89: RETURN 2               (* SYMBOL/STR/POKE *)
+  | 81, 83, 84, 86, 87, 88, 91: RETURN 1  (* LOADLIB/FREELIB/CSTR/MALLOC/FREE/PEEK/EXEPATH *)
+  | 82, 85, 89, 90: RETURN 2           (* SYMBOL/STR/POKE/GETENV *)
   ELSE RETURN 0 (* 4, 47, 49 *)
   END
 END;
@@ -550,7 +627,7 @@ BEGIN
   CASE id OF
     20, 21, 23, 25, 27, 28, 29, 31, 32,
     40, 41, 42, 43, 44, 45, 46, 47, 49, 51, 52, 53, 54,
-    80, 81, 82, 84, 86, 88: RETURN 1       (* FFI with result *)
+    80, 81, 82, 84, 86, 88, 90, 91: RETURN 1  (* FFI with result *)
   ELSE RETURN 0
   END
 END;
@@ -679,6 +756,21 @@ BEGIN
   | 87: SYSTEM.FREE(stack[base])                                              (* FFI FREE *)
   | 88: stack[base] := SYSTEM.PEEK(stack[base])                               (* FFI PEEK *)
   | 89: SYSTEM.POKE(stack[base], stack[base+1])                               (* FFI POKE *)
+  | 90: RefToStr(stack[base], nm);                                            (* FFI GETENV *)
+      IF SYSTEM.GETENV(nm, hb) THEN stack[base] := 1 ELSE stack[base] := 0 END;
+      ref := SYSTEM.L2I(MemRead(stack[base+1]));
+      ndim := -SYSTEM.L2I(heap[ref]); total := SYSTEM.L2I(heap[ref+ndim+1]); hdr := ndim+2;
+      n := 0; WHILE hb[n] # 0X DO INC(n) END;
+      IF n > total - 1 THEN n := total - 1 END;
+      FOR i := 0 TO n-1 DO heap[ref+hdr+i] := ORD(hb[i]) END;
+      heap[ref+hdr+n] := 0
+  | 91: n := SYSTEM.EXEPATH(hb);                                               (* FFI EXEPATH *)
+      ref := SYSTEM.L2I(MemRead(stack[base]));
+      ndim := -SYSTEM.L2I(heap[ref]); total := SYSTEM.L2I(heap[ref+ndim+1]); hdr := ndim+2;
+      IF n > total - 1 THEN n := total - 1 END;
+      FOR i := 0 TO n-1 DO heap[ref+hdr+i] := ORD(hb[i]) END;
+      heap[ref+hdr+n] := 0;
+      stack[base] := n
   ELSE msgbuf := "unknown builtin"; Fatal
   END
 END;

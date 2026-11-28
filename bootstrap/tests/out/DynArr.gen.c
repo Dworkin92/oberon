@@ -750,7 +750,7 @@ L653: ;
   rtDispose(vm, pop(vm), 0, 1u);
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 2u)); } /* absolute gid */
-  push(vm, rtNew(vm, 0, 2u));
+  push(vm, rtNew(vm, 0, 4u));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -921,7 +921,7 @@ L839: ;
   }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 2u)); } /* absolute gid */
-  rtDispose(vm, pop(vm), 0, 2u);
+  rtDispose(vm, pop(vm), 0, 4u);
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   rtDispose(vm, pop(vm), 0, 1u);

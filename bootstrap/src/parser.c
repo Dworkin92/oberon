@@ -24,7 +24,8 @@ enum { B_OUT_INT = 0, B_OUT_REAL, B_OUT_CHAR, B_OUT_STRING, B_OUT_LN,
        /* FFI generique (src/ffi_glue.c) : 60..70 reserves (ancien builtin SQLite,
           remplacé par lib/Sqlite.Mod au-dessus du FFI) */
        B_FFI_CALLC = 80, B_FFI_LOADLIB, B_FFI_SYMBOL, B_FFI_FREELIB,
-       B_FFI_CSTR, B_FFI_STR, B_FFI_MALLOC, B_FFI_FREE, B_FFI_PEEK, B_FFI_POKE };
+       B_FFI_CSTR, B_FFI_STR, B_FFI_MALLOC, B_FFI_FREE, B_FFI_PEEK, B_FFI_POKE,
+       B_FFI_GETENV = 90, B_FFI_EXEPATH };
 
 #define M_VAL 0
 #define M_ADDR 1
@@ -86,6 +87,7 @@ static void findTypeRef(Type *t, int *mod, int *idx) {
     for (int j = 0; j < lm->ntypes; j++)
       if (lm->types[j] == t) { *mod = impCache[i].modId; *idx = j; return; }
   }
+  registerTypeDeep(curMod, t); /* deep: nested types (array of array, record fields...) must be registered too */
   *mod = 0; *idx = typeIndex(curMod, t);
 }
 
@@ -266,6 +268,12 @@ static void makeBuiltinModules(void) {
   *st = mkBuiltinProc("FREE", B_FFI_FREE, 1, zv, (Type *[]){typeLongint}); st = &(*st)->next;
   *st = mkBuiltinProc("PEEK", B_FFI_PEEK, 1, zv, (Type *[]){typeLongint}); (*st)->type = typeLongint; st = &(*st)->next;
   *st = mkBuiltinProc("POKE", B_FFI_POKE, 2, zv, (Type *[]){typeLongint, typeLongint}); st = &(*st)->next;
+  { int g2[2] = {0, 1};
+    *st = mkBuiltinProc("GETENV", B_FFI_GETENV, 2, g2, (Type *[]){typeCharArrayAny, typeCharArrayAny});
+    (*st)->type = typeBool; st = &(*st)->next; }
+  { int v1b[1] = {1};
+    *st = mkBuiltinProc("EXEPATH", B_FFI_EXEPATH, 1, v1b, (Type *[]){typeCharArrayAny});
+    (*st)->type = typeInt; st = &(*st)->next; }
   builtinSystem = system;
 }
 
@@ -283,10 +291,11 @@ static void installImport(const char *real, const char *alias, const char *dir) 
   }
   /* search path: dir of the importing file, then dir/../lib, dir/../../lib (project lib/) */
   char path[600], mp[600], cdir[600];
-  const char *rel[3] = { "", "/../lib", "/../../lib" };
+  static char sdirs[80][600];
+  int ndirs = obSearchDirs(dir, sdirs, 80);
   int found = 0;
-  for (int ci = 0; ci < 3 && !found; ci++) {
-    snprintf(cdir, sizeof cdir, "%s%s", dir, rel[ci]);
+  for (int ci = 0; ci < ndirs && !found; ci++) {
+    snprintf(cdir, sizeof cdir, "%s", sdirs[ci]);
     snprintf(path, sizeof path, "%s/%s.obc", cdir, real);
     snprintf(mp, sizeof mp, "%s/%s.Mod", cdir, real);
     if (fileExists(path)) {

@@ -343,7 +343,7 @@ static VMMod *loadMod(VM *vm, const char *name, const char *dir, int *tc) {
   VMMod *existing = findMod(vm, name);
   if (existing) return existing;
   char path[600];
-  if (!findModuleFile(name, dir, path, sizeof path)) {
+  if (!findModuleFile(name, dir, 0, path, sizeof path)) {
     fprintf(stderr, "cannot load module '%s' (searched from '%s')\n", name, dir);
     exit(1);
   }
@@ -743,7 +743,7 @@ int builtinHasResult(int id) {
     case 40: case 41: case 42: case 43: case 44: case 45: case 46:
     case 47: case 49:
     case 51: case 52: case 53: case 54:
-    case 80: case 81: case 82: case 84: case 86: case 88: /* FFI w/ result */
+    case 80: case 81: case 82: case 84: case 86: case 88: case 90: case 91: /* FFI w/ result */
       return 1;
   }
   return 0;
@@ -767,8 +767,8 @@ int builtinNparams(int id) {
     case 40: case 41: case 42: case 44: case 45: case 46: case 48: return 2; /* SYSTEM */
     case 43: case 50: case 51: case 52: case 53: case 54: return 1; /* BNOT, EXIT, casts */
     case 80: return 10;                                   /* CALLC(fn, n, a0..a7) */
-    case 81: case 83: case 84: case 86: case 87: case 88: return 1; /* FFI 1 param */
-    case 82: case 85: case 89: return 2;                  /* SYMBOL/STR/POKE */
+    case 81: case 83: case 84: case 86: case 87: case 88: case 91: return 1; /* FFI 1 param */
+    case 82: case 85: case 89: case 90: return 2;         /* SYMBOL/STR/POKE/GETENV */
     /* 47 (ARGC), 49 (TICKS): 0 params -> default */
   }
   return 0;

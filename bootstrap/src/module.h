@@ -37,7 +37,13 @@ LoadedModule *loadModuleFile(const char *path);
 /* Search a compiled module `name` starting from dir `dir`:
    dir/name.obc, then dir/../lib/name.obc, then dir/../../lib/name.obc.
    On success writes the found path into out and returns 1, else returns 0. */
-int findModuleFile(const char *name, const char *dir, char *out, int outsz);
+int findModuleFile(const char *name, const char *dir, int allowMod, char *out, int outsz);
+int obExePath(char *buf, int cap);
+void obOberonHome(char *buf, int cap);
+int obSearchDirs(const char *fromDir, char dirs[][600], int maxDirs);
+struct Module;
+struct Type;
+void registerTypeDeep(struct Module *m, struct Type *t); /* deep type registration (writeModule pre-pass) */
 /* Build import symbol table (Obj CL_MODULE) from a loaded module */
 Obj *moduleObjFromLoaded(LoadedModule *lm, int modId, int exportedOnly);
 

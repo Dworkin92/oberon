@@ -25,6 +25,7 @@ virtuelle** (`obvm`).
    bootstrap/               stage-0 : la chaîne d'outils 100 % C
      src/                   obc / obvm / obdis / ob2c + runtime partagé rt.[ch]
                             + ffi_glue.c (FFI SYSTEM ids 80–89 : LOADLIB/SYMBOL/CALLC/...)
+     build/                 OBERON_HOME local : build/bin (exécutables + DLL) + build/lib (modules)
      build.sh, Makefile
      examples/              programmes de démo (.Mod)
      tests/                 run_tests.sh + sorties de référence (VM, C natif, VM.Mod)
@@ -84,8 +85,26 @@ Benchmark `bootstrap/examples/Bench.Mod` (boucle arithmétique 20M itérations, 
 
 ```sh
 cd bootstrap && ./build.sh         # ou: make (dans bootstrap/)
+# -> binaires dans build/bin/ (obc obvm obdis ob2c, + sqlite3.dll si présent dans
+#    C:\Local\Tools\sqlite3) et lib précompilée dans build/lib/ : c'est notre
+#    OBERON_HOME local.  Installation finale visée : seulement $OBERON_HOME/bin + $OBERON_HOME/lib.
 ./bootstrap/tests/run_tests.sh     # depuis la racine : compile et exécute tous les exemples (VM + C natif + VM.Mod)
 ```
+
+## Variables d'environnement (installation)
+
+- **`OBERON_HOME`** : racine de l'installation. Si absent, déduit du chemin de
+  l'exécutable courant avec un éventuel `/bin` (ou `\bin`) final retiré
+  (`SYSTEM.EXEPATH` donne le chemin de l'exe).
+- **`OBERON_PATH`** : liste de répertoires de recherche des modules, séparés par
+  `;` sous Windows, `:` sous POSIX. Le répertoire courant `.` est ajouté
+  automatiquement en tête ; `$OBERON_HOME/lib` est ajouté en fin s'il n'y est pas déjà.
+- Ordre de recherche d'un module `M` (premier trouvé gagne → surcharge possible) :
+  répertoire du fichier courant `D`, `D/../lib`, `D/../../lib`, puis `OBERON_PATH`
+  dans l'ordre, puis `$OBERON_HOME/lib`. À la compilation (`obc`) on accepte
+  `M.obc` puis `M.Mod` (compilé à la volée) ; à l'exécution (`obvm`, natif, VM.Mod)
+  seulement `M.obc`.
+
 FFI : les DLL externes (ex. `sqlite3.dll`) sont chargées **à l'exécution** via
 `SYSTEM.LOADLIB` — aucun link statique. Côté natif, ajouter simplement
 `src/ffi_glue.c` à la ligne gcc (voir ci-dessous). Voir `lib/Sqlite.Mod` + `examples/SqlDemo.Mod`.
@@ -102,10 +121,10 @@ END Hello.
 
 ```sh
 cd bootstrap
-./obc.exe examples/Hello.Mod     # compiler le module Oberon et ses dépendances
-./obvm.exe examples/Hello.obc    # exécuter le module dans la VM
-./obdis.exe examples/Hello.obc   # voir le bytecode
-./ob2c.exe examples/Hello.obc -o /tmp/Hello.c && gcc -O2 -Isrc -o /tmp/hello /tmp/Hello.c src/rt.c src/ob.c src/model.c src/module.c src/ffi_glue.c -lm && /tmp/hello examples/Hello.obc   # version native C (runtime + FFI)
+build/bin/obc.exe examples/Hello.Mod     # compiler le module Oberon et ses dépendances
+build/bin/obvm.exe examples/Hello.obc    # exécuter le module dans la VM
+build/bin/obdis.exe examples/Hello.obc   # voir le bytecode
+build/bin/ob2c.exe examples/Hello.obc -o /tmp/Hello.c && gcc -O2 -Isrc -o /tmp/hello /tmp/Hello.c src/rt.c src/ob.c src/model.c src/module.c src/ffi_glue.c -lm && /tmp/hello examples/Hello.obc   # version native C (runtime + FFI)
 ```
 ```
 

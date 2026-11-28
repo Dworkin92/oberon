@@ -138,15 +138,20 @@ static void f0_122(VM *vm);
 static void f0_123(VM *vm);
 static void f0_124(VM *vm);
 static void f0_125(VM *vm);
+static void f0_126(VM *vm);
+static void f0_127(VM *vm);
+static void f0_128(VM *vm);
+static void f0_129(VM *vm);
+static void f0_130(VM *vm);
 
-static ProcFn tab0[] = { f0_0, f0_1, f0_2, f0_3, f0_4, f0_5, f0_6, f0_7, f0_8, f0_9, f0_10, f0_11, f0_12, f0_13, f0_14, f0_15, f0_16, f0_17, f0_18, f0_19, f0_20, f0_21, f0_22, f0_23, f0_24, f0_25, f0_26, f0_27, f0_28, f0_29, f0_30, f0_31, f0_32, f0_33, f0_34, f0_35, f0_36, f0_37, f0_38, f0_39, f0_40, f0_41, f0_42, f0_43, f0_44, f0_45, f0_46, f0_47, f0_48, f0_49, f0_50, f0_51, f0_52, f0_53, f0_54, f0_55, f0_56, f0_57, f0_58, f0_59, f0_60, f0_61, f0_62, f0_63, f0_64, f0_65, f0_66, f0_67, f0_68, f0_69, f0_70, f0_71, f0_72, f0_73, f0_74, f0_75, f0_76, f0_77, f0_78, f0_79, f0_80, f0_81, f0_82, f0_83, f0_84, f0_85, f0_86, f0_87, f0_88, f0_89, f0_90, f0_91, f0_92, f0_93, f0_94, f0_95, f0_96, f0_97, f0_98, f0_99, f0_100, f0_101, f0_102, f0_103, f0_104, f0_105, f0_106, f0_107, f0_108, f0_109, f0_110, f0_111, f0_112, f0_113, f0_114, f0_115, f0_116, f0_117, f0_118, f0_119, f0_120, f0_121, f0_122, f0_123, f0_124, f0_125 };
+static ProcFn tab0[] = { f0_0, f0_1, f0_2, f0_3, f0_4, f0_5, f0_6, f0_7, f0_8, f0_9, f0_10, f0_11, f0_12, f0_13, f0_14, f0_15, f0_16, f0_17, f0_18, f0_19, f0_20, f0_21, f0_22, f0_23, f0_24, f0_25, f0_26, f0_27, f0_28, f0_29, f0_30, f0_31, f0_32, f0_33, f0_34, f0_35, f0_36, f0_37, f0_38, f0_39, f0_40, f0_41, f0_42, f0_43, f0_44, f0_45, f0_46, f0_47, f0_48, f0_49, f0_50, f0_51, f0_52, f0_53, f0_54, f0_55, f0_56, f0_57, f0_58, f0_59, f0_60, f0_61, f0_62, f0_63, f0_64, f0_65, f0_66, f0_67, f0_68, f0_69, f0_70, f0_71, f0_72, f0_73, f0_74, f0_75, f0_76, f0_77, f0_78, f0_79, f0_80, f0_81, f0_82, f0_83, f0_84, f0_85, f0_86, f0_87, f0_88, f0_89, f0_90, f0_91, f0_92, f0_93, f0_94, f0_95, f0_96, f0_97, f0_98, f0_99, f0_100, f0_101, f0_102, f0_103, f0_104, f0_105, f0_106, f0_107, f0_108, f0_109, f0_110, f0_111, f0_112, f0_113, f0_114, f0_115, f0_116, f0_117, f0_118, f0_119, f0_120, f0_121, f0_122, f0_123, f0_124, f0_125, f0_126, f0_127, f0_128, f0_129, f0_130 };
 static ProcFn *procTab[] = { tab0 };
 
 static void f0_0(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
-  { int lmod = 0, procIdx = 125, steps = 0;
+  { int lmod = 0, procIdx = 130, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -6211,6 +6216,2092 @@ static void f0_25(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L11: ;
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)255);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
+  if (pop(vm) == 0) goto L143;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 56u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)20480);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L11;
+L143: ;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 56u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)20480);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_26(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L11: ;
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
+  if (pop(vm) == 0) goto L127;
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L11;
+L127: ;
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_27(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L11: ;
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
+  if (pop(vm) == 0) goto L69;
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L11;
+L69: ;
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)4);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
+  if (pop(vm) == 0) goto L91;
+  push(vm, (Cell)(int32_t)0);
+  rtLeaveFrame(vm);
+  return;
+L91: ;
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)4);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)47);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)4);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)92);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
+  if (pop(vm) == 0) goto L183;
+  push(vm, (Cell)(int32_t)0);
+  rtLeaveFrame(vm);
+  return;
+L183: ;
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)3);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    vm->stack[slot] = pop(vm); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)97);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)122);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
+  if (pop(vm) == 0) goto L266;
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)32);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  goto L271;
+L266: ;
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+L271: ;
+  push(vm, (Cell)(int32_t)66);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)2);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    vm->stack[slot] = pop(vm); }
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)97);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)122);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
+  if (pop(vm) == 0) goto L360;
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)32);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  goto L365;
+L360: ;
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+L365: ;
+  push(vm, (Cell)(int32_t)73);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    vm->stack[slot] = pop(vm); }
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)97);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)122);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
+  if (pop(vm) == 0) goto L455;
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)32);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  goto L460;
+L455: ;
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+L460: ;
+  push(vm, (Cell)(int32_t)78);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_28(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  push(vm, cur->strRefs[9u]);
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 60u)); } /* absolute gid */
+  { int lmod = 255, procIdx = 90, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  if (pop(vm) == 0) goto L30;
+  rtLeaveFrame(vm);
+  return;
+L30: ;
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 61u)); } /* absolute gid */
+  { int lmod = 255, procIdx = 91, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L66: ;
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[61u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)47);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[61u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)92);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
+  if (pop(vm) == 0) goto L181;
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)-1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L66;
+L181: ;
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  if (pop(vm) == 0) goto L268;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 60u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)46);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 60u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L465;
+L268: ;
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L279: ;
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
+  if (pop(vm) == 0) goto L369;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 60u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[61u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L279;
+L369: ;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 60u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 60u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 27, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  if (pop(vm) == 0) goto L465;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 60u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)4);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L465: ;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_29(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 0, procIdx = 25, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 54u)); } /* absolute gid */
+  push(vm, cur->strRefs[10u]);
+  { int lmod = 0, procIdx = 23, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 54u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 25, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 0; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 54u)); } /* absolute gid */
+  push(vm, cur->strRefs[11u]);
+  { int lmod = 0, procIdx = 23, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 54u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 25, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 56u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)20480);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)46);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 56u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)20480);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int lmod = 0, procIdx = 28, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 60u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 59u)); } /* absolute gid */
+  push(vm, cur->strRefs[12u]);
+  { int lmod = 0, procIdx = 23, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  push(vm, cur->strRefs[13u]);
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 57u)); } /* absolute gid */
+  { int lmod = 255, procIdx = 90, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  if (pop(vm) == 0) goto L1041;
+  { int ld = 0, off = 6; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 61u)); } /* absolute gid */
+  { int lmod = 255, procIdx = 91, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)58);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L425: ;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[61u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
+  if (pop(vm) == 0) goto L531;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[61u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)92);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  if (pop(vm) == 0) goto L512;
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)59);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L512: ;
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L425;
+L531: ;
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L553: ;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[57u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
+  if (pop(vm) == 0) goto L895;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[57u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  if (pop(vm) == 0) goto L791;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 58u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)80);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
+  if (pop(vm) == 0) goto L775;
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 58u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 25, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 58u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 59u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 26, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  if (pop(vm) == 0) goto L775;
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L775: ;
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L876;
+L791: ;
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)255);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
+  if (pop(vm) == 0) goto L876;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 58u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[57u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L876: ;
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L553;
+L895: ;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 58u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)80);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
+  if (pop(vm) == 0) goto L1041;
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 58u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 25, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 58u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 59u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 26, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  if (pop(vm) == 0) goto L1041;
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L1041: ;
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell a = pop(vm); push(vm, !a); }
+  if (pop(vm) == 0) goto L1096;
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 59u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 25, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L1096: ;
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L1107: ;
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 2; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
+  if (pop(vm) == 0) goto L1358;
+  { int ld = 0, off = 5; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L1134: ;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[56u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { int ld = 0, off = 5; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)20480);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
+  if (pop(vm) == 0) goto L1270;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 54u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 5; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[56u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { int ld = 0, off = 5; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)20480);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 5; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L1134;
+L1270: ;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 54u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 5; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 54u)); } /* absolute gid */
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 0, procIdx = 24, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  if (pop(vm) == 0) goto L1339;
+  push(vm, (Cell)(int32_t)1);
+  rtLeaveFrame(vm);
+  return;
+L1339: ;
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L1107;
+L1358: ;
+  push(vm, (Cell)(int32_t)0);
+  rtLeaveFrame(vm);
+  return;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_30(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
   { int ld = 0, off = 1; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -6415,7 +8506,7 @@ L280: ;
   return;
 }
 
-static void f0_26(VM *vm) {
+static void f0_31(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
@@ -6428,7 +8519,7 @@ static void f0_26(VM *vm) {
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 0, procIdx = 25, steps = 1;
+  { int lmod = 0, procIdx = 30, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -6483,7 +8574,7 @@ L47: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[9u]);
+  push(vm, cur->strRefs[14u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -6680,159 +8771,7 @@ L286: ;
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 0, procIdx = 24, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  if (pop(vm) == 0) goto L368;
-  goto L563;
-L368: ;
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 54u)); } /* absolute gid */
-  push(vm, cur->strRefs[10u]);
-  { int lmod = 0, procIdx = 23, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 54u)); } /* absolute gid */
-  { int ld = 0, off = 0; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 0, procIdx = 24, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  if (pop(vm) == 0) goto L433;
-  goto L563;
-L433: ;
-  { int ld = 0, off = 1; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 54u)); } /* absolute gid */
-  push(vm, cur->strRefs[11u]);
-  { int lmod = 0, procIdx = 23, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 54u)); } /* absolute gid */
-  { int ld = 0, off = 0; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 0, procIdx = 24, steps = 1;
+  { int lmod = 0, procIdx = 29, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -6862,8 +8801,8 @@ L433: ;
     }
   }
   { Cell a = pop(vm); push(vm, !a); }
-  if (pop(vm) == 0) goto L563;
-  push(vm, cur->strRefs[12u]);
+  if (pop(vm) == 0) goto L433;
+  push(vm, cur->strRefs[15u]);
   { int lmod = 255, procIdx = 3, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -6987,7 +8926,7 @@ L433: ;
       if (!vm->running) return;
     }
   }
-L563: ;
+L433: ;
   { int lmod = 0, procIdx = 17, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -7147,14 +9086,14 @@ L563: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a || b); }
-  if (pop(vm) == 0) goto L711;
+  if (pop(vm) == 0) goto L581;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[13u]);
+  push(vm, cur->strRefs[16u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -7189,7 +9128,7 @@ L563: ;
       if (!vm->running) return;
     }
   }
-L711: ;
+L581: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 55u)); } /* absolute gid */
   { int lmod = 0, procIdx = 20, steps = 1;
@@ -7290,14 +9229,14 @@ L711: ;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
-  if (pop(vm) == 0) goto L822;
+  if (pop(vm) == 0) goto L692;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[14u]);
+  push(vm, cur->strRefs[17u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -7332,7 +9271,7 @@ L711: ;
       if (!vm->running) return;
     }
   }
-L822: ;
+L692: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 22u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -7365,7 +9304,7 @@ L822: ;
     push(vm, vm->stack[slot]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 61u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 67u)); } /* absolute gid */
   { int ld = 0, off = 6; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -7387,7 +9326,7 @@ L822: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L908: ;
+L778: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -7397,7 +9336,7 @@ L908: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L1158;
+  if (pop(vm) == 0) goto L1028;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 55u)); } /* absolute gid */
   { int lmod = 0, procIdx = 20, steps = 1;
@@ -7435,7 +9374,7 @@ L908: ;
     push(vm, MK_STACK_ADDR(slot)); }
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L954: ;
+L824: ;
   { int ld = 0, off = 4; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -7465,9 +9404,9 @@ L954: ;
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
-  if (pop(vm) == 0) goto L1092;
+  if (pop(vm) == 0) goto L962;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 60u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 66u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int ld = 0, off = 3; int fi = vm->fp - 1;
@@ -7525,10 +9464,10 @@ L954: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L954;
-L1092: ;
+  goto L824;
+L962: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 60u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 66u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int ld = 0, off = 3; int fi = vm->fp - 1;
@@ -7567,8 +9506,8 @@ L1092: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L908;
-L1158: ;
+  goto L778;
+L1028: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 24u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -7673,14 +9612,14 @@ L1158: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)262144);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
-  if (pop(vm) == 0) goto L1301;
+  if (pop(vm) == 0) goto L1171;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[15u]);
+  push(vm, cur->strRefs[18u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -7715,7 +9654,7 @@ L1158: ;
       if (!vm->running) return;
     }
   }
-L1301: ;
+L1171: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 23u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -7766,7 +9705,7 @@ L1301: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 59u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 65u)); } /* absolute gid */
   { int lmod = 0, procIdx = 18, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -7827,17 +9766,17 @@ L1301: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[59u]); }
+    push(vm, vm->mods[g]->globals[65u]); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
-  if (pop(vm) == 0) goto L1470;
+  if (pop(vm) == 0) goto L1340;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[16u]);
+  push(vm, cur->strRefs[19u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -7872,7 +9811,7 @@ L1301: ;
       if (!vm->running) return;
     }
   }
-L1470: ;
+L1340: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -7880,14 +9819,14 @@ L1470: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[59u]); }
+    push(vm, vm->mods[g]->globals[65u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { int ld = 0, off = 16; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L1498: ;
+L1368: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -7897,7 +9836,7 @@ L1498: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L1701;
+  if (pop(vm) == 0) goto L1571;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 55u)); } /* absolute gid */
   { int lmod = 0, procIdx = 20, steps = 1;
@@ -7930,7 +9869,7 @@ L1498: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 56u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int ld = 0, off = 3; int fi = vm->fp - 1;
@@ -8009,7 +9948,7 @@ L1498: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 57u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 63u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int ld = 0, off = 3; int fi = vm->fp - 1;
@@ -8088,7 +10027,7 @@ L1498: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 58u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int ld = 0, off = 3; int fi = vm->fp - 1;
@@ -8146,8 +10085,8 @@ L1498: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L1498;
-L1701: ;
+  goto L1368;
+L1571: ;
   { int ld = 0, off = 7; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -8217,14 +10156,14 @@ L1701: ;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)96);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
-  if (pop(vm) == 0) goto L1793;
+  if (pop(vm) == 0) goto L1663;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[17u]);
+  push(vm, cur->strRefs[20u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -8259,7 +10198,7 @@ L1701: ;
       if (!vm->running) return;
     }
   }
-L1793: ;
+L1663: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 25u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -8301,7 +10240,7 @@ L1793: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L1853: ;
+L1723: ;
   { int ld = 0, off = 5; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -8311,7 +10250,7 @@ L1853: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L3529;
+  if (pop(vm) == 0) goto L3399;
   { int ld = 0, off = 4; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -8635,7 +10574,7 @@ L1853: ;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)7);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L2949;
+  if (pop(vm) == 0) goto L2819;
   { int ld = 0, off = 6; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -8705,7 +10644,7 @@ L1853: ;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
-  if (pop(vm) == 0) goto L2487;
+  if (pop(vm) == 0) goto L2357;
   { int ld = 0, off = 6; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -8811,22 +10750,22 @@ L1853: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   push(vm, (Cell)(int32_t)1073741823);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L2876;
-L2487: ;
+  goto L2746;
+L2357: ;
   { int ld = 0, off = 6; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)8);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
-  if (pop(vm) == 0) goto L2547;
+  if (pop(vm) == 0) goto L2417;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[18u]);
+  push(vm, cur->strRefs[21u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -8861,7 +10800,7 @@ L2487: ;
       if (!vm->running) return;
     }
   }
-L2547: ;
+L2417: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 30u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -8918,7 +10857,7 @@ L2547: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L2632: ;
+L2502: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -8928,7 +10867,7 @@ L2632: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L2816;
+  if (pop(vm) == 0) goto L2686;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 33u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -9083,8 +11022,8 @@ L2632: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L2632;
-L2816: ;
+  goto L2502;
+L2686: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 31u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -9148,7 +11087,7 @@ L2816: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L2876: ;
+L2746: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 32u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -9237,15 +11176,15 @@ L2876: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L3510;
-L2949: ;
+  goto L3380;
+L2819: ;
   { int ld = 0, off = 4; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)8);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L3272;
+  if (pop(vm) == 0) goto L3142;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 29u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -9403,7 +11342,7 @@ L2949: ;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
-  if (pop(vm) == 0) goto L3128;
+  if (pop(vm) == 0) goto L2998;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 27u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -9438,7 +11377,7 @@ L2949: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L3128: ;
+L2998: ;
   { int ld = 0, off = 6; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -9518,7 +11457,7 @@ L3128: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L3187: ;
+L3057: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -9528,7 +11467,7 @@ L3187: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L3267;
+  if (pop(vm) == 0) goto L3137;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 55u)); } /* absolute gid */
   { int lmod = 0, procIdx = 20, steps = 1;
@@ -9627,17 +11566,17 @@ L3187: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L3187;
-L3267: ;
-  goto L3510;
-L3272: ;
+  goto L3057;
+L3137: ;
+  goto L3380;
+L3142: ;
   { int ld = 0, off = 4; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)9);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L3361;
+  if (pop(vm) == 0) goto L3231;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 28u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -9726,15 +11665,15 @@ L3272: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L3510;
-L3361: ;
+  goto L3380;
+L3231: ;
   { int ld = 0, off = 4; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)11);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L3510;
+  if (pop(vm) == 0) goto L3380;
   { int ld = 0, off = 6; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -9814,7 +11753,7 @@ L3361: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L3436: ;
+L3306: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -9824,7 +11763,7 @@ L3436: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L3497;
+  if (pop(vm) == 0) goto L3367;
   { int lmod = 0, procIdx = 18, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -9892,8 +11831,8 @@ L3436: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L3436;
-L3497: ;
+  goto L3306;
+L3367: ;
   { int lmod = 0, procIdx = 18, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -9923,7 +11862,7 @@ L3497: ;
       if (!vm->running) return;
     }
   }
-L3510: ;
+L3380: ;
   { int ld = 0, off = 5; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -9933,8 +11872,8 @@ L3510: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L1853;
-L3529: ;
+  goto L1723;
+L3399: ;
   { int ld = 0, off = 5; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -9951,7 +11890,7 @@ L3529: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L3556: ;
+L3426: ;
   { int ld = 0, off = 5; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -9961,7 +11900,7 @@ L3556: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L3801;
+  if (pop(vm) == 0) goto L3671;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[26u]); }
   push(vm, (Cell)(int32_t)0);
@@ -9993,7 +11932,7 @@ L3556: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)8);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L3782;
+  if (pop(vm) == 0) goto L3652;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 44u)); } /* absolute gid */
   push(vm, peek(vm));
@@ -10005,14 +11944,14 @@ L3556: ;
     push(vm, vm->mods[g]->globals[44u]); }
   push(vm, (Cell)(int32_t)1024);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
-  if (pop(vm) == 0) goto L3700;
+  if (pop(vm) == 0) goto L3570;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[19u]);
+  push(vm, cur->strRefs[22u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -10047,7 +11986,7 @@ L3556: ;
       if (!vm->running) return;
     }
   }
-L3700: ;
+L3570: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 34u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -10100,7 +12039,7 @@ L3700: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L3782: ;
+L3652: ;
   { int ld = 0, off = 5; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -10110,8 +12049,8 @@ L3782: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L3556;
-L3801: ;
+  goto L3426;
+L3671: ;
   { int ld = 0, off = 5; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -10128,7 +12067,7 @@ L3801: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L3828: ;
+L3698: ;
   { int ld = 0, off = 5; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -10138,7 +12077,7 @@ L3828: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L4538;
+  if (pop(vm) == 0) goto L4408;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[26u]); }
   push(vm, (Cell)(int32_t)0);
@@ -10170,7 +12109,7 @@ L3828: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)8);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L4089;
+  if (pop(vm) == 0) goto L3959;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[27u]); }
   push(vm, (Cell)(int32_t)0);
@@ -10202,7 +12141,7 @@ L3828: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
-  if (pop(vm) == 0) goto L4089;
+  if (pop(vm) == 0) goto L3959;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 43u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -10303,7 +12242,7 @@ L3828: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L4089: ;
+L3959: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[26u]); }
   push(vm, (Cell)(int32_t)0);
@@ -10335,7 +12274,7 @@ L4089: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)9);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L4519;
+  if (pop(vm) == 0) goto L4389;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[28u]); }
   push(vm, (Cell)(int32_t)0);
@@ -10367,7 +12306,7 @@ L4089: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
-  if (pop(vm) == 0) goto L4519;
+  if (pop(vm) == 0) goto L4389;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[26u]); }
   push(vm, (Cell)(int32_t)0);
@@ -10424,7 +12363,7 @@ L4089: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)8);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L4519;
+  if (pop(vm) == 0) goto L4389;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 35u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -10593,7 +12532,7 @@ L4089: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L4519: ;
+L4389: ;
   { int ld = 0, off = 5; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -10603,8 +12542,8 @@ L4519: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L3828;
-L4538: ;
+  goto L3698;
+L4408: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -10612,14 +12551,14 @@ L4538: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[59u]); }
+    push(vm, vm->mods[g]->globals[65u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { int ld = 0, off = 23; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L4566: ;
+L4436: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -10629,7 +12568,7 @@ L4566: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L4798;
+  if (pop(vm) == 0) goto L4668;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[26u]); }
   push(vm, (Cell)(int32_t)0);
@@ -10643,7 +12582,7 @@ L4566: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[57u]); }
+    push(vm, vm->mods[g]->globals[63u]); }
   push(vm, (Cell)(int32_t)0);
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -10677,7 +12616,7 @@ L4566: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)7);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L4779;
+  if (pop(vm) == 0) goto L4649;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 18u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -10703,7 +12642,7 @@ L4566: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[56u]); }
+    push(vm, vm->mods[g]->globals[62u]); }
   push(vm, (Cell)(int32_t)0);
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -10740,7 +12679,7 @@ L4566: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[57u]); }
+    push(vm, vm->mods[g]->globals[63u]); }
   push(vm, (Cell)(int32_t)0);
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -10789,7 +12728,7 @@ L4566: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L4779: ;
+L4649: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -10799,8 +12738,8 @@ L4779: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L4566;
-L4798: ;
+  goto L4436;
+L4668: ;
   { int ld = 0, off = 8; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -10870,14 +12809,14 @@ L4798: ;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)64);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
-  if (pop(vm) == 0) goto L4890;
+  if (pop(vm) == 0) goto L4760;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[20u]);
+  push(vm, cur->strRefs[23u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -10912,7 +12851,7 @@ L4798: ;
       if (!vm->running) return;
     }
   }
-L4890: ;
+L4760: ;
   { int ld = 0, off = 5; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -10929,7 +12868,7 @@ L4890: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L4917: ;
+L4787: ;
   { int ld = 0, off = 5; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -10939,7 +12878,7 @@ L4917: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L6350;
+  if (pop(vm) == 0) goto L6220;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 55u)); } /* absolute gid */
   { int lmod = 0, procIdx = 20, steps = 1;
@@ -11108,7 +13047,7 @@ L4917: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L5037: ;
+L4907: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -11118,7 +13057,7 @@ L5037: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L5117;
+  if (pop(vm) == 0) goto L4987;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 55u)); } /* absolute gid */
   { int lmod = 0, procIdx = 20, steps = 1;
@@ -11217,8 +13156,8 @@ L5037: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L5037;
-L5117: ;
+  goto L4907;
+L4987: ;
   { int ld = 0, off = 12; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -11510,14 +13449,14 @@ L5117: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)2097152);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
-  if (pop(vm) == 0) goto L5410;
+  if (pop(vm) == 0) goto L5280;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[21u]);
+  push(vm, cur->strRefs[24u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -11552,7 +13491,7 @@ L5117: ;
       if (!vm->running) return;
     }
   }
-L5410: ;
+L5280: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 40u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -11625,7 +13564,7 @@ L5410: ;
     push(vm, MK_STACK_ADDR(slot)); }
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L5516: ;
+L5386: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -11635,9 +13574,9 @@ L5516: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
-  if (pop(vm) == 0) goto L6331;
+  if (pop(vm) == 0) goto L6201;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 63u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
   { int lmod = 0, procIdx = 17, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -11707,22 +13646,22 @@ L5516: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[63u]); }
+    push(vm, vm->mods[g]->globals[69u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[63u]); }
+    push(vm, vm->mods[g]->globals[69u]); }
   push(vm, (Cell)(int32_t)90);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a || b); }
-  if (pop(vm) == 0) goto L5653;
+  if (pop(vm) == 0) goto L5523;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[22u]);
+  push(vm, cur->strRefs[25u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -11757,7 +13696,7 @@ L5516: ;
       if (!vm->running) return;
     }
   }
-L5653: ;
+L5523: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 16u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -11777,10 +13716,10 @@ L5653: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[62u]); }
+    push(vm, vm->mods[g]->globals[68u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[63u]); }
+    push(vm, vm->mods[g]->globals[69u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)90);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -11803,10 +13742,10 @@ L5653: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[63u]); }
+    push(vm, vm->mods[g]->globals[69u]); }
   push(vm, (Cell)(int32_t)86);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L6179;
+  if (pop(vm) == 0) goto L6049;
   { int ld = 0, off = 6; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -12035,7 +13974,7 @@ L5653: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L6068: ;
+L5938: ;
   { int ld = 0, off = 4; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -12045,7 +13984,7 @@ L6068: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L6174;
+  if (pop(vm) == 0) goto L6044;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 16u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -12119,10 +14058,10 @@ L6068: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L6068;
-L6174: ;
-  goto L6326;
-L6179: ;
+  goto L5938;
+L6044: ;
+  goto L6196;
+L6049: ;
   { int ld = 0, off = 4; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -12130,7 +14069,7 @@ L6179: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[63u]); }
+    push(vm, vm->mods[g]->globals[69u]); }
   { int lmod = 0, procIdx = 1, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -12166,7 +14105,7 @@ L6179: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L6220: ;
+L6090: ;
   { int ld = 0, off = 4; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -12176,7 +14115,7 @@ L6220: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L6326;
+  if (pop(vm) == 0) goto L6196;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 16u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -12250,10 +14189,10 @@ L6220: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L6220;
-L6326: ;
-  goto L5516;
-L6331: ;
+  goto L6090;
+L6196: ;
+  goto L5386;
+L6201: ;
   { int ld = 0, off = 5; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -12263,8 +14202,8 @@ L6331: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L4917;
-L6350: ;
+  goto L4787;
+L6220: ;
   { int ld = 0, off = 9; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -12334,14 +14273,14 @@ L6350: ;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
-  if (pop(vm) == 0) goto L6442;
+  if (pop(vm) == 0) goto L6312;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[23u]);
+  push(vm, cur->strRefs[26u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -12376,7 +14315,7 @@ L6350: ;
       if (!vm->running) return;
     }
   }
-L6442: ;
+L6312: ;
   { int ld = 0, off = 5; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -12393,7 +14332,7 @@ L6442: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L6469: ;
+L6339: ;
   { int ld = 0, off = 5; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -12403,7 +14342,7 @@ L6469: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L6584;
+  if (pop(vm) == 0) goto L6454;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 55u)); } /* absolute gid */
   { int lmod = 0, procIdx = 20, steps = 1;
@@ -12505,8 +14444,8 @@ L6469: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L6469;
-L6584: ;
+  goto L6339;
+L6454: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -12514,14 +14453,14 @@ L6584: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[61u]); }
+    push(vm, vm->mods[g]->globals[67u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { int ld = 0, off = 29; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-L6612: ;
+L6482: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -12531,16 +14470,16 @@ L6612: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
-  if (pop(vm) == 0) goto L6904;
+  if (pop(vm) == 0) goto L6774;
   { int ld = 0, off = 4; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L6639: ;
+L6509: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[60u]); }
+    push(vm, vm->mods[g]->globals[66u]); }
   push(vm, (Cell)(int32_t)0);
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -12570,7 +14509,7 @@ L6639: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
-  if (pop(vm) == 0) goto L6779;
+  if (pop(vm) == 0) goto L6649;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 55u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -12592,7 +14531,7 @@ L6639: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[60u]); }
+    push(vm, vm->mods[g]->globals[66u]); }
   push(vm, (Cell)(int32_t)0);
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -12630,8 +14569,8 @@ L6639: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L6639;
-L6779: ;
+  goto L6509;
+L6649: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 55u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
@@ -12692,7 +14631,7 @@ L6779: ;
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int lmod = 0, procIdx = 26, steps = 1;
+  { int lmod = 0, procIdx = 31, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -12731,8 +14670,8 @@ L6779: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L6612;
-L6904: ;
+  goto L6482;
+L6774: ;
   { int ld = 0, off = 2; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -12744,7 +14683,7 @@ L6904: ;
   return;
 }
 
-static void f0_27(VM *vm) {
+static void f0_32(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
@@ -12761,52 +14700,52 @@ L15: ;
   push(vm, (Cell)(int32_t)2);
   rtLeaveFrame(vm);
   return;
-  goto L503;
+  goto L511;
 L26: ;
   push(vm, (Cell)(int32_t)1);
   rtLeaveFrame(vm);
   return;
-  goto L503;
+  goto L511;
 L37: ;
   push(vm, (Cell)(int32_t)2);
   rtLeaveFrame(vm);
   return;
-  goto L503;
+  goto L511;
 L48: ;
   push(vm, (Cell)(int32_t)3);
   rtLeaveFrame(vm);
   return;
-  goto L503;
+  goto L511;
 L59: ;
   push(vm, (Cell)(int32_t)2);
   rtLeaveFrame(vm);
   return;
-  goto L503;
+  goto L511;
 L70: ;
   push(vm, (Cell)(int32_t)1);
   rtLeaveFrame(vm);
   return;
-  goto L503;
+  goto L511;
 L81: ;
   push(vm, (Cell)(int32_t)10);
   rtLeaveFrame(vm);
   return;
-  goto L503;
+  goto L511;
 L92: ;
   push(vm, (Cell)(int32_t)1);
   rtLeaveFrame(vm);
   return;
-  goto L503;
+  goto L511;
 L103: ;
   push(vm, (Cell)(int32_t)2);
   rtLeaveFrame(vm);
   return;
-  goto L503;
+  goto L511;
 L114: ;
   push(vm, (Cell)(int32_t)0);
   rtLeaveFrame(vm);
   return;
-  goto L503;
+  goto L511;
 L125: ;
   { int ld = 0, off = 1; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -12904,14 +14843,16 @@ L125: ;
       case 87: goto L92;
       case 88: goto L92;
       case 89: goto L103;
+      case 90: goto L103;
+      case 91: goto L92;
       default: goto L114; } }
-L503: ;
+L511: ;
   rtLeaveFrame(vm);
   return;
   return;
 }
 
-static void f0_28(VM *vm) {
+static void f0_33(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
@@ -12928,12 +14869,12 @@ L15: ;
   push(vm, (Cell)(int32_t)1);
   rtLeaveFrame(vm);
   return;
-  goto L331;
+  goto L343;
 L26: ;
   push(vm, (Cell)(int32_t)0);
   rtLeaveFrame(vm);
   return;
-  goto L331;
+  goto L343;
 L37: ;
   { int ld = 0, off = 1; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -13010,14 +14951,17 @@ L37: ;
       case 66: goto L15;
       case 67: goto L26;
       case 68: goto L15;
+      case 69: goto L26;
+      case 70: goto L15;
+      case 71: goto L15;
       default: goto L26; } }
-L331: ;
+L343: ;
   rtLeaveFrame(vm);
   return;
   return;
 }
 
-static void f0_29(VM *vm) {
+static void f0_34(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
@@ -13028,7 +14972,7 @@ static void f0_29(VM *vm) {
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-  { VMMod *tm = vm->mods[cur->map[0]]; Type *t = tm->lm->types[2u];
+  { VMMod *tm = vm->mods[cur->map[0]]; Type *t = tm->lm->types[3u];
     if (t->kind != TK_ARRAY) vmRuntimeError(vm, "ALLOC_ARRAY on non-array");
     push(vm, allocArrayObj(vm, t)); }
   { int ld = 0, off = 18; int fi = vm->fp - 1;
@@ -13043,7 +14987,7 @@ static void f0_29(VM *vm) {
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-  goto L8257;
+  goto L9327;
 L37: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -13174,7 +15118,7 @@ L37: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
+  goto L9713;
 L141: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -13305,7 +15249,7 @@ L141: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
+  goto L9713;
 L245: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -13385,7 +15329,7 @@ L245: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
+  goto L9713;
 L303: ;
   { int ld = 0, off = 3; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -13729,7 +15673,7 @@ L569: ;
 L654: ;
   goto L481;
 L659: ;
-  goto L8635;
+  goto L9713;
 L664: ;
   { int lmod = 255, procIdx = 4, steps = 0;
     if (lmod == 255) {
@@ -13760,7 +15704,7 @@ L664: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
+  goto L9713;
 L682: ;
   { int ld = 0, off = 14; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -13848,7 +15792,7 @@ L682: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
+  goto L9713;
 L750: ;
   { int ld = 0, off = 15; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -13965,7 +15909,7 @@ L750: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
+  goto L9713;
 L831: ;
   { int ld = 0, off = 16; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -14053,7 +15997,7 @@ L831: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
+  goto L9713;
 L899: ;
   { int ld = 0, off = 17; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -14488,7 +16432,7 @@ L1332: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L1382: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 15u)); } /* absolute gid */
@@ -14546,7 +16490,7 @@ L1382: ;
     push(vm, MK_GLOBAL_ADDR(g, 14u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L1446: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -14648,7 +16592,7 @@ L1446: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
+  goto L9713;
 L1537: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -14728,7 +16672,7 @@ L1537: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
+  goto L9713;
 L1595: ;
   { int ld = 0, off = 14; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -14816,7 +16760,7 @@ L1595: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
+  goto L9713;
 L1663: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -14995,7 +16939,7 @@ L1786: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L1832: ;
-  goto L8635;
+  goto L9713;
 L1837: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -15174,7 +17118,7 @@ L1960: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L2006: ;
-  goto L8635;
+  goto L9713;
 L2011: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -15313,7 +17257,7 @@ L2011: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L2158: ;
-  goto L8635;
+  goto L9713;
 L2163: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -15553,7 +17497,7 @@ L2395: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L2433: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -15719,7 +17663,7 @@ L2433: ;
     }
   }
 L2587: ;
-  goto L8635;
+  goto L9713;
 L2592: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -16250,7 +18194,7 @@ L3158: ;
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L3196: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -16757,7 +18701,7 @@ L3550: ;
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   goto L3550;
 L3701: ;
-  goto L8635;
+  goto L9713;
 L3706: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -17013,7 +18957,7 @@ L3970: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L4003: ;
-  goto L8635;
+  goto L9713;
 L4008: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -17173,7 +19117,7 @@ L4108: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L4182: ;
-  goto L8635;
+  goto L9713;
 L4187: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -17333,7 +19277,7 @@ L4287: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L4361: ;
-  goto L8635;
+  goto L9713;
 L4366: ;
   { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -17470,7 +19414,7 @@ L4366: ;
     }
   }
 L4507: ;
-  goto L8635;
+  goto L9713;
 L4512: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -17606,7 +19550,7 @@ L4618: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L4651: ;
-  goto L8635;
+  goto L9713;
 L4656: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -17742,7 +19686,7 @@ L4762: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L4795: ;
-  goto L8635;
+  goto L9713;
 L4800: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -17836,7 +19780,7 @@ L4800: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L4906: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -17930,7 +19874,7 @@ L4906: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L5012: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -18024,7 +19968,7 @@ L5012: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L5118: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -18096,7 +20040,7 @@ L5118: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L5191: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -18190,7 +20134,7 @@ L5191: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L5297: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -18284,7 +20228,7 @@ L5297: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L5403: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -18405,7 +20349,7 @@ L5519: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L5552: ;
-  goto L8635;
+  goto L9713;
 L5557: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -18432,7 +20376,7 @@ L5557: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L5602: ;
   { int ld = 0, off = 7; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
@@ -18970,7 +20914,7 @@ L6170: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L6220: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -19022,7 +20966,7 @@ L6220: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L6266: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 15u)); } /* absolute gid */
@@ -19080,7 +21024,7 @@ L6266: ;
     push(vm, MK_GLOBAL_ADDR(g, 14u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L6330: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -19152,7 +21096,7 @@ L6330: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L6403: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -19253,7 +21197,7 @@ L6403: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L6489: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -19354,7 +21298,7 @@ L6489: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L6575: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -19484,7 +21428,7 @@ L6575: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L6674: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -19783,7 +21727,7 @@ L6674: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L7057: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -19892,7 +21836,7 @@ L7057: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L7153: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -20023,7 +21967,7 @@ L7153: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L7282: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -20074,7 +22018,7 @@ L7282: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
+  goto L9713;
 L7327: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -20183,7 +22127,7 @@ L7327: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L7423: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -20640,7 +22584,7 @@ L7889: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L7939: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -20712,7 +22656,7 @@ L7939: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L8012: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -20763,7 +22707,7 @@ L8012: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
+  goto L9713;
 L8057: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
@@ -20835,7 +22779,7 @@ L8057: ;
     }
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L8635;
+  goto L9713;
 L8130: ;
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
@@ -20908,15 +22852,979 @@ L8130: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
+  goto L9713;
 L8208: ;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int lmod = 0, procIdx = 14, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int ld = 0, off = 18; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int lmod = 255, procIdx = 90, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  if (pop(vm) == 0) goto L8319;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L8352;
+L8319: ;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L8352: ;
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 0, procIdx = 12, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int lmod = 255, procIdx = 51, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[0u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)1048576);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 255, procIdx = 51, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell a = pop(vm); push(vm, (Cell)(int32_t)(-(int32_t)a)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 5; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[0u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)1048576);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 255, procIdx = 51, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 6; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)2);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L8550: ;
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
+  if (pop(vm) == 0) goto L8606;
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L8550;
+L8606: ;
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 5; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
+  if (pop(vm) == 0) goto L8645;
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int ld = 0, off = 5; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L8645: ;
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { int ld = 0, off = 24; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    vm->stack[slot] = pop(vm); }
+L8672: ;
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 24; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
+  if (pop(vm) == 0) goto L8773;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 6; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)1048576);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L8672;
+L8773: ;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 6; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)1048576);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L9713;
+L8823: ;
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int lmod = 255, procIdx = 91, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[3u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 0, procIdx = 12, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int lmod = 255, procIdx = 51, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[0u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)1048576);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 255, procIdx = 51, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell a = pop(vm); push(vm, (Cell)(int32_t)(-(int32_t)a)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 5; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[0u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)1048576);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int lmod = 255, procIdx = 51, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 6; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int ld = 0, off = 4; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)2);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 5; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
+  if (pop(vm) == 0) goto L9067;
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int ld = 0, off = 5; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L9067: ;
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { int ld = 0, off = 25; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    vm->stack[slot] = pop(vm); }
+L9094: ;
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 25; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
+  if (pop(vm) == 0) goto L9195;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 6; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)1048576);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { int ld = 0, off = 17; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L9094;
+L9195: ;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 3; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 6; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)1048576);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 3u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)0);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)65536);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L9713;
+L9278: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[24u]);
+  push(vm, cur->strRefs[27u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -20951,8 +23859,8 @@ L8208: ;
       if (!vm->running) return;
     }
   }
-  goto L8635;
-L8257: ;
+  goto L9713;
+L9327: ;
   { int ld = 0, off = 19; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -20972,13 +23880,13 @@ L8257: ;
       case 10: goto L1446;
       case 11: goto L1537;
       case 12: goto L1595;
-      case 13: goto L8208;
-      case 14: goto L8208;
-      case 15: goto L8208;
-      case 16: goto L8208;
-      case 17: goto L8208;
-      case 18: goto L8208;
-      case 19: goto L8208;
+      case 13: goto L9278;
+      case 14: goto L9278;
+      case 15: goto L9278;
+      case 16: goto L9278;
+      case 17: goto L9278;
+      case 18: goto L9278;
+      case 19: goto L9278;
       case 20: goto L1663;
       case 21: goto L1837;
       case 22: goto L2011;
@@ -20992,13 +23900,13 @@ L8257: ;
       case 30: goto L4366;
       case 31: goto L4512;
       case 32: goto L4656;
-      case 33: goto L8208;
-      case 34: goto L8208;
-      case 35: goto L8208;
-      case 36: goto L8208;
-      case 37: goto L8208;
-      case 38: goto L8208;
-      case 39: goto L8208;
+      case 33: goto L9278;
+      case 34: goto L9278;
+      case 35: goto L9278;
+      case 36: goto L9278;
+      case 37: goto L9278;
+      case 38: goto L9278;
+      case 39: goto L9278;
       case 40: goto L4800;
       case 41: goto L4906;
       case 42: goto L5012;
@@ -21014,31 +23922,31 @@ L8257: ;
       case 52: goto L6403;
       case 53: goto L6489;
       case 54: goto L6575;
-      case 55: goto L8208;
-      case 56: goto L8208;
-      case 57: goto L8208;
-      case 58: goto L8208;
-      case 59: goto L8208;
-      case 60: goto L8208;
-      case 61: goto L8208;
-      case 62: goto L8208;
-      case 63: goto L8208;
-      case 64: goto L8208;
-      case 65: goto L8208;
-      case 66: goto L8208;
-      case 67: goto L8208;
-      case 68: goto L8208;
-      case 69: goto L8208;
-      case 70: goto L8208;
-      case 71: goto L8208;
-      case 72: goto L8208;
-      case 73: goto L8208;
-      case 74: goto L8208;
-      case 75: goto L8208;
-      case 76: goto L8208;
-      case 77: goto L8208;
-      case 78: goto L8208;
-      case 79: goto L8208;
+      case 55: goto L9278;
+      case 56: goto L9278;
+      case 57: goto L9278;
+      case 58: goto L9278;
+      case 59: goto L9278;
+      case 60: goto L9278;
+      case 61: goto L9278;
+      case 62: goto L9278;
+      case 63: goto L9278;
+      case 64: goto L9278;
+      case 65: goto L9278;
+      case 66: goto L9278;
+      case 67: goto L9278;
+      case 68: goto L9278;
+      case 69: goto L9278;
+      case 70: goto L9278;
+      case 71: goto L9278;
+      case 72: goto L9278;
+      case 73: goto L9278;
+      case 74: goto L9278;
+      case 75: goto L9278;
+      case 76: goto L9278;
+      case 77: goto L9278;
+      case 78: goto L9278;
+      case 79: goto L9278;
       case 80: goto L6674;
       case 81: goto L7057;
       case 82: goto L7153;
@@ -21049,14 +23957,16 @@ L8257: ;
       case 87: goto L8012;
       case 88: goto L8057;
       case 89: goto L8130;
-      default: goto L8208; } }
-L8635: ;
+      case 90: goto L8208;
+      case 91: goto L8823;
+      default: goto L9278; } }
+L9713: ;
   rtLeaveFrame(vm);
   return;
   return;
 }
 
-static void f0_30(VM *vm) {
+static void f0_35(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
@@ -21162,7 +24072,7 @@ static void f0_30(VM *vm) {
   return;
 }
 
-static void f0_31(VM *vm) {
+static void f0_36(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
@@ -21386,18 +24296,18 @@ static void f0_31(VM *vm) {
   return;
 }
 
-static void f0_32(VM *vm) {
+static void f0_37(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -21428,16 +24338,16 @@ static void f0_32(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)4);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   push(vm, (Cell)(int32_t)16);
   { Cell a = pop(vm); push(vm, (Cell)(int32_t)(-(int32_t)a)); }
   { int lmod = 255, procIdx = 44, steps = 0;
@@ -21500,9 +24410,9 @@ static void f0_32(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 71u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   push(vm, (Cell)(int32_t)65535);
   { int lmod = 255, procIdx = 40, steps = 0;
     if (lmod == 255) {
@@ -21564,7 +24474,7 @@ static void f0_32(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[13u]); }
   push(vm, (Cell)(int32_t)1);
@@ -21572,17 +24482,17 @@ static void f0_32(VM *vm) {
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L160: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[70u]); }
+    push(vm, vm->mods[g]->globals[76u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
   if (pop(vm) == 0) goto L232;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[9u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -21598,7 +24508,7 @@ L160: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)-1);
@@ -21607,7 +24517,7 @@ L160: ;
   goto L160;
 L232: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
   if (pop(vm) == 0) goto L293;
@@ -21617,7 +24527,7 @@ L232: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[25u]);
+  push(vm, cur->strRefs[28u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -21654,12 +24564,12 @@ L232: ;
   }
 L293: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 74u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[8u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -21674,14 +24584,14 @@ L293: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[71u]); }
+    push(vm, vm->mods[g]->globals[77u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[3u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[68u]); }
+    push(vm, vm->mods[g]->globals[74u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)65536);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -21729,18 +24639,18 @@ L293: ;
   return;
 }
 
-static void f0_33(VM *vm) {
+static void f0_38(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -21771,14 +24681,14 @@ static void f0_33(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)4);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 0, procIdx = 5, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -21842,12 +24752,12 @@ static void f0_33(VM *vm) {
   return;
 }
 
-static void f0_34(VM *vm) {
+static void f0_39(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -21879,7 +24789,7 @@ static void f0_34(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -21911,9 +24821,9 @@ static void f0_34(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
   { int lmod = 0, procIdx = 5, steps = 1;
     if (lmod == 255) {
@@ -21978,18 +24888,18 @@ static void f0_34(VM *vm) {
   return;
 }
 
-static void f0_35(VM *vm) {
+static void f0_40(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -22020,9 +24930,9 @@ static void f0_35(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)4);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
@@ -22059,9 +24969,9 @@ static void f0_35(VM *vm) {
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L102;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -22098,19 +25008,19 @@ L102: ;
   return;
 }
 
-static void f0_36(VM *vm) {
+static void f0_41(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 72u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[16u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)2097152);
@@ -22156,15 +25066,15 @@ static void f0_36(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 73u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)4);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -22224,15 +25134,15 @@ static void f0_36(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 74u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 80u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)8);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -22292,22 +25202,22 @@ static void f0_36(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)12);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[72u]); }
+    push(vm, vm->mods[g]->globals[78u]); }
   push(vm, (Cell)(int32_t)255);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L310;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 84u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
-  { int lmod = 0, procIdx = 27, steps = 1;
+    push(vm, vm->mods[g]->globals[79u]); }
+  { int lmod = 0, procIdx = 32, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -22338,20 +25248,20 @@ static void f0_36(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 81u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[4u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
+    push(vm, vm->mods[g]->globals[79u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[75u]); }
+    push(vm, vm->mods[g]->globals[81u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
-  { int lmod = 0, procIdx = 29, steps = 1;
+    push(vm, vm->mods[g]->globals[84u]); }
+  { int lmod = 0, procIdx = 34, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -22383,10 +25293,10 @@ static void f0_36(VM *vm) {
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 4u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[75u]); }
+    push(vm, vm->mods[g]->globals[81u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
-  { int lmod = 0, procIdx = 28, steps = 1;
+    push(vm, vm->mods[g]->globals[79u]); }
+  { int lmod = 0, procIdx = 33, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -22420,19 +25330,19 @@ static void f0_36(VM *vm) {
   goto L962;
 L310: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 82u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[22u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[65u]); }
+    push(vm, vm->mods[g]->globals[71u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[72u]); }
+    push(vm, vm->mods[g]->globals[78u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -22448,21 +25358,21 @@ L310: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 81u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[4u]); }
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[37u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
+    push(vm, vm->mods[g]->globals[79u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)64);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -22479,35 +25389,35 @@ L310: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[13u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 83u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[74u]); }
+    push(vm, vm->mods[g]->globals[80u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L449: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[77u]); }
+    push(vm, vm->mods[g]->globals[83u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
   if (pop(vm) == 0) goto L534;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[9u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -22523,7 +25433,7 @@ L449: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 83u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)-1);
@@ -22542,7 +25452,7 @@ L534: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[26u]);
+  push(vm, cur->strRefs[29u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -22599,7 +25509,7 @@ L595: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 5u)); } /* absolute gid */
@@ -22620,7 +25530,7 @@ L595: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 6u)); } /* absolute gid */
@@ -22641,7 +25551,7 @@ L595: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
+    push(vm, vm->mods[g]->globals[79u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 7u)); } /* absolute gid */
@@ -22682,7 +25592,7 @@ L595: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[75u]); }
+    push(vm, vm->mods[g]->globals[81u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 9u)); } /* absolute gid */
@@ -22703,7 +25613,7 @@ L595: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 10u)); } /* absolute gid */
@@ -22755,19 +25665,19 @@ L595: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 4u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[75u]); }
+    push(vm, vm->mods[g]->globals[81u]); }
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[38u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
+    push(vm, vm->mods[g]->globals[79u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)64);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -22784,7 +25694,7 @@ L595: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L962: ;
@@ -22793,18 +25703,18 @@ L962: ;
   return;
 }
 
-static void f0_37(VM *vm) {
+static void f0_42(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -22835,16 +25745,16 @@ static void f0_37(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)4);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   push(vm, (Cell)(int32_t)16);
   { Cell a = pop(vm); push(vm, (Cell)(int32_t)(-(int32_t)a)); }
   { int lmod = 255, procIdx = 44, steps = 0;
@@ -22907,9 +25817,9 @@ static void f0_37(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 71u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   push(vm, (Cell)(int32_t)65535);
   { int lmod = 255, procIdx = 40, steps = 0;
     if (lmod == 255) {
@@ -22971,7 +25881,7 @@ static void f0_37(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[13u]); }
   push(vm, (Cell)(int32_t)1);
@@ -22979,17 +25889,17 @@ static void f0_37(VM *vm) {
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L160: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[70u]); }
+    push(vm, vm->mods[g]->globals[76u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
   if (pop(vm) == 0) goto L232;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[9u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -23005,7 +25915,7 @@ L160: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)-1);
@@ -23014,12 +25924,12 @@ L160: ;
   goto L160;
 L232: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 74u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[8u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -23034,7 +25944,7 @@ L232: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[71u]); }
+    push(vm, vm->mods[g]->globals[77u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
@@ -23042,7 +25952,7 @@ L232: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[68u]); }
+    push(vm, vm->mods[g]->globals[74u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)65536);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -23090,1082 +26000,12 @@ L232: ;
   return;
 }
 
-static void f0_38(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
-  if (pop(vm) == 0) goto L81;
-  push(vm, (Cell)(int32_t)1);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L99;
-L81: ;
-  push(vm, (Cell)(int32_t)0);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L99: ;
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_39(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
-  push(vm, (Cell)(int32_t)4);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
-  push(vm, (Cell)(int32_t)16);
-  { Cell a = pop(vm); push(vm, (Cell)(int32_t)(-(int32_t)a)); }
-  { int lmod = 255, procIdx = 44, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int lmod = 255, procIdx = 51, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 71u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
-  push(vm, (Cell)(int32_t)65535);
-  { int lmod = 255, procIdx = 40, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int lmod = 255, procIdx = 51, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[13u]); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L160: ;
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[70u]); }
-  push(vm, (Cell)(int32_t)0);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
-  if (pop(vm) == 0) goto L232;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[9u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)256);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
-  push(vm, peek(vm));
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  push(vm, (Cell)(int32_t)-1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L160;
-L232: ;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[8u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)256);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[71u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[68u]); }
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_40(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a < (int64_t)b); }
-  if (pop(vm) == 0) goto L81;
-  push(vm, (Cell)(int32_t)1);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L99;
-L81: ;
-  push(vm, (Cell)(int32_t)0);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L99: ;
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_41(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int lmod = 255, procIdx = 51, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_42(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  push(vm, (Cell)(int32_t)0);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L101;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
-  push(vm, (Cell)(int32_t)3);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[27u]);
-  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
-  push(vm, (Cell)(int32_t)3);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  { Cell src = pop(vm); Cell dst = pop(vm);
-    for (uint32_t i = 0; i < 24u; i++) memWrite(vm, dst + (Cell)i, memRead(vm, src + (Cell)i)); }
-  { int lmod = 0, procIdx = 2, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L101: ;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 102u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[0u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int lmod = 255, procIdx = 51, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)1048576);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[102u]); }
-  push(vm, (Cell)(int32_t)0);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a >= (int64_t)b); }
-  if (pop(vm) == 0) goto L210;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
-  push(vm, (Cell)(int32_t)3);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[28u]);
-  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
-  push(vm, (Cell)(int32_t)3);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  { Cell src = pop(vm); Cell dst = pop(vm);
-    for (uint32_t i = 0; i < 19u; i++) memWrite(vm, dst + (Cell)i, memRead(vm, src + (Cell)i)); }
-  { int lmod = 0, procIdx = 2, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L210: ;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[102u]); }
-  { Cell a = pop(vm); push(vm, -a); }
-  { int lmod = 255, procIdx = 51, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 101u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[0u]); }
-  push(vm, (Cell)(int32_t)0);
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int lmod = 255, procIdx = 51, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  push(vm, (Cell)(int32_t)1048576);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell acc = pop(vm); Cell ref = pop(vm);
-    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
-    Cell tag = vm->heap[ref];
-    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
-    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
-    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
-    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  push(vm, (Cell)(int32_t)0);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a < (int64_t)b); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[101u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a >= (int64_t)b); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, a || b); }
-  if (pop(vm) == 0) goto L373;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
-  push(vm, (Cell)(int32_t)3);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[29u]);
-  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
-  push(vm, (Cell)(int32_t)3);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  { Cell src = pop(vm); Cell dst = pop(vm);
-    for (uint32_t i = 0; i < 19u; i++) memWrite(vm, dst + (Cell)i, memRead(vm, src + (Cell)i)); }
-  { int lmod = 0, procIdx = 2, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L373: ;
-  push(vm, (Cell)(int32_t)2);
-  push(vm, (Cell)(int32_t)56);
-  { int lmod = 255, procIdx = 44, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, (Cell)(int32_t)2);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
 static void f0_43(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -24197,7 +26037,7 @@ static void f0_43(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -24229,10 +26069,10 @@ static void f0_43(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
   if (pop(vm) == 0) goto L81;
   push(vm, (Cell)(int32_t)1);
   { int lmod = 0, procIdx = 3, steps = 1;
@@ -24307,8 +26147,13 @@ static void f0_44(VM *vm) {
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[72u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[70u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -24339,8 +26184,48 @@ static void f0_44(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[70u]); }
+  push(vm, (Cell)(int32_t)4);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[103u]); }
+  push(vm, (Cell)(int32_t)16);
+  { Cell a = pop(vm); push(vm, (Cell)(int32_t)(-(int32_t)a)); }
+  { int lmod = 255, procIdx = 44, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -24371,10 +26256,138 @@ static void f0_44(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+    push(vm, vm->mods[g]->globals[103u]); }
+  push(vm, (Cell)(int32_t)65535);
+  { int lmod = 255, procIdx = 40, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int lmod = 255, procIdx = 51, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[13u]); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L160: ;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[76u]); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
+  if (pop(vm) == 0) goto L232;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[9u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[75u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
+  push(vm, peek(vm));
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)-1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L160;
+L232: ;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 74u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[8u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[75u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)256);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[77u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[74u]); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -24414,7 +26427,7 @@ static void f0_45(VM *vm) {
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -24446,7 +26459,904 @@ static void f0_45(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a < (int64_t)b); }
+  if (pop(vm) == 0) goto L81;
+  push(vm, (Cell)(int32_t)1);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L99;
+L81: ;
+  push(vm, (Cell)(int32_t)0);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L99: ;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_46(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[72u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[70u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { int lmod = 0, procIdx = 35, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int lmod = 255, procIdx = 51, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_47(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  if (pop(vm) == 0) goto L101;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
+  push(vm, (Cell)(int32_t)3);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  push(vm, cur->strRefs[30u]);
+  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
+  push(vm, (Cell)(int32_t)3);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  { Cell src = pop(vm); Cell dst = pop(vm);
+    for (uint32_t i = 0; i < 24u; i++) memWrite(vm, dst + (Cell)i, memRead(vm, src + (Cell)i)); }
+  { int lmod = 0, procIdx = 2, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L101: ;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 108u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[0u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int lmod = 255, procIdx = 51, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)1048576);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[108u]); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a >= (int64_t)b); }
+  if (pop(vm) == 0) goto L210;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
+  push(vm, (Cell)(int32_t)3);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  push(vm, cur->strRefs[31u]);
+  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
+  push(vm, (Cell)(int32_t)3);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  { Cell src = pop(vm); Cell dst = pop(vm);
+    for (uint32_t i = 0; i < 19u; i++) memWrite(vm, dst + (Cell)i, memRead(vm, src + (Cell)i)); }
+  { int lmod = 0, procIdx = 2, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L210: ;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 84u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[108u]); }
+  { Cell a = pop(vm); push(vm, -a); }
+  { int lmod = 255, procIdx = 51, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 107u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[0u]); }
+  push(vm, (Cell)(int32_t)0);
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int lmod = 255, procIdx = 51, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[84u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  push(vm, (Cell)(int32_t)1);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  push(vm, (Cell)(int32_t)1048576);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
+  { Cell acc = pop(vm); Cell ref = pop(vm);
+    if (ref == 0) vmRuntimeError(vm, "nil pointer dereference");
+    Cell tag = vm->heap[ref];
+    if (tag >= 0) vmRuntimeError(vm, "indexing non-array");
+    int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
+    if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
+    push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a < (int64_t)b); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[107u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a >= (int64_t)b); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a || b); }
+  if (pop(vm) == 0) goto L373;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
+  push(vm, (Cell)(int32_t)3);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  push(vm, cur->strRefs[32u]);
+  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
+  push(vm, (Cell)(int32_t)3);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  { Cell src = pop(vm); Cell dst = pop(vm);
+    for (uint32_t i = 0; i < 19u; i++) memWrite(vm, dst + (Cell)i, memRead(vm, src + (Cell)i)); }
+  { int lmod = 0, procIdx = 2, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L373: ;
+  push(vm, (Cell)(int32_t)2);
+  push(vm, (Cell)(int32_t)56);
+  { int lmod = 255, procIdx = 44, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[84u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  push(vm, (Cell)(int32_t)2);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_48(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  if (pop(vm) == 0) goto L81;
+  push(vm, (Cell)(int32_t)1);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L99;
+L81: ;
+  push(vm, (Cell)(int32_t)0);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L99: ;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_49(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_50(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 0, procIdx = 12, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -24510,12 +27420,12 @@ static void f0_45(VM *vm) {
   return;
 }
 
-static void f0_46(VM *vm) {
+static void f0_51(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -24547,7 +27457,7 @@ static void f0_46(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -24579,9 +27489,9 @@ static void f0_46(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 0, procIdx = 13, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -24616,19 +27526,19 @@ static void f0_46(VM *vm) {
   return;
 }
 
-static void f0_47(VM *vm) {
+static void f0_52(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 72u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[16u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)2097152);
@@ -24674,15 +27584,15 @@ static void f0_47(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -24713,26 +27623,26 @@ static void f0_47(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)5);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 82u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[22u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[65u]); }
+    push(vm, vm->mods[g]->globals[71u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[72u]); }
+    push(vm, vm->mods[g]->globals[78u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -24754,7 +27664,7 @@ static void f0_47(VM *vm) {
     push(vm, vm->mods[g]->globals[23u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -24769,7 +27679,7 @@ static void f0_47(VM *vm) {
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -24847,12 +27757,12 @@ static void f0_47(VM *vm) {
   return;
 }
 
-static void f0_48(VM *vm) {
+static void f0_53(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -24884,7 +27794,7 @@ static void f0_48(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -24916,9 +27826,9 @@ static void f0_48(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a - b); }
   { int lmod = 0, procIdx = 5, steps = 1;
     if (lmod == 255) {
@@ -24983,12 +27893,12 @@ static void f0_48(VM *vm) {
   return;
 }
 
-static void f0_49(VM *vm) {
+static void f0_54(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -25020,7 +27930,7 @@ static void f0_49(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -25052,9 +27962,9 @@ static void f0_49(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a * b); }
   { int lmod = 0, procIdx = 5, steps = 1;
     if (lmod == 255) {
@@ -25119,19 +28029,19 @@ static void f0_49(VM *vm) {
   return;
 }
 
-static void f0_50(VM *vm) {
+static void f0_55(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 72u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[16u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)2097152);
@@ -25177,15 +28087,15 @@ static void f0_50(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -25216,26 +28126,26 @@ static void f0_50(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)5);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 82u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[22u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[65u]); }
+    push(vm, vm->mods[g]->globals[71u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[72u]); }
+    push(vm, vm->mods[g]->globals[78u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -25258,7 +28168,7 @@ static void f0_50(VM *vm) {
     push(vm, vm->mods[g]->globals[23u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -25273,7 +28183,7 @@ static void f0_50(VM *vm) {
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -25351,19 +28261,19 @@ static void f0_50(VM *vm) {
   return;
 }
 
-static void f0_51(VM *vm) {
+static void f0_56(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 72u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[16u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)2097152);
@@ -25409,15 +28319,15 @@ static void f0_51(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -25448,9 +28358,9 @@ static void f0_51(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)5);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
@@ -25489,14 +28399,14 @@ static void f0_51(VM *vm) {
     push(vm, vm->mods[g]->globals[22u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[65u]); }
+    push(vm, vm->mods[g]->globals[71u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[72u]); }
+    push(vm, vm->mods[g]->globals[78u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -25542,7 +28452,7 @@ static void f0_51(VM *vm) {
   }
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
@@ -25578,18 +28488,18 @@ static void f0_51(VM *vm) {
   return;
 }
 
-static void f0_52(VM *vm) {
+static void f0_57(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 31, steps = 1;
+  { int lmod = 0, procIdx = 36, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -25620,14 +28530,14 @@ static void f0_52(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)8);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -25662,18 +28572,18 @@ static void f0_52(VM *vm) {
   return;
 }
 
-static void f0_53(VM *vm) {
+static void f0_58(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -25704,9 +28614,9 @@ static void f0_53(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)4);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
@@ -25714,14 +28624,14 @@ static void f0_53(VM *vm) {
     push(vm, vm->mods[g]->globals[42u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[65u]); }
+    push(vm, vm->mods[g]->globals[71u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -25798,18 +28708,18 @@ static void f0_53(VM *vm) {
   return;
 }
 
-static void f0_54(VM *vm) {
+static void f0_59(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 31, steps = 1;
+  { int lmod = 0, procIdx = 36, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -25840,14 +28750,14 @@ static void f0_54(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)8);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -25882,12 +28792,12 @@ static void f0_54(VM *vm) {
   return;
 }
 
-static void f0_55(VM *vm) {
+static void f0_60(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -25950,7 +28860,7 @@ static void f0_55(VM *vm) {
     }
   }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
@@ -25986,12 +28896,12 @@ static void f0_55(VM *vm) {
   return;
 }
 
-static void f0_56(VM *vm) {
+static void f0_61(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 81u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 87u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[39u]); }
   push(vm, (Cell)(int32_t)0);
@@ -26055,12 +28965,12 @@ static void f0_56(VM *vm) {
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[81u]); }
+    push(vm, vm->mods[g]->globals[87u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L148;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 100u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 106u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -26094,7 +29004,7 @@ static void f0_56(VM *vm) {
   goto L160;
 L148: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 100u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 106u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L160: ;
@@ -26122,7 +29032,7 @@ L160: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 91u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[10u]); }
   push(vm, (Cell)(int32_t)0);
@@ -26145,7 +29055,7 @@ L160: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 86u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 92u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[11u]); }
   push(vm, (Cell)(int32_t)0);
@@ -26168,17 +29078,17 @@ L160: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[86u]); }
+    push(vm, vm->mods[g]->globals[92u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
   if (pop(vm) == 0) goto L744;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 84u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[86u]); }
+    push(vm, vm->mods[g]->globals[92u]); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
@@ -26225,25 +29135,25 @@ L160: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 71u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)4);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 87u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 93u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[13u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[85u]); }
+    push(vm, vm->mods[g]->globals[91u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { int ld = 0, off = 0; int fi = vm->fp - 1;
@@ -26252,7 +29162,7 @@ L160: ;
     vm->stack[slot] = pop(vm); }
 L421: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { int ld = 0, off = 0; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -26260,27 +29170,27 @@ L421: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
   if (pop(vm) == 0) goto L744;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 88u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 94u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[87u]); }
+    push(vm, vm->mods[g]->globals[93u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 89u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 95u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[86u]); }
+    push(vm, vm->mods[g]->globals[92u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[71u]); }
+    push(vm, vm->mods[g]->globals[77u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)1048576);
@@ -26326,11 +29236,11 @@ L421: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 94u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 100u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[89u]); }
+    push(vm, vm->mods[g]->globals[95u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -26339,7 +29249,7 @@ L421: ;
     vm->stack[slot] = pop(vm); }
 L555: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[94u]); }
+    push(vm, vm->mods[g]->globals[100u]); }
   { int ld = 0, off = 1; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -26351,14 +29261,14 @@ L555: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[86u]); }
+    push(vm, vm->mods[g]->globals[92u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[71u]); }
+    push(vm, vm->mods[g]->globals[77u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[94u]); }
+    push(vm, vm->mods[g]->globals[100u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)1048576);
@@ -26379,7 +29289,7 @@ L555: ;
     push(vm, vm->mods[g]->globals[8u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[88u]); }
+    push(vm, vm->mods[g]->globals[94u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -26394,7 +29304,7 @@ L555: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[94u]); }
+    push(vm, vm->mods[g]->globals[100u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)65536);
@@ -26411,7 +29321,7 @@ L555: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 94u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 100u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
@@ -26420,17 +29330,17 @@ L555: ;
   goto L555;
 L698: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 71u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[71u]); }
+    push(vm, vm->mods[g]->globals[77u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[89u]); }
+    push(vm, vm->mods[g]->globals[95u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
@@ -26445,7 +29355,7 @@ L744: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[85u]); }
+    push(vm, vm->mods[g]->globals[91u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
@@ -26460,12 +29370,12 @@ L744: ;
   goto L840;
 L804: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[81u]); }
+    push(vm, vm->mods[g]->globals[87u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L840;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[100u]); }
+    push(vm, vm->mods[g]->globals[106u]); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -26501,19 +29411,19 @@ L840: ;
   return;
 }
 
-static void f0_57(VM *vm) {
+static void f0_62(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 72u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[16u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)2097152);
@@ -26559,15 +29469,15 @@ static void f0_57(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -26598,26 +29508,26 @@ static void f0_57(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)5);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 82u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[22u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[65u]); }
+    push(vm, vm->mods[g]->globals[71u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[72u]); }
+    push(vm, vm->mods[g]->globals[78u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -26636,14 +29546,14 @@ static void f0_57(VM *vm) {
     push(vm, vm->mods[g]->globals[26u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -26695,7 +29605,7 @@ static void f0_57(VM *vm) {
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[30u]);
+  push(vm, cur->strRefs[33u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -26732,19 +29642,19 @@ static void f0_57(VM *vm) {
   }
 L274: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 83u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 89u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[28u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -26789,7 +29699,7 @@ L274: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[83u]); }
+    push(vm, vm->mods[g]->globals[89u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
   if (pop(vm) == 0) goto L398;
@@ -26799,7 +29709,7 @@ L274: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[31u]);
+  push(vm, cur->strRefs[34u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -26839,14 +29749,14 @@ L398: ;
     push(vm, vm->mods[g]->globals[26u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[83u]); }
+    push(vm, vm->mods[g]->globals[89u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)96);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -26864,19 +29774,19 @@ L398: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L771;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 80u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 86u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[35u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -26921,19 +29831,19 @@ L398: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 84u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[36u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -26978,7 +29888,7 @@ L398: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[80u]); }
+    push(vm, vm->mods[g]->globals[86u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L639;
@@ -26988,7 +29898,7 @@ L398: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[32u]);
+  push(vm, cur->strRefs[35u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -27025,10 +29935,10 @@ L398: ;
   }
 L639: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 74u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)2);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int lmod = 0, procIdx = 6, steps = 1;
     if (lmod == 255) {
@@ -27065,7 +29975,7 @@ L639: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[68u]); }
+    push(vm, vm->mods[g]->globals[74u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)1048576);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -27079,14 +29989,14 @@ L639: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[80u]); }
+    push(vm, vm->mods[g]->globals[86u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[68u]); }
+    push(vm, vm->mods[g]->globals[74u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
@@ -27102,10 +30012,10 @@ L639: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[68u]); }
+    push(vm, vm->mods[g]->globals[74u]); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -27141,14 +30051,14 @@ L771: ;
     push(vm, vm->mods[g]->globals[26u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[83u]); }
+    push(vm, vm->mods[g]->globals[89u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)96);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -27169,14 +30079,14 @@ L771: ;
     push(vm, vm->mods[g]->globals[31u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[83u]); }
+    push(vm, vm->mods[g]->globals[89u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)96);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -27199,7 +30109,7 @@ L771: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[33u]);
+  push(vm, cur->strRefs[36u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -27236,9 +30146,9 @@ L771: ;
   }
 L923: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[83u]); }
+    push(vm, vm->mods[g]->globals[89u]); }
   { int lmod = 0, procIdx = 10, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -27305,7 +30215,7 @@ L966: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[34u]);
+  push(vm, cur->strRefs[37u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -27346,19 +30256,19 @@ L1010: ;
   return;
 }
 
-static void f0_58(VM *vm) {
+static void f0_63(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 72u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[16u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)2097152);
@@ -27404,15 +30314,15 @@ static void f0_58(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -27443,26 +30353,26 @@ static void f0_58(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)5);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 82u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[22u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[65u]); }
+    push(vm, vm->mods[g]->globals[71u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[72u]); }
+    push(vm, vm->mods[g]->globals[78u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -27478,7 +30388,7 @@ static void f0_58(VM *vm) {
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -27510,9 +30420,9 @@ static void f0_58(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 84u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 90u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 0, procIdx = 12, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -27573,7 +30483,7 @@ static void f0_58(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
   if (pop(vm) == 0) goto L610;
@@ -27581,14 +30491,14 @@ static void f0_58(VM *vm) {
     push(vm, vm->mods[g]->globals[26u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -27637,14 +30547,14 @@ static void f0_58(VM *vm) {
     push(vm, vm->mods[g]->globals[28u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -27692,21 +30602,21 @@ static void f0_58(VM *vm) {
   { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
   if (pop(vm) == 0) goto L566;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 84u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[28u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -27780,7 +30690,7 @@ static void f0_58(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
   if (pop(vm) == 0) goto L512;
@@ -27790,7 +30700,7 @@ static void f0_58(VM *vm) {
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[35u]);
+  push(vm, cur->strRefs[38u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -27827,9 +30737,9 @@ static void f0_58(VM *vm) {
   }
 L512: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   { int lmod = 0, procIdx = 7, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -27860,7 +30770,7 @@ L512: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   push(vm, (Cell)(int32_t)0);
   { int lmod = 0, procIdx = 13, steps = 1;
     if (lmod == 255) {
@@ -27899,7 +30809,7 @@ L566: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[36u]);
+  push(vm, cur->strRefs[39u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -27940,18 +30850,18 @@ L610: ;
   return;
 }
 
-static void f0_59(VM *vm) {
+static void f0_64(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 72u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -28011,15 +30921,15 @@ static void f0_59(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 73u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)4);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -28079,15 +30989,15 @@ static void f0_59(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 74u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 80u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)8);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -28147,26 +31057,26 @@ static void f0_59(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)12);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 82u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[22u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[65u]); }
+    push(vm, vm->mods[g]->globals[71u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[72u]); }
+    push(vm, vm->mods[g]->globals[78u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -28182,7 +31092,7 @@ static void f0_59(VM *vm) {
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[74u]); }
+    push(vm, vm->mods[g]->globals[80u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
   if (pop(vm) == 0) goto L293;
@@ -28190,12 +31100,12 @@ static void f0_59(VM *vm) {
   push(vm, (Cell)(int64_t)UINT64_C(0x100000000000000));
   { Cell b = pop(vm), a = pop(vm); push(vm, a * b); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   push(vm, (Cell)(int64_t)UINT64_C(0x1000000000000));
   { Cell b = pop(vm), a = pop(vm); push(vm, a * b); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
+    push(vm, vm->mods[g]->globals[79u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
@@ -28229,30 +31139,30 @@ static void f0_59(VM *vm) {
   goto L1353;
 L293: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[13u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 83u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[74u]); }
+    push(vm, vm->mods[g]->globals[80u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L325: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[77u]); }
+    push(vm, vm->mods[g]->globals[83u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
   if (pop(vm) == 0) goto L397;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[9u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -28268,7 +31178,7 @@ L325: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 83u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)-1);
@@ -28277,7 +31187,7 @@ L325: ;
   goto L325;
 L397: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
   if (pop(vm) == 0) goto L458;
@@ -28287,7 +31197,7 @@ L397: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[37u]);
+  push(vm, cur->strRefs[40u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -28324,34 +31234,34 @@ L397: ;
   }
 L458: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 84u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 87u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 93u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L483: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[87u]); }
+    push(vm, vm->mods[g]->globals[93u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
   if (pop(vm) == 0) goto L555;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 84u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 87u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 93u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[9u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[87u]); }
+    push(vm, vm->mods[g]->globals[93u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -28369,24 +31279,24 @@ L483: ;
   goto L483;
 L555: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 96u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 102u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)4);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 87u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 93u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L580: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[87u]); }
+    push(vm, vm->mods[g]->globals[93u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
   if (pop(vm) == 0) goto L744;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 96u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 102u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[96u]); }
+    push(vm, vm->mods[g]->globals[102u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
@@ -28396,7 +31306,7 @@ L580: ;
     push(vm, vm->mods[g]->globals[5u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[87u]); }
+    push(vm, vm->mods[g]->globals[93u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -28419,7 +31329,7 @@ L580: ;
     push(vm, vm->mods[g]->globals[6u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[87u]); }
+    push(vm, vm->mods[g]->globals[93u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -28449,12 +31359,12 @@ L580: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 87u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 93u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[9u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[87u]); }
+    push(vm, vm->mods[g]->globals[93u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -28472,9 +31382,9 @@ L580: ;
   goto L580;
 L744: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 84u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 90u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[96u]); }
+    push(vm, vm->mods[g]->globals[102u]); }
   { int lmod = 0, procIdx = 6, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -28510,7 +31420,7 @@ L744: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)1048576);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -28530,7 +31440,7 @@ L744: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
@@ -28546,14 +31456,14 @@ L744: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   push(vm, (Cell)(int32_t)2);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
@@ -28569,14 +31479,14 @@ L744: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
+    push(vm, vm->mods[g]->globals[79u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 0u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
@@ -28592,25 +31502,25 @@ L744: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 71u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)4);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 87u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 93u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L952: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[87u]); }
+    push(vm, vm->mods[g]->globals[93u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
   if (pop(vm) == 0) goto L1334;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 89u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 95u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[38u]); }
   push(vm, (Cell)(int32_t)0);
@@ -28618,7 +31528,7 @@ L952: ;
     push(vm, vm->mods[g]->globals[5u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[87u]); }
+    push(vm, vm->mods[g]->globals[93u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -28641,7 +31551,7 @@ L952: ;
     push(vm, vm->mods[g]->globals[6u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[87u]); }
+    push(vm, vm->mods[g]->globals[93u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -28674,9 +31584,9 @@ L952: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[71u]); }
+    push(vm, vm->mods[g]->globals[77u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)1048576);
@@ -28691,21 +31601,21 @@ L952: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[89u]); }
+    push(vm, vm->mods[g]->globals[95u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 71u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 94u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 100u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[89u]); }
+    push(vm, vm->mods[g]->globals[95u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { int ld = 0, off = 0; int fi = vm->fp - 1;
@@ -28714,7 +31624,7 @@ L952: ;
     vm->stack[slot] = pop(vm); }
 L1149: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[94u]); }
+    push(vm, vm->mods[g]->globals[100u]); }
   { int ld = 0, off = 0; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -28726,9 +31636,9 @@ L1149: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[71u]); }
+    push(vm, vm->mods[g]->globals[77u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)1048576);
@@ -28749,7 +31659,7 @@ L1149: ;
     push(vm, vm->mods[g]->globals[8u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[87u]); }
+    push(vm, vm->mods[g]->globals[93u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -28764,7 +31674,7 @@ L1149: ;
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[94u]); }
+    push(vm, vm->mods[g]->globals[100u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)65536);
@@ -28781,14 +31691,14 @@ L1149: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 71u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 94u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 100u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
@@ -28797,12 +31707,12 @@ L1149: ;
   goto L1149;
 L1294: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 87u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 93u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[9u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[87u]); }
+    push(vm, vm->mods[g]->globals[93u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -28820,7 +31730,7 @@ L1294: ;
   goto L952;
 L1334: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -28856,12 +31766,12 @@ L1353: ;
   return;
 }
 
-static void f0_60(VM *vm) {
+static void f0_65(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -28893,7 +31803,7 @@ static void f0_60(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L81;
@@ -28903,7 +31813,7 @@ static void f0_60(VM *vm) {
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[38u]);
+  push(vm, cur->strRefs[41u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -28940,7 +31850,7 @@ static void f0_60(VM *vm) {
   }
 L81: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   push(vm, (Cell)(int32_t)56);
   { Cell a = pop(vm); push(vm, (Cell)(int32_t)(-(int32_t)a)); }
   { int lmod = 255, procIdx = 44, steps = 0;
@@ -29005,9 +31915,9 @@ L81: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L750;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 82u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   push(vm, (Cell)(int32_t)48);
   { Cell a = pop(vm); push(vm, (Cell)(int32_t)(-(int32_t)a)); }
   { int lmod = 255, procIdx = 44, steps = 0;
@@ -29100,9 +32010,9 @@ L81: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 73u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   push(vm, (Cell)(int64_t)UINT64_C(0xFFFFFFFF));
   { int lmod = 255, procIdx = 40, steps = 0;
     if (lmod == 255) {
@@ -29184,24 +32094,24 @@ L81: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 81u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[4u]); }
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[37u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
+    push(vm, vm->mods[g]->globals[79u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)64);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -29218,7 +32128,7 @@ L81: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[13u]); }
   push(vm, (Cell)(int32_t)1);
@@ -29235,7 +32145,7 @@ L81: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[39u]);
+  push(vm, cur->strRefs[42u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -29290,7 +32200,7 @@ L419: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 6u)); } /* absolute gid */
@@ -29311,7 +32221,7 @@ L419: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
+    push(vm, vm->mods[g]->globals[79u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 7u)); } /* absolute gid */
@@ -29352,7 +32262,7 @@ L419: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[75u]); }
+    push(vm, vm->mods[g]->globals[81u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 9u)); } /* absolute gid */
@@ -29373,7 +32283,7 @@ L419: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[69u]); }
+    push(vm, vm->mods[g]->globals[75u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 10u)); } /* absolute gid */
@@ -29425,19 +32335,19 @@ L419: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 4u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[75u]); }
+    push(vm, vm->mods[g]->globals[81u]); }
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[38u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
+    push(vm, vm->mods[g]->globals[79u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)64);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -29454,15 +32364,15 @@ L419: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   goto L2763;
 L750: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 84u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 90u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   push(vm, (Cell)(int64_t)UINT64_C(0xFFFFFFFFFFFFFF));
   { int lmod = 255, procIdx = 40, steps = 0;
     if (lmod == 255) {
@@ -29524,14 +32434,14 @@ L750: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)1048576);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -29555,7 +32465,7 @@ L750: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[40u]);
+  push(vm, cur->strRefs[43u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -29592,12 +32502,12 @@ L750: ;
   }
 L894: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 82u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
@@ -29644,12 +32554,12 @@ L894: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 73u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   push(vm, (Cell)(int32_t)2);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
@@ -29696,12 +32606,12 @@ L894: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 84u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
@@ -29768,24 +32678,24 @@ L894: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 75u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 81u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[4u]); }
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[37u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
+    push(vm, vm->mods[g]->globals[79u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)64);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -29802,21 +32712,21 @@ L894: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 90u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 96u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[75u]); }
+    push(vm, vm->mods[g]->globals[81u]); }
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[38u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
+    push(vm, vm->mods[g]->globals[79u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)64);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -29833,19 +32743,19 @@ L894: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 71u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)4);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 96u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 102u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { int ld = 0, off = 0; int fi = vm->fp - 1;
@@ -29854,7 +32764,7 @@ L894: ;
     vm->stack[slot] = pop(vm); }
 L1264: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { int ld = 0, off = 0; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -29866,7 +32776,7 @@ L1264: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -29880,17 +32790,17 @@ L1264: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[71u]); }
+    push(vm, vm->mods[g]->globals[77u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 89u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 95u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[71u]); }
+    push(vm, vm->mods[g]->globals[77u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)1048576);
@@ -29936,25 +32846,25 @@ L1264: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 71u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[71u]); }
+    push(vm, vm->mods[g]->globals[77u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[89u]); }
+    push(vm, vm->mods[g]->globals[95u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 96u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 102u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[96u]); }
+    push(vm, vm->mods[g]->globals[102u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[89u]); }
+    push(vm, vm->mods[g]->globals[95u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
@@ -29963,9 +32873,9 @@ L1264: ;
   goto L1264;
 L1437: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[90u]); }
-  { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[96u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[102u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)65536);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
@@ -29976,7 +32886,7 @@ L1437: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[41u]);
+  push(vm, cur->strRefs[44u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -30013,35 +32923,35 @@ L1437: ;
   }
 L1505: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 91u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[90u]); }
+    push(vm, vm->mods[g]->globals[96u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L1537: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
   if (pop(vm) == 0) goto L1843;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 89u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 95u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[12u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -30100,11 +33010,11 @@ L1537: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 94u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 100u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[89u]); }
+    push(vm, vm->mods[g]->globals[95u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -30113,7 +33023,7 @@ L1537: ;
     vm->stack[slot] = pop(vm); }
 L1660: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[94u]); }
+    push(vm, vm->mods[g]->globals[100u]); }
   { int ld = 0, off = 1; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -30125,9 +33035,9 @@ L1660: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[91u]); }
+    push(vm, vm->mods[g]->globals[97u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[94u]); }
+    push(vm, vm->mods[g]->globals[100u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)65536);
@@ -30145,12 +33055,12 @@ L1660: ;
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[12u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -30168,7 +33078,7 @@ L1660: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[94u]); }
+    push(vm, vm->mods[g]->globals[100u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)1048576);
@@ -30185,7 +33095,7 @@ L1660: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 94u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 100u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
@@ -30194,15 +33104,15 @@ L1660: ;
   goto L1660;
 L1803: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 91u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[91u]); }
+    push(vm, vm->mods[g]->globals[97u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[89u]); }
+    push(vm, vm->mods[g]->globals[95u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)-1);
@@ -30211,20 +33121,20 @@ L1803: ;
   goto L1537;
 L1843: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 93u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)1);
   { Cell a = pop(vm); push(vm, (Cell)(int32_t)(-(int32_t)a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L1875: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
   if (pop(vm) == 0) goto L2411;
@@ -30239,7 +33149,7 @@ L1875: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[42u]);
+  push(vm, cur->strRefs[45u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -30276,19 +33186,19 @@ L1875: ;
   }
 L1953: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 92u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[90u]); }
+    push(vm, vm->mods[g]->globals[96u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 95u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 101u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { int ld = 0, off = 2; int fi = vm->fp - 1;
@@ -30297,7 +33207,7 @@ L1953: ;
     vm->stack[slot] = pop(vm); }
 L2002: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[95u]); }
+    push(vm, vm->mods[g]->globals[101u]); }
   { int ld = 0, off = 2; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -30305,19 +33215,19 @@ L2002: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
   if (pop(vm) == 0) goto L2123;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 92u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[92u]); }
+    push(vm, vm->mods[g]->globals[98u]); }
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[12u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[95u]); }
+    push(vm, vm->mods[g]->globals[101u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)256);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -30377,7 +33287,7 @@ L2002: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 95u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 101u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
@@ -30464,7 +33374,7 @@ L2123: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[92u]); }
+    push(vm, vm->mods[g]->globals[98u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 9u)); } /* absolute gid */
@@ -30485,7 +33395,7 @@ L2123: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[93u]); }
+    push(vm, vm->mods[g]->globals[99u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 10u)); } /* absolute gid */
@@ -30528,7 +33438,7 @@ L2123: ;
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 93u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[13u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
@@ -30540,7 +33450,7 @@ L2123: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)-1);
@@ -30559,7 +33469,7 @@ L2411: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[43u]);
+  push(vm, cur->strRefs[46u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -30614,7 +33524,7 @@ L2472: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 6u)); } /* absolute gid */
@@ -30635,7 +33545,7 @@ L2472: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[73u]); }
+    push(vm, vm->mods[g]->globals[79u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 7u)); } /* absolute gid */
@@ -30676,7 +33586,7 @@ L2472: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[75u]); }
+    push(vm, vm->mods[g]->globals[81u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 9u)); } /* absolute gid */
@@ -30697,7 +33607,7 @@ L2472: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[93u]); }
+    push(vm, vm->mods[g]->globals[99u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 10u)); } /* absolute gid */
@@ -30718,7 +33628,7 @@ L2472: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 11u)); } /* absolute gid */
@@ -30739,7 +33649,7 @@ L2472: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[84u]); }
+    push(vm, vm->mods[g]->globals[90u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 13u)); } /* absolute gid */
@@ -30751,13 +33661,13 @@ L2472: ;
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 4u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[90u]); }
-  { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[96u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[102u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L2763: ;
@@ -30766,19 +33676,19 @@ L2763: ;
   return;
 }
 
-static void f0_61(VM *vm) {
+static void f0_66(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 72u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[16u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)2097152);
@@ -30824,15 +33734,15 @@ static void f0_61(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -30863,26 +33773,26 @@ static void f0_61(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)5);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 82u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[22u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[65u]); }
+    push(vm, vm->mods[g]->globals[71u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[72u]); }
+    push(vm, vm->mods[g]->globals[78u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -30898,9 +33808,9 @@ static void f0_61(VM *vm) {
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -30993,18 +33903,18 @@ static void f0_61(VM *vm) {
   return;
 }
 
-static void f0_62(VM *vm) {
+static void f0_67(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -31035,14 +33945,14 @@ static void f0_62(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)4);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -31074,7 +33984,7 @@ static void f0_62(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L133;
@@ -31084,7 +33994,7 @@ static void f0_62(VM *vm) {
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[44u]);
+  push(vm, cur->strRefs[47u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -31121,12 +34031,12 @@ static void f0_62(VM *vm) {
   }
 L133: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 102u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 108u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -31171,7 +34081,7 @@ L133: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[102u]); }
+    push(vm, vm->mods[g]->globals[108u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a >= (int64_t)b); }
   if (pop(vm) == 0) goto L242;
@@ -31181,7 +34091,7 @@ L133: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[45u]);
+  push(vm, cur->strRefs[48u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -31218,9 +34128,9 @@ L133: ;
   }
 L242: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 84u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[102u]); }
+    push(vm, vm->mods[g]->globals[108u]); }
   { Cell a = pop(vm); push(vm, -a); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
@@ -31253,7 +34163,7 @@ L242: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -31286,7 +34196,7 @@ L242: ;
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -31317,7 +34227,7 @@ L242: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a || b); }
   if (pop(vm) == 0) goto L370;
@@ -31327,7 +34237,7 @@ L242: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[46u]);
+  push(vm, cur->strRefs[49u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -31367,7 +34277,7 @@ L370: ;
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -31400,7 +34310,7 @@ L370: ;
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -31478,19 +34388,19 @@ L370: ;
   return;
 }
 
-static void f0_63(VM *vm) {
+static void f0_68(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 72u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[16u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)2097152);
@@ -31536,15 +34446,15 @@ static void f0_63(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -31575,26 +34485,26 @@ static void f0_63(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)5);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 82u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[22u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[65u]); }
+    push(vm, vm->mods[g]->globals[71u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[72u]); }
+    push(vm, vm->mods[g]->globals[78u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -31610,19 +34520,19 @@ static void f0_63(VM *vm) {
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 80u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 86u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[34u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[76u]); }
+    push(vm, vm->mods[g]->globals[82u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -31667,7 +34577,7 @@ static void f0_63(VM *vm) {
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -31699,21 +34609,21 @@ static void f0_63(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 82u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 88u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
   if (pop(vm) == 0) goto L441;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 101u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 107u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -31759,34 +34669,34 @@ static void f0_63(VM *vm) {
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L323: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[101u]); }
+    push(vm, vm->mods[g]->globals[107u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a > (int64_t)b); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[82u]); }
+    push(vm, vm->mods[g]->globals[88u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
   if (pop(vm) == 0) goto L441;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[101u]); }
+    push(vm, vm->mods[g]->globals[107u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[80u]); }
+    push(vm, vm->mods[g]->globals[86u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L388;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 82u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 88u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)1);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   goto L436;
 L388: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 101u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 107u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[43u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[101u]); }
+    push(vm, vm->mods[g]->globals[107u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -31834,12 +34744,12 @@ L436: ;
   goto L323;
 L441: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[63u]); }
+    push(vm, vm->mods[g]->globals[69u]); }
   push(vm, (Cell)(int32_t)60);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L543;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[82u]); }
+    push(vm, vm->mods[g]->globals[88u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L519;
@@ -31849,7 +34759,7 @@ L441: ;
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[47u]);
+  push(vm, cur->strRefs[50u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -31886,7 +34796,7 @@ L441: ;
   }
 L519: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -31919,7 +34829,7 @@ L519: ;
   goto L562;
 L543: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[82u]); }
+    push(vm, vm->mods[g]->globals[88u]); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -31955,15 +34865,15 @@ L562: ;
   return;
 }
 
-static void f0_64(VM *vm) {
+static void f0_69(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 63u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)59);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int lmod = 0, procIdx = 63, steps = 1;
+  { int lmod = 0, procIdx = 68, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -31997,15 +34907,15 @@ static void f0_64(VM *vm) {
   return;
 }
 
-static void f0_65(VM *vm) {
+static void f0_70(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 63u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 69u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)60);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int lmod = 0, procIdx = 63, steps = 1;
+  { int lmod = 0, procIdx = 68, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -32039,18 +34949,18 @@ static void f0_65(VM *vm) {
   return;
 }
 
-static void f0_66(VM *vm) {
+static void f0_71(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -32081,14 +34991,14 @@ static void f0_66(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)4);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -32120,7 +35030,7 @@ static void f0_66(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -32152,11 +35062,11 @@ static void f0_66(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -32194,7 +35104,7 @@ static void f0_66(VM *vm) {
     vm->stack[slot] = pop(vm); }
 L134: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { int ld = 0, off = 0; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -32202,14 +35112,14 @@ L134: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a <= (int32_t)b); }
   if (pop(vm) == 0) goto L223;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
   { int lmod = 0, procIdx = 12, steps = 1;
     if (lmod == 255) {
@@ -32270,7 +35180,7 @@ L134: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
@@ -32283,12 +35193,12 @@ L223: ;
   return;
 }
 
-static void f0_67(VM *vm) {
+static void f0_72(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -32320,7 +35230,7 @@ static void f0_67(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -32352,11 +35262,11 @@ static void f0_67(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a || b); }
@@ -32367,7 +35277,7 @@ static void f0_67(VM *vm) {
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[48u]);
+  push(vm, cur->strRefs[51u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -32404,12 +35314,12 @@ static void f0_67(VM *vm) {
   }
 L114: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -32484,12 +35394,12 @@ L114: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 78u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 84u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -32564,12 +35474,12 @@ L114: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 76u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -32600,7 +35510,7 @@ L114: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
@@ -32648,12 +35558,12 @@ L114: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 71u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -32684,7 +35594,7 @@ L114: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
@@ -32732,23 +35642,23 @@ L114: ;
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[70u]); }
+    push(vm, vm->mods[g]->globals[76u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[71u]); }
+    push(vm, vm->mods[g]->globals[77u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
   if (pop(vm) == 0) goto L417;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 71u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 77u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[70u]); }
+    push(vm, vm->mods[g]->globals[76u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L417: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[71u]); }
+    push(vm, vm->mods[g]->globals[77u]); }
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { int ld = 0, off = 0; int fi = vm->fp - 1;
@@ -32757,7 +35667,7 @@ L417: ;
     vm->stack[slot] = pop(vm); }
 L446: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { int ld = 0, off = 0; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -32769,7 +35679,7 @@ L446: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -32800,12 +35710,12 @@ L446: ;
     }
   }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[78u]); }
+    push(vm, vm->mods[g]->globals[84u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)2);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)1048576);
@@ -32823,7 +35733,7 @@ L446: ;
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -32857,7 +35767,7 @@ L446: ;
     push(vm, vm->mods[g]->globals[0u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -32934,7 +35844,7 @@ L446: ;
   push(vm, (Cell)(int32_t)2);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)1048576);
@@ -32951,7 +35861,7 @@ L446: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
@@ -32964,7 +35874,7 @@ L655: ;
   return;
 }
 
-static void f0_68(VM *vm) {
+static void f0_73(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
@@ -33022,12 +35932,12 @@ static void f0_68(VM *vm) {
   return;
 }
 
-static void f0_69(VM *vm) {
+static void f0_74(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33063,12 +35973,12 @@ static void f0_69(VM *vm) {
   return;
 }
 
-static void f0_70(VM *vm) {
+static void f0_75(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33100,7 +36010,7 @@ static void f0_70(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33132,7 +36042,7 @@ static void f0_70(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33163,7 +36073,7 @@ static void f0_70(VM *vm) {
     }
   }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33198,12 +36108,12 @@ static void f0_70(VM *vm) {
   return;
 }
 
-static void f0_71(VM *vm) {
+static void f0_76(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33235,7 +36145,7 @@ static void f0_71(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33267,7 +36177,7 @@ static void f0_71(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   push(vm, (Cell)(int64_t)UINT64_C(0xFFFFFFFF));
   { int lmod = 255, procIdx = 40, steps = 0;
     if (lmod == 255) {
@@ -33299,7 +36209,7 @@ static void f0_71(VM *vm) {
     }
   }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   push(vm, (Cell)(int32_t)31);
   { int lmod = 255, procIdx = 40, steps = 0;
     if (lmod == 255) {
@@ -33422,12 +36332,12 @@ static void f0_71(VM *vm) {
   return;
 }
 
-static void f0_72(VM *vm) {
+static void f0_77(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33459,7 +36369,7 @@ static void f0_72(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33491,7 +36401,7 @@ static void f0_72(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   push(vm, (Cell)(int64_t)UINT64_C(0xFFFFFFFF));
   { int lmod = 255, procIdx = 40, steps = 0;
     if (lmod == 255) {
@@ -33523,7 +36433,7 @@ static void f0_72(VM *vm) {
     }
   }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   push(vm, (Cell)(int32_t)31);
   { int lmod = 255, procIdx = 40, steps = 0;
     if (lmod == 255) {
@@ -33647,12 +36557,12 @@ static void f0_72(VM *vm) {
   return;
 }
 
-static void f0_73(VM *vm) {
+static void f0_78(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33684,7 +36594,7 @@ static void f0_73(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33716,7 +36626,7 @@ static void f0_73(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L101;
@@ -33726,7 +36636,7 @@ static void f0_73(VM *vm) {
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[49u]);
+  push(vm, cur->strRefs[52u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -33763,9 +36673,9 @@ static void f0_73(VM *vm) {
   }
 L101: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { Cell b = pop(vm), a = pop(vm); if (b == 0) vmRuntimeError(vm, "division by zero"); Cell q, r; idivmod(a, b, &q, &r); push(vm, q); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
@@ -33801,12 +36711,12 @@ L101: ;
   return;
 }
 
-static void f0_74(VM *vm) {
+static void f0_79(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33838,7 +36748,7 @@ static void f0_74(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33870,7 +36780,7 @@ static void f0_74(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L101;
@@ -33880,7 +36790,7 @@ static void f0_74(VM *vm) {
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[50u]);
+  push(vm, cur->strRefs[53u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -33917,9 +36827,9 @@ static void f0_74(VM *vm) {
   }
 L101: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { Cell b = pop(vm), a = pop(vm); if (b == 0) vmRuntimeError(vm, "division by zero"); Cell q, r; idivmod(a, b, &q, &r); push(vm, r); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
@@ -33955,12 +36865,12 @@ L101: ;
   return;
 }
 
-static void f0_75(VM *vm) {
+static void f0_80(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -33992,7 +36902,7 @@ static void f0_75(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -34024,9 +36934,9 @@ static void f0_75(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a <= (int64_t)b); }
   if (pop(vm) == 0) goto L81;
   push(vm, (Cell)(int32_t)1);
@@ -34097,12 +37007,12 @@ L99: ;
   return;
 }
 
-static void f0_76(VM *vm) {
+static void f0_81(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -34134,7 +37044,7 @@ static void f0_76(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -34166,9 +37076,9 @@ static void f0_76(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a > (int64_t)b); }
   if (pop(vm) == 0) goto L81;
   push(vm, (Cell)(int32_t)1);
@@ -34239,12 +37149,12 @@ L99: ;
   return;
 }
 
-static void f0_77(VM *vm) {
+static void f0_82(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -34276,7 +37186,7 @@ static void f0_77(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -34308,9 +37218,9 @@ static void f0_77(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a >= (int64_t)b); }
   if (pop(vm) == 0) goto L81;
   push(vm, (Cell)(int32_t)1);
@@ -34381,18 +37291,18 @@ L99: ;
   return;
 }
 
-static void f0_78(VM *vm) {
+static void f0_83(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -34423,9 +37333,9 @@ static void f0_78(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)4);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
@@ -34462,9 +37372,9 @@ static void f0_78(VM *vm) {
   { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
   if (pop(vm) == 0) goto L102;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -34501,12 +37411,12 @@ L102: ;
   return;
 }
 
-static void f0_79(VM *vm) {
+static void f0_84(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -34538,7 +37448,7 @@ static void f0_79(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { Cell a = pop(vm); push(vm, -a); }
   { int lmod = 0, procIdx = 5, steps = 1;
     if (lmod == 255) {
@@ -34603,12 +37513,12 @@ static void f0_79(VM *vm) {
   return;
 }
 
-static void f0_80(VM *vm) {
+static void f0_85(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -34640,12 +37550,12 @@ static void f0_80(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a < (int64_t)b); }
   if (pop(vm) == 0) goto L75;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { Cell a = pop(vm); push(vm, -a); }
   { int lmod = 0, procIdx = 5, steps = 1;
     if (lmod == 255) {
@@ -34708,7 +37618,7 @@ static void f0_80(VM *vm) {
   goto L94;
 L75: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -34744,12 +37654,12 @@ L94: ;
   return;
 }
 
-static void f0_81(VM *vm) {
+static void f0_86(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -34781,7 +37691,7 @@ static void f0_81(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   push(vm, (Cell)(int32_t)1);
   { int lmod = 255, procIdx = 40, steps = 0;
     if (lmod == 255) {
@@ -34846,12 +37756,12 @@ static void f0_81(VM *vm) {
   return;
 }
 
-static void f0_82(VM *vm) {
+static void f0_87(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -34883,7 +37793,7 @@ static void f0_82(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -34915,7 +37825,7 @@ static void f0_82(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -34946,7 +37856,7 @@ static void f0_82(VM *vm) {
     }
   }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35040,12 +37950,12 @@ static void f0_82(VM *vm) {
   return;
 }
 
-static void f0_83(VM *vm) {
+static void f0_88(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35077,7 +37987,7 @@ static void f0_83(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35109,7 +38019,7 @@ static void f0_83(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35140,7 +38050,7 @@ static void f0_83(VM *vm) {
     }
   }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35234,12 +38144,12 @@ static void f0_83(VM *vm) {
   return;
 }
 
-static void f0_84(VM *vm) {
+static void f0_89(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35271,7 +38181,7 @@ static void f0_84(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35303,7 +38213,7 @@ static void f0_84(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35334,7 +38244,7 @@ static void f0_84(VM *vm) {
     }
   }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35428,12 +38338,12 @@ static void f0_84(VM *vm) {
   return;
 }
 
-static void f0_85(VM *vm) {
+static void f0_90(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35465,7 +38375,7 @@ static void f0_85(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35497,7 +38407,7 @@ static void f0_85(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35528,7 +38438,7 @@ static void f0_85(VM *vm) {
     }
   }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35622,12 +38532,12 @@ static void f0_85(VM *vm) {
   return;
 }
 
-static void f0_86(VM *vm) {
+static void f0_91(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35659,7 +38569,7 @@ static void f0_86(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35753,12 +38663,12 @@ static void f0_86(VM *vm) {
   return;
 }
 
-static void f0_87(VM *vm) {
+static void f0_92(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35790,9 +38700,9 @@ static void f0_87(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 109u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35824,12 +38734,12 @@ static void f0_87(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[103u]); }
+    push(vm, vm->mods[g]->globals[109u]); }
   push(vm, (Cell)(int64_t)UINT64_C(0x0));
   { Cell b = pop(vm), a = pop(vm); push(vm, cellToDouble(a) < cellToDouble(b)); }
   if (pop(vm) == 0) goto L105;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[103u]); }
+    push(vm, vm->mods[g]->globals[109u]); }
   { Cell a = pop(vm); push(vm, cellFromDouble(-cellToDouble(a))); }
   { int lmod = 255, procIdx = 52, steps = 0;
     if (lmod == 255) {
@@ -35892,7 +38802,7 @@ static void f0_87(VM *vm) {
   goto L124;
 L105: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35928,12 +38838,12 @@ L124: ;
   return;
 }
 
-static void f0_88(VM *vm) {
+static void f0_93(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -35965,7 +38875,7 @@ static void f0_88(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -36030,12 +38940,12 @@ static void f0_88(VM *vm) {
   return;
 }
 
-static void f0_89(VM *vm) {
+static void f0_94(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -36067,7 +38977,7 @@ static void f0_89(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -36189,12 +39099,12 @@ static void f0_89(VM *vm) {
   return;
 }
 
-static void f0_90(VM *vm) {
+static void f0_95(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -36226,7 +39136,7 @@ static void f0_90(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -36291,1129 +39201,13 @@ static void f0_90(VM *vm) {
   return;
 }
 
-static void f0_91(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int lmod = 255, procIdx = 53, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { int lmod = 255, procIdx = 53, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[103u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[104u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, cellToDouble(a) < cellToDouble(b)); }
-  if (pop(vm) == 0) goto L133;
-  push(vm, (Cell)(int32_t)1);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L151;
-L133: ;
-  push(vm, (Cell)(int32_t)0);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L151: ;
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_92(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int lmod = 255, procIdx = 53, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { int lmod = 255, procIdx = 53, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[103u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[104u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, cellToDouble(a) <= cellToDouble(b)); }
-  if (pop(vm) == 0) goto L133;
-  push(vm, (Cell)(int32_t)1);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L151;
-L133: ;
-  push(vm, (Cell)(int32_t)0);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L151: ;
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_93(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int lmod = 255, procIdx = 53, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { int lmod = 255, procIdx = 53, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[103u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[104u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, cellToDouble(a) > cellToDouble(b)); }
-  if (pop(vm) == 0) goto L133;
-  push(vm, (Cell)(int32_t)1);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L151;
-L133: ;
-  push(vm, (Cell)(int32_t)0);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L151: ;
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_94(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int lmod = 255, procIdx = 53, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { int lmod = 255, procIdx = 53, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[103u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[104u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, cellToDouble(a) >= cellToDouble(b)); }
-  if (pop(vm) == 0) goto L133;
-  push(vm, (Cell)(int32_t)1);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L151;
-L133: ;
-  push(vm, (Cell)(int32_t)0);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L151: ;
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_95(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int lmod = 255, procIdx = 53, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { int lmod = 255, procIdx = 53, steps = 0;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[103u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[104u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, cellToDouble(a) == cellToDouble(b)); }
-  if (pop(vm) == 0) goto L133;
-  push(vm, (Cell)(int32_t)1);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L151;
-L133: ;
-  push(vm, (Cell)(int32_t)0);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L151: ;
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
 static void f0_96(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -37445,8 +39239,40 @@ static void f0_96(VM *vm) {
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, MK_GLOBAL_ADDR(g, 109u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 255, procIdx = 53, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -37478,10 +39304,44 @@ static void f0_96(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[103u]); }
+    push(vm, MK_GLOBAL_ADDR(g, 110u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[104u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, cellToDouble(a) != cellToDouble(b)); }
+    push(vm, vm->mods[g]->globals[105u]); }
+  { int lmod = 255, procIdx = 53, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[109u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[110u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, cellToDouble(a) < cellToDouble(b)); }
   if (pop(vm) == 0) goto L133;
   push(vm, (Cell)(int32_t)1);
   { int lmod = 0, procIdx = 3, steps = 1;
@@ -37556,7 +39416,7 @@ static void f0_97(VM *vm) {
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -37588,7 +39448,7 @@ static void f0_97(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -37620,9 +39480,1059 @@ static void f0_97(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, MK_GLOBAL_ADDR(g, 109u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int lmod = 255, procIdx = 53, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 110u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { int lmod = 255, procIdx = 53, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[109u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[110u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, cellToDouble(a) <= cellToDouble(b)); }
+  if (pop(vm) == 0) goto L133;
+  push(vm, (Cell)(int32_t)1);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L151;
+L133: ;
+  push(vm, (Cell)(int32_t)0);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L151: ;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_98(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 109u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int lmod = 255, procIdx = 53, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 110u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { int lmod = 255, procIdx = 53, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[109u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[110u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, cellToDouble(a) > cellToDouble(b)); }
+  if (pop(vm) == 0) goto L133;
+  push(vm, (Cell)(int32_t)1);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L151;
+L133: ;
+  push(vm, (Cell)(int32_t)0);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L151: ;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_99(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 109u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int lmod = 255, procIdx = 53, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 110u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { int lmod = 255, procIdx = 53, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[109u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[110u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, cellToDouble(a) >= cellToDouble(b)); }
+  if (pop(vm) == 0) goto L133;
+  push(vm, (Cell)(int32_t)1);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L151;
+L133: ;
+  push(vm, (Cell)(int32_t)0);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L151: ;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_100(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 109u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int lmod = 255, procIdx = 53, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 110u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { int lmod = 255, procIdx = 53, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[109u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[110u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, cellToDouble(a) == cellToDouble(b)); }
+  if (pop(vm) == 0) goto L133;
+  push(vm, (Cell)(int32_t)1);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L151;
+L133: ;
+  push(vm, (Cell)(int32_t)0);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L151: ;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_101(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 109u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int lmod = 255, procIdx = 53, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 110u)); } /* absolute gid */
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { int lmod = 255, procIdx = 53, steps = 0;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[109u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[110u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, cellToDouble(a) != cellToDouble(b)); }
+  if (pop(vm) == 0) goto L133;
+  push(vm, (Cell)(int32_t)1);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L151;
+L133: ;
+  push(vm, (Cell)(int32_t)0);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L151: ;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_102(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L81;
   push(vm, (Cell)(int32_t)1);
@@ -37693,12 +40603,12 @@ L99: ;
   return;
 }
 
-static void f0_98(VM *vm) {
+static void f0_103(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -37730,7 +40640,7 @@ static void f0_98(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -37762,9 +40672,9 @@ static void f0_98(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
   if (pop(vm) == 0) goto L81;
   push(vm, (Cell)(int32_t)1);
@@ -37835,12 +40745,12 @@ L99: ;
   return;
 }
 
-static void f0_99(VM *vm) {
+static void f0_104(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -37872,7 +40782,7 @@ static void f0_99(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -37904,11 +40814,11 @@ static void f0_99(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
@@ -37981,12 +40891,12 @@ L111: ;
   return;
 }
 
-static void f0_100(VM *vm) {
+static void f0_105(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38018,7 +40928,7 @@ static void f0_100(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38050,11 +40960,11 @@ static void f0_100(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a || b); }
@@ -38127,12 +41037,12 @@ L111: ;
   return;
 }
 
-static void f0_101(VM *vm) {
+static void f0_106(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38164,7 +41074,7 @@ static void f0_101(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L60;
@@ -38236,12 +41146,12 @@ L78: ;
   return;
 }
 
-static void f0_102(VM *vm) {
+static void f0_107(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38273,7 +41183,7 @@ static void f0_102(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38305,9 +41215,9 @@ static void f0_102(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 255, procIdx = 41, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38401,12 +41311,12 @@ static void f0_102(VM *vm) {
   return;
 }
 
-static void f0_103(VM *vm) {
+static void f0_108(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38438,7 +41348,7 @@ static void f0_103(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38470,9 +41380,9 @@ static void f0_103(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 255, procIdx = 43, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38595,12 +41505,12 @@ static void f0_103(VM *vm) {
   return;
 }
 
-static void f0_104(VM *vm) {
+static void f0_109(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38632,7 +41542,7 @@ static void f0_104(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38664,9 +41574,9 @@ static void f0_104(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 255, procIdx = 40, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38760,12 +41670,12 @@ static void f0_104(VM *vm) {
   return;
 }
 
-static void f0_105(VM *vm) {
+static void f0_110(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38797,7 +41707,7 @@ static void f0_105(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -38829,11 +41739,11 @@ static void f0_105(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a < (int64_t)b); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   push(vm, (Cell)(int32_t)31);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a > (int64_t)b); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a || b); }
@@ -38844,7 +41754,7 @@ static void f0_105(VM *vm) {
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[51u]);
+  push(vm, cur->strRefs[54u]);
   { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
   push(vm, (Cell)(int32_t)3);
   { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
@@ -38881,9 +41791,9 @@ static void f0_105(VM *vm) {
   }
 L114: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { Cell a = pop(vm); push(vm, -a); }
   { int lmod = 255, procIdx = 44, steps = 0;
     if (lmod == 255) {
@@ -38978,641 +41888,12 @@ L114: ;
   return;
 }
 
-static void f0_106(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_107(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, a - b); }
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_108(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, a * b); }
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_109(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  push(vm, (Cell)(int32_t)0);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L101;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
-  push(vm, (Cell)(int32_t)3);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[52u]);
-  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
-  push(vm, (Cell)(int32_t)3);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  { Cell src = pop(vm); Cell dst = pop(vm);
-    for (uint32_t i = 0; i < 17u; i++) memWrite(vm, dst + (Cell)i, memRead(vm, src + (Cell)i)); }
-  { int lmod = 0, procIdx = 2, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L101: ;
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); if (b == 0) vmRuntimeError(vm, "division by zero"); Cell q, r; idivmod(a, b, &q, &r); push(vm, q); }
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_110(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  push(vm, (Cell)(int32_t)0);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L101;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
-  push(vm, (Cell)(int32_t)3);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  push(vm, cur->strRefs[53u]);
-  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
-  push(vm, (Cell)(int32_t)3);
-  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
-  { Cell src = pop(vm); Cell dst = pop(vm);
-    for (uint32_t i = 0; i < 17u; i++) memWrite(vm, dst + (Cell)i, memRead(vm, src + (Cell)i)); }
-  { int lmod = 0, procIdx = 2, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L101: ;
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); if (b == 0) vmRuntimeError(vm, "division by zero"); Cell q, r; idivmod(a, b, &q, &r); push(vm, r); }
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
 static void f0_111(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -39644,8 +41925,42 @@ static void f0_111(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { Cell a = pop(vm); push(vm, -a); }
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -39685,7 +42000,7 @@ static void f0_112(VM *vm) {
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -39717,12 +42032,607 @@ static void f0_112(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a - b); }
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_113(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a * b); }
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_114(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  if (pop(vm) == 0) goto L101;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
+  push(vm, (Cell)(int32_t)3);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  push(vm, cur->strRefs[55u]);
+  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
+  push(vm, (Cell)(int32_t)3);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  { Cell src = pop(vm); Cell dst = pop(vm);
+    for (uint32_t i = 0; i < 17u; i++) memWrite(vm, dst + (Cell)i, memRead(vm, src + (Cell)i)); }
+  { int lmod = 0, procIdx = 2, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L101: ;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); if (b == 0) vmRuntimeError(vm, "division by zero"); Cell q, r; idivmod(a, b, &q, &r); push(vm, q); }
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_115(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  if (pop(vm) == 0) goto L101;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 53u)); } /* absolute gid */
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
+  push(vm, (Cell)(int32_t)3);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  push(vm, cur->strRefs[56u]);
+  { Cell r = pop(vm); push(vm, MK_HEAP_ADDR(r)); }
+  push(vm, (Cell)(int32_t)3);
+  { Cell b = pop(vm), a = pop(vm); push(vm, a + b); }
+  { Cell src = pop(vm); Cell dst = pop(vm);
+    for (uint32_t i = 0; i < 17u; i++) memWrite(vm, dst + (Cell)i, memRead(vm, src + (Cell)i)); }
+  { int lmod = 0, procIdx = 2, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L101: ;
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); if (b == 0) vmRuntimeError(vm, "division by zero"); Cell q, r; idivmod(a, b, &q, &r); push(vm, r); }
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_116(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { Cell a = pop(vm); push(vm, -a); }
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_117(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a < (int64_t)b); }
   if (pop(vm) == 0) goto L62;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { Cell a = pop(vm); push(vm, -a); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
@@ -39756,7 +42666,7 @@ static void f0_112(VM *vm) {
   goto L81;
 L62: ;
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 0, procIdx = 3, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -39792,12 +42702,12 @@ L81: ;
   return;
 }
 
-static void f0_113(VM *vm) {
+static void f0_118(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -39829,7 +42739,7 @@ static void f0_113(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   push(vm, (Cell)(int32_t)1);
   { int lmod = 255, procIdx = 40, steps = 0;
     if (lmod == 255) {
@@ -39894,722 +42804,12 @@ static void f0_113(VM *vm) {
   return;
 }
 
-static void f0_114(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a < (int64_t)b); }
-  if (pop(vm) == 0) goto L81;
-  push(vm, (Cell)(int32_t)1);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L99;
-L81: ;
-  push(vm, (Cell)(int32_t)0);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L99: ;
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_115(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a <= (int64_t)b); }
-  if (pop(vm) == 0) goto L81;
-  push(vm, (Cell)(int32_t)1);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L99;
-L81: ;
-  push(vm, (Cell)(int32_t)0);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L99: ;
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_116(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a > (int64_t)b); }
-  if (pop(vm) == 0) goto L81;
-  push(vm, (Cell)(int32_t)1);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L99;
-L81: ;
-  push(vm, (Cell)(int32_t)0);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L99: ;
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_117(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a >= (int64_t)b); }
-  if (pop(vm) == 0) goto L81;
-  push(vm, (Cell)(int32_t)1);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L99;
-L81: ;
-  push(vm, (Cell)(int32_t)0);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L99: ;
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
-static void f0_118(VM *vm) {
-  Frame *fr = &vm->frames[vm->fp - 1];
-  VMMod *cur = vm->mods[fr->mod];
-  (void)fr; (void)cur;
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 4, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
-  { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
-  if (pop(vm) == 0) goto L81;
-  push(vm, (Cell)(int32_t)1);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-  goto L99;
-L81: ;
-  push(vm, (Cell)(int32_t)0);
-  { int lmod = 0, procIdx = 3, steps = 1;
-    if (lmod == 255) {
-      int nparams = builtinNparams(procIdx);
-      int base = vm->sp - nparams;
-      callBuiltin(vm, procIdx, base, nparams);
-      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
-    } else {
-      int g = cur->map[lmod];
-      VMMod *callee = vm->mods[g];
-      LProc *cp = &callee->lm->procs[procIdx];
-      int base = vm->sp - cp->nparams;
-      int fi = vm->fp - 1;
-      int st = steps;
-      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
-      if (vm->fp >= vm->frameCap) {
-        vm->frameCap *= 2;
-        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
-        fr = &vm->frames[vm->fp - 1];
-      }
-      Frame *nf = &vm->frames[vm->fp++];
-      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
-      nf->extra = 0; nf->cref = 0;
-      vm->sp = base + cp->nlocals;
-      procTab[g][procIdx](vm);
-      fr = &vm->frames[vm->fp - 1];
-      cur = vm->mods[fr->mod];
-      if (!vm->running) return;
-    }
-  }
-L99: ;
-  rtLeaveFrame(vm);
-  return;
-  return;
-}
-
 static void f0_119(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -40641,7 +42841,7 @@ static void f0_119(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -40673,10 +42873,10 @@ static void f0_119(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
-  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a < (int64_t)b); }
   if (pop(vm) == 0) goto L81;
   push(vm, (Cell)(int32_t)1);
   { int lmod = 0, procIdx = 3, steps = 1;
@@ -40751,7 +42951,7 @@ static void f0_120(VM *vm) {
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -40783,7 +42983,717 @@ static void f0_120(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a <= (int64_t)b); }
+  if (pop(vm) == 0) goto L81;
+  push(vm, (Cell)(int32_t)1);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L99;
+L81: ;
+  push(vm, (Cell)(int32_t)0);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L99: ;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_121(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a > (int64_t)b); }
+  if (pop(vm) == 0) goto L81;
+  push(vm, (Cell)(int32_t)1);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L99;
+L81: ;
+  push(vm, (Cell)(int32_t)0);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L99: ;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_122(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int64_t)a >= (int64_t)b); }
+  if (pop(vm) == 0) goto L81;
+  push(vm, (Cell)(int32_t)1);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L99;
+L81: ;
+  push(vm, (Cell)(int32_t)0);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L99: ;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_123(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
+  if (pop(vm) == 0) goto L81;
+  push(vm, (Cell)(int32_t)1);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L99;
+L81: ;
+  push(vm, (Cell)(int32_t)0);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L99: ;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_124(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[105u]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, a != b); }
+  if (pop(vm) == 0) goto L81;
+  push(vm, (Cell)(int32_t)1);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L99;
+L81: ;
+  push(vm, (Cell)(int32_t)0);
+  { int lmod = 0, procIdx = 3, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+L99: ;
+  rtLeaveFrame(vm);
+  return;
+  return;
+}
+
+static void f0_125(VM *vm) {
+  Frame *fr = &vm->frames[vm->fp - 1];
+  VMMod *cur = vm->mods[fr->mod];
+  (void)fr; (void)cur;
+  { int g = cur->map[0];
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
+  { int lmod = 0, procIdx = 4, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int g = cur->map[0];
+    push(vm, vm->mods[g]->globals[104u]); }
   { int lmod = 0, procIdx = 5, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -40847,18 +43757,18 @@ static void f0_120(VM *vm) {
   return;
 }
 
-static void f0_121(VM *vm) {
+static void f0_126(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 97u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 103u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -40889,15 +43799,15 @@ static void f0_121(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 98u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 104u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)4);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -40928,15 +43838,15 @@ static void f0_121(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 99u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 105u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)8);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -40967,14 +43877,14 @@ static void f0_121(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   push(vm, (Cell)(int32_t)12);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 100u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 106u)); } /* absolute gid */
   { int lmod = 0, procIdx = 4, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -41006,11 +43916,11 @@ static void f0_121(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 79u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 85u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[100u]); }
+    push(vm, vm->mods[g]->globals[106u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[98u]); }
+    push(vm, vm->mods[g]->globals[104u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, a - b); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
@@ -41043,13 +43953,13 @@ static void f0_121(VM *vm) {
   }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[97u]); }
+    push(vm, vm->mods[g]->globals[103u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -41083,18 +43993,18 @@ static void f0_121(VM *vm) {
   { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
   if (pop(vm) == 0) goto L291;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   push(vm, (Cell)(int32_t)4);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[79u]); }
+    push(vm, vm->mods[g]->globals[85u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { int lmod = 0, procIdx = 30, steps = 1;
+  { int lmod = 0, procIdx = 35, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -41156,9 +44066,9 @@ static void f0_121(VM *vm) {
   goto L317;
 L291: ;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[99u]); }
+    push(vm, vm->mods[g]->globals[105u]); }
   { int lmod = 255, procIdx = 51, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -41195,7 +44105,7 @@ L317: ;
   return;
 }
 
-static void f0_122(VM *vm) {
+static void f0_127(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
@@ -41204,12 +44114,12 @@ static void f0_122(VM *vm) {
   return;
 }
 
-static void f0_123(VM *vm) {
+static void f0_128(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)4);
@@ -41225,10 +44135,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 32, 4294967295));
+  push(vm, rtProcVal(vm, 0, 37, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)1);
@@ -41244,10 +44154,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 33, 4294967295));
+  push(vm, rtProcVal(vm, 0, 38, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)13);
@@ -41263,10 +44173,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 34, 4294967295));
+  push(vm, rtProcVal(vm, 0, 39, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)52);
@@ -41282,10 +44192,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 35, 4294967295));
+  push(vm, rtProcVal(vm, 0, 40, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)54);
@@ -41301,10 +44211,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 36, 4294967295));
+  push(vm, rtProcVal(vm, 0, 41, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)5);
@@ -41320,10 +44230,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 37, 4294967295));
+  push(vm, rtProcVal(vm, 0, 42, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)35);
@@ -41339,10 +44249,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 38, 4294967295));
+  push(vm, rtProcVal(vm, 0, 43, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)6);
@@ -41358,10 +44268,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 39, 4294967295));
+  push(vm, rtProcVal(vm, 0, 44, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)30);
@@ -41377,10 +44287,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 40, 4294967295));
+  push(vm, rtProcVal(vm, 0, 45, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)51);
@@ -41396,10 +44306,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 41, 4294967295));
+  push(vm, rtProcVal(vm, 0, 46, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)61);
@@ -41415,10 +44325,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 42, 4294967295));
+  push(vm, rtProcVal(vm, 0, 47, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)34);
@@ -41434,10 +44344,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 43, 4294967295));
+  push(vm, rtProcVal(vm, 0, 48, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)69);
@@ -41453,10 +44363,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 44, 4294967295));
+  push(vm, rtProcVal(vm, 0, 49, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)10);
@@ -41472,10 +44382,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 45, 4294967295));
+  push(vm, rtProcVal(vm, 0, 50, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)11);
@@ -41491,10 +44401,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 46, 4294967295));
+  push(vm, rtProcVal(vm, 0, 51, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)7);
@@ -41510,10 +44420,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 47, 4294967295));
+  push(vm, rtProcVal(vm, 0, 52, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)14);
@@ -41529,10 +44439,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 48, 4294967295));
+  push(vm, rtProcVal(vm, 0, 53, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)15);
@@ -41548,10 +44458,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 49, 4294967295));
+  push(vm, rtProcVal(vm, 0, 54, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)8);
@@ -41567,10 +44477,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 50, 4294967295));
+  push(vm, rtProcVal(vm, 0, 55, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)9);
@@ -41586,10 +44496,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 51, 4294967295));
+  push(vm, rtProcVal(vm, 0, 56, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)2);
@@ -41605,10 +44515,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 52, 4294967295));
+  push(vm, rtProcVal(vm, 0, 57, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)3);
@@ -41624,10 +44534,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 53, 4294967295));
+  push(vm, rtProcVal(vm, 0, 58, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)70);
@@ -41643,10 +44553,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 54, 4294967295));
+  push(vm, rtProcVal(vm, 0, 59, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)12);
@@ -41662,10 +44572,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 55, 4294967295));
+  push(vm, rtProcVal(vm, 0, 60, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)55);
@@ -41681,10 +44591,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 56, 4294967295));
+  push(vm, rtProcVal(vm, 0, 61, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)56);
@@ -41700,10 +44610,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 57, 4294967295));
+  push(vm, rtProcVal(vm, 0, 62, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)87);
@@ -41719,10 +44629,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 58, 4294967295));
+  push(vm, rtProcVal(vm, 0, 63, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)88);
@@ -41738,10 +44648,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 59, 4294967295));
+  push(vm, rtProcVal(vm, 0, 64, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)89);
@@ -41757,10 +44667,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 60, 4294967295));
+  push(vm, rtProcVal(vm, 0, 65, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)57);
@@ -41776,10 +44686,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 61, 4294967295));
+  push(vm, rtProcVal(vm, 0, 66, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)58);
@@ -41795,10 +44705,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 62, 4294967295));
+  push(vm, rtProcVal(vm, 0, 67, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)59);
@@ -41814,10 +44724,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 64, 4294967295));
+  push(vm, rtProcVal(vm, 0, 69, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)60);
@@ -41833,10 +44743,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 65, 4294967295));
+  push(vm, rtProcVal(vm, 0, 70, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)62);
@@ -41852,10 +44762,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 66, 4294967295));
+  push(vm, rtProcVal(vm, 0, 71, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)63);
@@ -41871,10 +44781,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 67, 4294967295));
+  push(vm, rtProcVal(vm, 0, 72, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)64);
@@ -41890,10 +44800,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 68, 4294967295));
+  push(vm, rtProcVal(vm, 0, 73, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)65);
@@ -41909,10 +44819,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 69, 4294967295));
+  push(vm, rtProcVal(vm, 0, 74, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)66);
@@ -41928,10 +44838,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 70, 4294967295));
+  push(vm, rtProcVal(vm, 0, 75, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)67);
@@ -41947,10 +44857,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 71, 4294967295));
+  push(vm, rtProcVal(vm, 0, 76, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)68);
@@ -41966,10 +44876,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 72, 4294967295));
+  push(vm, rtProcVal(vm, 0, 77, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)16);
@@ -41985,10 +44895,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 73, 4294967295));
+  push(vm, rtProcVal(vm, 0, 78, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)17);
@@ -42004,10 +44914,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 74, 4294967295));
+  push(vm, rtProcVal(vm, 0, 79, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)31);
@@ -42023,10 +44933,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 75, 4294967295));
+  push(vm, rtProcVal(vm, 0, 80, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)32);
@@ -42042,10 +44952,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 76, 4294967295));
+  push(vm, rtProcVal(vm, 0, 81, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)33);
@@ -42061,10 +44971,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 77, 4294967295));
+  push(vm, rtProcVal(vm, 0, 82, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)53);
@@ -42080,10 +44990,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 78, 4294967295));
+  push(vm, rtProcVal(vm, 0, 83, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)18);
@@ -42099,10 +45009,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 79, 4294967295));
+  push(vm, rtProcVal(vm, 0, 84, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)19);
@@ -42118,10 +45028,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 80, 4294967295));
+  push(vm, rtProcVal(vm, 0, 85, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)20);
@@ -42137,10 +45047,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 81, 4294967295));
+  push(vm, rtProcVal(vm, 0, 86, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)21);
@@ -42156,10 +45066,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 82, 4294967295));
+  push(vm, rtProcVal(vm, 0, 87, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)22);
@@ -42175,10 +45085,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 83, 4294967295));
+  push(vm, rtProcVal(vm, 0, 88, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)23);
@@ -42194,10 +45104,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 84, 4294967295));
+  push(vm, rtProcVal(vm, 0, 89, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)24);
@@ -42213,10 +45123,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 85, 4294967295));
+  push(vm, rtProcVal(vm, 0, 90, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)25);
@@ -42232,10 +45142,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 86, 4294967295));
+  push(vm, rtProcVal(vm, 0, 91, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)26);
@@ -42251,10 +45161,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 87, 4294967295));
+  push(vm, rtProcVal(vm, 0, 92, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)27);
@@ -42270,10 +45180,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 88, 4294967295));
+  push(vm, rtProcVal(vm, 0, 93, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)28);
@@ -42289,10 +45199,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 89, 4294967295));
+  push(vm, rtProcVal(vm, 0, 94, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)29);
@@ -42308,10 +45218,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 90, 4294967295));
+  push(vm, rtProcVal(vm, 0, 95, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)36);
@@ -42327,10 +45237,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 91, 4294967295));
+  push(vm, rtProcVal(vm, 0, 96, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)37);
@@ -42346,10 +45256,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 92, 4294967295));
+  push(vm, rtProcVal(vm, 0, 97, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)38);
@@ -42365,10 +45275,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 93, 4294967295));
+  push(vm, rtProcVal(vm, 0, 98, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)39);
@@ -42384,10 +45294,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 94, 4294967295));
+  push(vm, rtProcVal(vm, 0, 99, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)40);
@@ -42403,10 +45313,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 95, 4294967295));
+  push(vm, rtProcVal(vm, 0, 100, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)41);
@@ -42422,10 +45332,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 96, 4294967295));
+  push(vm, rtProcVal(vm, 0, 101, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)42);
@@ -42441,10 +45351,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 97, 4294967295));
+  push(vm, rtProcVal(vm, 0, 102, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)43);
@@ -42460,10 +45370,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 98, 4294967295));
+  push(vm, rtProcVal(vm, 0, 103, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)44);
@@ -42479,10 +45389,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 99, 4294967295));
+  push(vm, rtProcVal(vm, 0, 104, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)45);
@@ -42498,10 +45408,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 100, 4294967295));
+  push(vm, rtProcVal(vm, 0, 105, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)46);
@@ -42517,10 +45427,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 101, 4294967295));
+  push(vm, rtProcVal(vm, 0, 106, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)47);
@@ -42536,10 +45446,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 102, 4294967295));
+  push(vm, rtProcVal(vm, 0, 107, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)48);
@@ -42555,10 +45465,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 103, 4294967295));
+  push(vm, rtProcVal(vm, 0, 108, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)49);
@@ -42574,10 +45484,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 104, 4294967295));
+  push(vm, rtProcVal(vm, 0, 109, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)50);
@@ -42593,10 +45503,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 105, 4294967295));
+  push(vm, rtProcVal(vm, 0, 110, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)71);
@@ -42612,10 +45522,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 106, 4294967295));
+  push(vm, rtProcVal(vm, 0, 111, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)72);
@@ -42631,10 +45541,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 107, 4294967295));
+  push(vm, rtProcVal(vm, 0, 112, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)73);
@@ -42650,10 +45560,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 108, 4294967295));
+  push(vm, rtProcVal(vm, 0, 113, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)74);
@@ -42669,10 +45579,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 109, 4294967295));
+  push(vm, rtProcVal(vm, 0, 114, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)75);
@@ -42688,10 +45598,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 110, 4294967295));
+  push(vm, rtProcVal(vm, 0, 115, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)76);
@@ -42707,10 +45617,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 111, 4294967295));
+  push(vm, rtProcVal(vm, 0, 116, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)77);
@@ -42726,10 +45636,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 112, 4294967295));
+  push(vm, rtProcVal(vm, 0, 117, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)78);
@@ -42745,10 +45655,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 113, 4294967295));
+  push(vm, rtProcVal(vm, 0, 118, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)79);
@@ -42764,10 +45674,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 114, 4294967295));
+  push(vm, rtProcVal(vm, 0, 119, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)80);
@@ -42783,10 +45693,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 115, 4294967295));
+  push(vm, rtProcVal(vm, 0, 120, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)81);
@@ -42802,10 +45712,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 116, 4294967295));
+  push(vm, rtProcVal(vm, 0, 121, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)82);
@@ -42821,10 +45731,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 117, 4294967295));
+  push(vm, rtProcVal(vm, 0, 122, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)83);
@@ -42840,10 +45750,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 118, 4294967295));
+  push(vm, rtProcVal(vm, 0, 123, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)84);
@@ -42859,10 +45769,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 119, 4294967295));
+  push(vm, rtProcVal(vm, 0, 124, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)85);
@@ -42878,10 +45788,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 120, 4294967295));
+  push(vm, rtProcVal(vm, 0, 125, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)86);
@@ -42897,10 +45807,10 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 121, 4294967295));
+  push(vm, rtProcVal(vm, 0, 126, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 62u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 68u)); } /* absolute gid */
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)0);
   push(vm, (Cell)(int32_t)0);
@@ -42916,14 +45826,14 @@ static void f0_123(VM *vm) {
     int ndim = (int)-tag; Cell total = vm->heap[ref + ndim + 1];
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
-  push(vm, rtProcVal(vm, 0, 122, 4294967295));
+  push(vm, rtProcVal(vm, 0, 127, 4294967295));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   rtLeaveFrame(vm);
   return;
   return;
 }
 
-static void f0_124(VM *vm) {
+static void f0_129(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
@@ -43169,7 +46079,7 @@ L409: ;
   { Cell b = pop(vm), a = pop(vm); push(vm, a && b); }
   if (pop(vm) == 0) goto L730;
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 65u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 71u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[5u]); }
   push(vm, (Cell)(int32_t)0);
@@ -43192,12 +46102,12 @@ L409: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 66u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 72u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[40u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[65u]); }
+    push(vm, vm->mods[g]->globals[71u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)32);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a * (int32_t)b)); }
@@ -43238,7 +46148,7 @@ L409: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[7u]); }
   push(vm, (Cell)(int32_t)0);
@@ -43275,9 +46185,9 @@ L409: ;
     push(vm, vm->mods[g]->globals[16u]); }
   push(vm, (Cell)(int32_t)0);
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[66u]); }
+    push(vm, vm->mods[g]->globals[72u]); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, b); push(vm, a); }
   push(vm, (Cell)(int32_t)2097152);
@@ -43294,7 +46204,7 @@ L409: ;
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
-    push(vm, MK_GLOBAL_ADDR(g, 64u)); } /* absolute gid */
+    push(vm, MK_GLOBAL_ADDR(g, 70u)); } /* absolute gid */
   push(vm, peek(vm));
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
   push(vm, (Cell)(int32_t)1);
@@ -43340,7 +46250,7 @@ L409: ;
     if (acc < 0 || acc >= total) vmRuntimeError(vm, "index out of range");
     push(vm, MK_HEAP_ADDR(ref + ndim + 2 + acc)); }
   { int g = cur->map[0];
-    push(vm, vm->mods[g]->globals[64u]); }
+    push(vm, vm->mods[g]->globals[70u]); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
 L725: ;
   goto L409;
@@ -43350,7 +46260,7 @@ L730: ;
   return;
 }
 
-static void f0_125(VM *vm) {
+static void f0_130(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
@@ -43391,7 +46301,7 @@ static void f0_125(VM *vm) {
   push(vm, (Cell)(int32_t)1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
   if (pop(vm) == 0) goto L86;
-  push(vm, cur->strRefs[54u]);
+  push(vm, cur->strRefs[57u]);
   { int lmod = 255, procIdx = 3, steps = 0;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
@@ -43953,7 +46863,7 @@ L698: ;
     push(vm, MK_GLOBAL_ADDR(g, 15u)); } /* absolute gid */
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int lmod = 0, procIdx = 123, steps = 1;
+  { int lmod = 0, procIdx = 128, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -43986,7 +46896,7 @@ L698: ;
     push(vm, MK_GLOBAL_ADDR(g, 52u)); } /* absolute gid */
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 51u)); } /* absolute gid */
-  { int lmod = 0, procIdx = 26, steps = 1;
+  { int lmod = 0, procIdx = 31, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;
@@ -44015,7 +46925,7 @@ L698: ;
       if (!vm->running) return;
     }
   }
-  { int lmod = 0, procIdx = 124, steps = 1;
+  { int lmod = 0, procIdx = 129, steps = 1;
     if (lmod == 255) {
       int nparams = builtinNparams(procIdx);
       int base = vm->sp - nparams;

@@ -60,7 +60,7 @@ static void walk(const char *name, const char *dir) {
   for (int i = 0; i < gNMods; i++)
     if (!strcmp(gMods[i].lm->name, name)) return;
   char path[600];
-  if (!findModuleFile(name, dir, path, sizeof path)) { fprintf(stderr, "ob2c: cannot find %s.obc from %s\n", name, dir); exit(1); }
+  if (!findModuleFile(name, dir, 0, path, sizeof path)) { fprintf(stderr, "ob2c: cannot find %s.obc from %s\n", name, dir); exit(1); }
   LoadedModule *lm = loadModuleFile(path);
   if (!lm) { fprintf(stderr, "ob2c: cannot load %s\n", path); exit(1); }
   gMods[gNMods].lm = lm;

@@ -2,7 +2,7 @@
 
 > ⭐ Après un compactage ou une nouvelle session, repartir de [`docs/REPRISE.md`](docs/REPRISE.md).
 
-État au 27/11/2026 : étapes 0–5 faites + tout le groupe A (types procéduraux, closures, threaded code, records en ligne) + conformité Oberon-07 (WHILE...ELSIF, CASE de type, CAP) + builtin SQLite (FFI niveau 1), **116/116 tests** (29 exemples × 4 moteurs :
+État au 28/11/2026 : étapes 0–5 faites + tout le groupe A (types procéduraux, closures, threaded code, records en ligne) + conformité Oberon-07 (WHILE...ELSIF, CASE de type, CAP) + builtin SQLite (FFI niveau 1), **116/116 tests** (29 exemples × 4 moteurs :
 `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif). Voir
 [`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md) pour la vision d'ensemble. **Groupe A terminé ✅ — prochain gros morceau : OC.Mod.**
 
@@ -64,6 +64,10 @@
 - [x] **Sémantique des bodies de modules** (27/11, bug trouvé grâce à Sqlite) : le body (proc 0) de **chaque** module chargé tourne au démarrage, dépendances d'abord — `rtEnterBody` (rt.c) empile une frame par module, `ob2c.c` génère une boucle `while (running && fp>0)`, idem dans `VM.Mod` (Run).
 - [ ] **Sockets + protocole natif** (niveau 3) : builtin `Net` (winsock `ws2_32.dll` : Socket/Connect/Send/Recv/Close) puis `lib/Pg.Mod` en **pur Oberon** (protocole wire PostgreSQL v3 : startup, auth md5 puis SCRAM-SHA-256 — SHA-256/HMAC/PBKDF2 en Oberon, simple query 'Q', parse DataRow/RowDescription) et `lib/MariaDB.Mod` (protocole MySQL). Zéro dépendance C côté client.
 - [ ] Déclaration `FOREIGN "sym" LIB "dll"` dans le dialecte pour OC.Mod (émettre `extern` + link en C) — seulement si besoin réel, le FFI builtin couvre le reste.
+
+## 📦 Layout installé (fait ✅ 28/11)
+
+- [x] `OBERON_HOME` (env, sinon dir de l'exe sans `/bin` final) + `OBERON_PATH` (`.` en tête + entrées env, sep `;`/`:` + `$OBERON_HOME/lib` en fin), premier trouvé gagne → surcharge de modules. Implémenté dans `module.c` (obc/obvm/ob2c) + `SYSTEM.GETENV`/`EXEPATH` (90–91) + VM.Mod (TryDirs en Oberon). `build/bin` + `build/lib` = OBERON_HOME local ; install finale = `$OBERON_HOME/bin` + `$OBERON_HOME/lib` seuls.
 
 ## 🧹 Polish / plus tard
 

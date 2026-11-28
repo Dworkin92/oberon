@@ -122,6 +122,22 @@ int ffiBuiltin(VM *vm, int id, Cell *arg, int base) {
     case 89: /* POKE(p, v) */
       if (arg[0]) *(Cell *)(intptr_t)arg[0] = arg[1];
       return 1;
+    case 90: { /* GETENV(name, VAR buf): BOOLEAN */
+      char nm2[256];
+      const char *v;
+      refToCStr(vm, arg[0], nm2, sizeof nm2);
+      v = getenv(nm2);
+      if (v) { cStrToRef(vm, arg[1], v); vm->stack[base] = 1; }
+      else vm->stack[base] = 0;
+      return 1;
+    }
+    case 91: { /* EXEPATH(VAR buf): INTEGER (longueur) — chemin de l'exécutable courant */
+      char ex[600];
+      int ok = obExePath(ex, sizeof ex);
+      cStrToRef(vm, arg[0], ok ? ex : "");
+      vm->stack[base] = ok ? (Cell)strlen(ex) : 0;
+      return 1;
+    }
   }
   return 0;
 }

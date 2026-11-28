@@ -940,7 +940,7 @@ static void f0_0(VM *vm) {
   }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 10u)); } /* absolute gid */
-  push(vm, rtNew(vm, 0, 3u));
+  push(vm, rtNew(vm, 0, 4u));
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 10u)); } /* absolute gid */
@@ -995,7 +995,7 @@ static void f0_0(VM *vm) {
     for (uint32_t i = 0; i < 2u; i++) memWrite(vm, dst + (Cell)i, memRead(vm, src + (Cell)i)); }
   { int g = cur->map[0];
     push(vm, MK_GLOBAL_ADDR(g, 10u)); } /* absolute gid */
-  rtDispose(vm, pop(vm), 0, 3u);
+  rtDispose(vm, pop(vm), 0, 4u);
   { int g = cur->map[0];
     push(vm, vm->mods[g]->globals[8u]); }
   push(vm, (Cell)(int32_t)0);

@@ -30,19 +30,23 @@ oberon/
 ## Commandes essentielles (toutes depuis `bootstrap/`)
 
 ```sh
-./build.sh                          # rebuild les 4 binaires C (ffi_glue.c linké dans obvm.exe)
+./build.sh                          # binaires -> build/bin/ (+ build/lib précompilé, + sqlite3.dll)
 ./tests/run_tests.sh                # 116/116 attendu ; « passed: 116  failed: 0 » (lent : lancer en arrière-plan)
-./obc.exe examples/Hello.Mod        # compile (.obc à côté du .Mod ; imports compilés aussi)
-./obvm.exe examples/Hello.obc       # exécute sur la VM C
-./obdis.exe examples/Hello.obc      # désassemble
-./obvm.exe ../selfhost/VM.obc examples/Hello.obc   # exécute via VM.Mod (Oberon) sur obvm
-# natif : ./ob2c.exe examples/Hello.obc -o /tmp/H.c && gcc -O2 -Isrc -o /tmp/h /tmp/H.c \
+build/bin/obc.exe examples/Hello.Mod        # compile (.obc à côté du .Mod ; imports compilés aussi)
+build/bin/obvm.exe examples/Hello.obc       # exécute sur la VM C
+build/bin/obdis.exe examples/Hello.obc      # désassemble
+build/bin/obvm.exe ../selfhost/VM.obc examples/Hello.obc   # exécute via VM.Mod (Oberon) sur obvm
+# natif : build/bin/ob2c.exe examples/Hello.obc -o /tmp/H.c && gcc -O2 -Isrc -o /tmp/h /tmp/H.c \
 #          src/rt.c src/ob.c src/model.c src/module.c src/ffi_glue.c -lm && /tmp/h examples/Hello.obc
-#          (toujours ajouter src/ffi_glue.c : le runtime C référence les builtins FFI 80–89)
+#          (toujours ajouter src/ffi_glue.c : le runtime C référence les builtins FFI 80–91)
 ```
 
-Chemin de recherche des imports (dans obc, obvm, ob2c **et** VM.Mod) : `D/M.obc`, `D/M.Mod`,
-`D/../lib/…`, `D/../../lib/…` — c'est comme ça que `lib/` est trouvable depuis `bootstrap/examples` et `selfhost/`.
+Recherche des imports (dans obc, obvm, ob2c **et** VM.Mod) — premier trouvé gagne :
+`D` (dir du fichier), `D/../lib`, `D/../../lib`, puis `OBERON_PATH` = `.` (CWD) en tête +
+les entrées de la variable d'environnement (séparateur `;` Windows / `:` POSIX) +
+`$OBERON_HOME/lib` en fin si absent. `OBERON_HOME` sinon = dir de l'exe sans le `/bin` final
+(`SYSTEM.EXEPATH`/`SYSTEM.GETENV`, builtins 90–91). `build/` = notre OBERON_HOME local
+(`build/bin` + `build/lib`) ; installation finale visée : seulement `$OBERON_HOME/bin` + `$OBERON_HOME/lib`.
 
 ## Invariants à ne PAS régresser
 

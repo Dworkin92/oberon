@@ -4,7 +4,7 @@ Type *typeInt, *typeReal, *typeBool, *typeChar, *typeSet, *typeNil, *typeLongint
 Type *typeProc0;
 Type *typeCharArrayAny;
 Type *typeAnyPointer;
-int gTypeStamp = 0;
+int gTypeStamp = 1; /* never 0: fresh types have visited==0 and must not match the stamp at parse time */
 Obj *scopeStack[64];
 int scopeTop = -1;
 Module *curMod;
