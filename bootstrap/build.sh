@@ -9,6 +9,10 @@
 # so build/lib is found automatically via $OBERON_HOME/lib.
 cd "$(dirname "$0")" || exit 1
 CC=${CC:-gcc}
+# prefer winlibs 16.2.0 when present (toolchain upgrade 28/11)
+if [ "$CC" = "gcc" ] && [ -x "/c/Local/Tools/mingw64-16.2.0/bin/gcc.exe" ]; then
+  CC="/c/Local/Tools/mingw64-16.2.0/bin/gcc.exe"
+fi
 CFLAGS="-O2 -std=gnu11 -Wall"
 BIN=build/bin
 LIB=build/lib

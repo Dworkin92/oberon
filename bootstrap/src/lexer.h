@@ -15,7 +15,8 @@ enum {
   S_TILDE, S_PIPE,
   S_EQ, S_NEQ, S_LT, S_LE, S_GT, S_GE,
   S_DOT, S_DOTDOT, S_COMMA, S_COLON, S_SEMI,
-  S_LPAREN, S_RPAREN, S_LBRACK, S_RBRACK, S_CARET, S_LBRACE, S_RBRACE
+  S_LPAREN, S_RPAREN, S_LBRACK, S_RBRACK, S_CARET, S_LBRACE, S_RBRACE,
+  S_FORWARD   /* appended 28/11: forward procedure declarations (Oberon-07) */
 };
 
 const char *symName(int s);

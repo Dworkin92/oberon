@@ -1775,7 +1775,7 @@ static void f1_11(VM *vm) {
   Frame *fr = &vm->frames[vm->fp - 1];
   VMMod *cur = vm->mods[fr->mod];
   (void)fr; (void)cur;
-  { int ld = 0, off = 7; int fi = vm->fp - 1;
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -1805,7 +1805,7 @@ static void f1_11(VM *vm) {
     push(vm, MK_STACK_ADDR(slot)); }
   push(vm, (Cell)(int32_t)0);
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int ld = 0, off = 8; int fi = vm->fp - 1;
+  { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -1920,7 +1920,7 @@ L70: ;
   push(vm, (Cell)(int32_t)46);
   { Cell b = pop(vm), a = pop(vm); push(vm, a == b); }
   if (pop(vm) == 0) goto L234;
-  { int ld = 0, off = 8; int fi = vm->fp - 1;
+  { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -1993,11 +1993,11 @@ L234: ;
   push(vm, (Cell)(int32_t)0);
   { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
   if (pop(vm) == 0) goto L349;
-  { int ld = 0, off = 7; int fi = vm->fp - 1;
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
-  { int ld = 0, off = 7; int fi = vm->fp - 1;
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -2010,7 +2010,7 @@ L234: ;
   { Cell a = pop(vm); push(vm, cellFromDouble((double)(int32_t)a)); }
   { Cell b = pop(vm), a = pop(vm); push(vm, cellFromDouble(cellToDouble(a) + cellToDouble(b))); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int ld = 0, off = 8; int fi = vm->fp - 1;
+  { int ld = 0, off = 10; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
@@ -2326,14 +2326,22 @@ L734: ;
     push(vm, vm->stack[slot]); }
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a - (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-L757: ;
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
   { int ld = 0, off = 4; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)0);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
-  if (pop(vm) == 0) goto L813;
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
+  if (pop(vm) == 0) goto L796;
   { int ld = 0, off = 7; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -2342,10 +2350,35 @@ L757: ;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
+  { Cell a = pop(vm); push(vm, (Cell)(int32_t)(-(int32_t)a)); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L796: ;
+  { int ld = 0, off = 9; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  push(vm, (Cell)(int64_t)UINT64_C(0x3FF0000000000000));
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L811: ;
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  push(vm, (Cell)(int32_t)0);
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a > (int32_t)b); }
+  if (pop(vm) == 0) goto L867;
+  { int ld = 0, off = 9; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { int ld = 0, off = 9; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int64_t)UINT64_C(0x4024000000000000));
   { Cell b = pop(vm), a = pop(vm); push(vm, cellFromDouble(cellToDouble(a) * cellToDouble(b))); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int ld = 0, off = 4; int fi = vm->fp - 1;
+  { int ld = 0, off = 7; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
@@ -2354,47 +2387,48 @@ L757: ;
   push(vm, (Cell)(int32_t)-1);
   { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L757;
-L813: ;
+  goto L811;
+L867: ;
   { int ld = 0, off = 4; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
   push(vm, (Cell)(int32_t)0);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a < (int32_t)b); }
-  if (pop(vm) == 0) goto L869;
-  { int ld = 0, off = 7; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  { int ld = 0, off = 7; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, vm->stack[slot]); }
-  push(vm, (Cell)(int64_t)UINT64_C(0x4024000000000000));
-  { Cell b = pop(vm), a = pop(vm); push(vm, cellFromDouble(cellToDouble(a) / cellToDouble(b))); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  { int ld = 0, off = 4; int fi = vm->fp - 1;
-    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
-    int slot = vm->frames[fi].base + off;
-    push(vm, MK_STACK_ADDR(slot)); }
-  push(vm, peek(vm));
-  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  push(vm, (Cell)(int32_t)1);
-  { Cell b = pop(vm), a = pop(vm); push(vm, (Cell)(int32_t)((int32_t)a + (int32_t)b)); }
-  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
-  goto L813;
-L869: ;
+  { Cell b = pop(vm), a = pop(vm); push(vm, (int32_t)a >= (int32_t)b); }
+  if (pop(vm) == 0) goto L906;
   { int ld = 0, off = 1; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, MK_STACK_ADDR(slot)); }
   { Cell a = pop(vm); push(vm, memRead(vm, a)); }
-  { int ld = 0, off = 7; int fi = vm->fp - 1;
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 9; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, cellFromDouble(cellToDouble(a) * cellToDouble(b))); }
   { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+  goto L924;
+L906: ;
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { int ld = 0, off = 8; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { int ld = 0, off = 9; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, vm->stack[slot]); }
+  { Cell b = pop(vm), a = pop(vm); push(vm, cellFromDouble(cellToDouble(a) / cellToDouble(b))); }
+  { Cell v = pop(vm); Cell a = pop(vm); memWrite(vm, a, v); }
+L924: ;
   rtLeaveFrame(vm);
   return;
   return;
@@ -2891,7 +2925,7 @@ L440: ;
     }
   }
   if (pop(vm) == 0) goto L480;
-  push(vm, (Cell)(int32_t)17);
+  push(vm, (Cell)(int32_t)18);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -2932,7 +2966,7 @@ L480: ;
     }
   }
   if (pop(vm) == 0) goto L520;
-  push(vm, (Cell)(int32_t)18);
+  push(vm, (Cell)(int32_t)19);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -2973,7 +3007,7 @@ L520: ;
     }
   }
   if (pop(vm) == 0) goto L560;
-  push(vm, (Cell)(int32_t)19);
+  push(vm, (Cell)(int32_t)20);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3014,7 +3048,7 @@ L560: ;
     }
   }
   if (pop(vm) == 0) goto L600;
-  push(vm, (Cell)(int32_t)20);
+  push(vm, (Cell)(int32_t)21);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3055,7 +3089,7 @@ L600: ;
     }
   }
   if (pop(vm) == 0) goto L640;
-  push(vm, (Cell)(int32_t)21);
+  push(vm, (Cell)(int32_t)22);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3096,7 +3130,7 @@ L640: ;
     }
   }
   if (pop(vm) == 0) goto L680;
-  push(vm, (Cell)(int32_t)22);
+  push(vm, (Cell)(int32_t)23);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3137,7 +3171,7 @@ L680: ;
     }
   }
   if (pop(vm) == 0) goto L720;
-  push(vm, (Cell)(int32_t)23);
+  push(vm, (Cell)(int32_t)24);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3178,7 +3212,7 @@ L720: ;
     }
   }
   if (pop(vm) == 0) goto L760;
-  push(vm, (Cell)(int32_t)24);
+  push(vm, (Cell)(int32_t)25);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3219,7 +3253,7 @@ L760: ;
     }
   }
   if (pop(vm) == 0) goto L800;
-  push(vm, (Cell)(int32_t)25);
+  push(vm, (Cell)(int32_t)26);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3260,7 +3294,7 @@ L800: ;
     }
   }
   if (pop(vm) == 0) goto L840;
-  push(vm, (Cell)(int32_t)26);
+  push(vm, (Cell)(int32_t)27);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3301,7 +3335,7 @@ L840: ;
     }
   }
   if (pop(vm) == 0) goto L880;
-  push(vm, (Cell)(int32_t)27);
+  push(vm, (Cell)(int32_t)28);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3342,7 +3376,7 @@ L880: ;
     }
   }
   if (pop(vm) == 0) goto L920;
-  push(vm, (Cell)(int32_t)28);
+  push(vm, (Cell)(int32_t)29);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3383,7 +3417,7 @@ L920: ;
     }
   }
   if (pop(vm) == 0) goto L960;
-  push(vm, (Cell)(int32_t)29);
+  push(vm, (Cell)(int32_t)30);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3424,7 +3458,7 @@ L960: ;
     }
   }
   if (pop(vm) == 0) goto L1000;
-  push(vm, (Cell)(int32_t)30);
+  push(vm, (Cell)(int32_t)31);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3465,7 +3499,7 @@ L1000: ;
     }
   }
   if (pop(vm) == 0) goto L1040;
-  push(vm, (Cell)(int32_t)31);
+  push(vm, (Cell)(int32_t)32);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3506,7 +3540,7 @@ L1040: ;
     }
   }
   if (pop(vm) == 0) goto L1080;
-  push(vm, (Cell)(int32_t)32);
+  push(vm, (Cell)(int32_t)33);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3547,7 +3581,7 @@ L1080: ;
     }
   }
   if (pop(vm) == 0) goto L1120;
-  push(vm, (Cell)(int32_t)33);
+  push(vm, (Cell)(int32_t)34);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3588,7 +3622,7 @@ L1120: ;
     }
   }
   if (pop(vm) == 0) goto L1160;
-  push(vm, (Cell)(int32_t)34);
+  push(vm, (Cell)(int32_t)35);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3629,7 +3663,7 @@ L1160: ;
     }
   }
   if (pop(vm) == 0) goto L1200;
-  push(vm, (Cell)(int32_t)35);
+  push(vm, (Cell)(int32_t)36);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3670,7 +3704,7 @@ L1200: ;
     }
   }
   if (pop(vm) == 0) goto L1240;
-  push(vm, (Cell)(int32_t)36);
+  push(vm, (Cell)(int32_t)37);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3711,7 +3745,7 @@ L1240: ;
     }
   }
   if (pop(vm) == 0) goto L1280;
-  push(vm, (Cell)(int32_t)37);
+  push(vm, (Cell)(int32_t)38);
   rtLeaveFrame(vm);
   return;
   goto L1315;
@@ -3752,7 +3786,7 @@ L1280: ;
     }
   }
   if (pop(vm) == 0) goto L1315;
-  push(vm, (Cell)(int32_t)38);
+  push(vm, (Cell)(int32_t)65);
   rtLeaveFrame(vm);
   return;
 L1315: ;
@@ -9116,7 +9150,7 @@ static void f1_25(VM *vm) {
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
     vm->stack[slot] = pop(vm); }
-  goto L2325;
+  goto L2360;
 L15: ;
   push(vm, cur->strRefs[43u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9155,7 +9189,7 @@ L15: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L50: ;
   push(vm, cur->strRefs[44u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9194,7 +9228,7 @@ L50: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L85: ;
   push(vm, cur->strRefs[45u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9233,7 +9267,7 @@ L85: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L120: ;
   push(vm, cur->strRefs[46u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9272,7 +9306,7 @@ L120: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L155: ;
   push(vm, cur->strRefs[47u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9311,7 +9345,7 @@ L155: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L190: ;
   push(vm, cur->strRefs[48u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9350,7 +9384,7 @@ L190: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L225: ;
   push(vm, cur->strRefs[49u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9389,7 +9423,7 @@ L225: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L260: ;
   push(vm, cur->strRefs[50u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9428,7 +9462,7 @@ L260: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L295: ;
   push(vm, cur->strRefs[51u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9467,7 +9501,7 @@ L295: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L330: ;
   push(vm, cur->strRefs[52u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9506,7 +9540,7 @@ L330: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L365: ;
   push(vm, cur->strRefs[53u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9545,7 +9579,7 @@ L365: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L400: ;
   push(vm, cur->strRefs[54u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9584,7 +9618,7 @@ L400: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L435: ;
   push(vm, cur->strRefs[55u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9623,7 +9657,7 @@ L435: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L470: ;
   push(vm, cur->strRefs[56u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9662,7 +9696,7 @@ L470: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L505: ;
   push(vm, cur->strRefs[57u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9701,7 +9735,7 @@ L505: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L540: ;
   push(vm, cur->strRefs[58u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9740,7 +9774,7 @@ L540: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L575: ;
   push(vm, cur->strRefs[59u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9779,7 +9813,7 @@ L575: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L610: ;
   push(vm, cur->strRefs[60u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9818,7 +9852,7 @@ L610: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L645: ;
   push(vm, cur->strRefs[61u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9857,7 +9891,7 @@ L645: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L680: ;
   push(vm, cur->strRefs[62u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9896,7 +9930,7 @@ L680: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L715: ;
   push(vm, cur->strRefs[63u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9935,7 +9969,7 @@ L715: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L750: ;
   push(vm, cur->strRefs[64u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -9974,7 +10008,7 @@ L750: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L785: ;
   push(vm, cur->strRefs[65u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10013,7 +10047,7 @@ L785: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L820: ;
   push(vm, cur->strRefs[66u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10052,7 +10086,7 @@ L820: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L855: ;
   push(vm, cur->strRefs[67u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10091,7 +10125,7 @@ L855: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L890: ;
   push(vm, cur->strRefs[68u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10130,7 +10164,7 @@ L890: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L925: ;
   push(vm, cur->strRefs[69u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10169,7 +10203,7 @@ L925: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L960: ;
   push(vm, cur->strRefs[70u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10208,7 +10242,7 @@ L960: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L995: ;
   push(vm, cur->strRefs[71u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10247,7 +10281,7 @@ L995: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1030: ;
   push(vm, cur->strRefs[72u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10286,7 +10320,7 @@ L1030: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1065: ;
   push(vm, cur->strRefs[73u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10325,7 +10359,7 @@ L1065: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1100: ;
   push(vm, cur->strRefs[74u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10364,7 +10398,7 @@ L1100: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1135: ;
   push(vm, cur->strRefs[75u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10403,7 +10437,7 @@ L1135: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1170: ;
   push(vm, cur->strRefs[76u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10442,7 +10476,7 @@ L1170: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1205: ;
   push(vm, cur->strRefs[77u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10481,7 +10515,7 @@ L1205: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1240: ;
   push(vm, cur->strRefs[78u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10520,7 +10554,7 @@ L1240: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1275: ;
   push(vm, cur->strRefs[79u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10559,7 +10593,7 @@ L1275: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1310: ;
   push(vm, cur->strRefs[80u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10598,7 +10632,7 @@ L1310: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1345: ;
   push(vm, cur->strRefs[81u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10637,7 +10671,7 @@ L1345: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1380: ;
   push(vm, cur->strRefs[82u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10676,7 +10710,7 @@ L1380: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1415: ;
   push(vm, cur->strRefs[83u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10715,7 +10749,7 @@ L1415: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1450: ;
   push(vm, cur->strRefs[84u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10754,7 +10788,7 @@ L1450: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1485: ;
   push(vm, cur->strRefs[85u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10793,7 +10827,7 @@ L1485: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1520: ;
   push(vm, cur->strRefs[86u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10832,7 +10866,7 @@ L1520: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1555: ;
   push(vm, cur->strRefs[87u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10871,7 +10905,7 @@ L1555: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1590: ;
   push(vm, cur->strRefs[88u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10910,7 +10944,7 @@ L1590: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1625: ;
   push(vm, cur->strRefs[89u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10949,7 +10983,7 @@ L1625: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1660: ;
   push(vm, cur->strRefs[90u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -10988,7 +11022,7 @@ L1660: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1695: ;
   push(vm, cur->strRefs[91u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11027,7 +11061,7 @@ L1695: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1730: ;
   push(vm, cur->strRefs[92u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11066,7 +11100,7 @@ L1730: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1765: ;
   push(vm, cur->strRefs[93u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11105,7 +11139,7 @@ L1765: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1800: ;
   push(vm, cur->strRefs[94u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11144,7 +11178,7 @@ L1800: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1835: ;
   push(vm, cur->strRefs[95u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11183,7 +11217,7 @@ L1835: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1870: ;
   push(vm, cur->strRefs[96u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11222,7 +11256,7 @@ L1870: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1905: ;
   push(vm, cur->strRefs[97u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11261,7 +11295,7 @@ L1905: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1940: ;
   push(vm, cur->strRefs[98u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11300,7 +11334,7 @@ L1940: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L1975: ;
   push(vm, cur->strRefs[99u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11339,7 +11373,7 @@ L1975: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L2010: ;
   push(vm, cur->strRefs[100u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11378,7 +11412,7 @@ L2010: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L2045: ;
   push(vm, cur->strRefs[101u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11417,7 +11451,7 @@ L2045: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L2080: ;
   push(vm, cur->strRefs[102u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11456,7 +11490,7 @@ L2080: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L2115: ;
   push(vm, cur->strRefs[103u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11495,7 +11529,7 @@ L2115: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L2150: ;
   push(vm, cur->strRefs[104u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11534,7 +11568,7 @@ L2150: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L2185: ;
   push(vm, cur->strRefs[105u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11573,7 +11607,7 @@ L2185: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L2220: ;
   push(vm, cur->strRefs[106u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11612,7 +11646,7 @@ L2220: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L2255: ;
   push(vm, cur->strRefs[107u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11651,7 +11685,7 @@ L2255: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L2290: ;
   push(vm, cur->strRefs[108u]);
   { int ld = 0, off = 1; int fi = vm->fp - 1;
@@ -11690,8 +11724,47 @@ L2290: ;
       if (!vm->running) return;
     }
   }
-  goto L2603;
+  goto L2642;
 L2325: ;
+  push(vm, cur->strRefs[109u]);
+  { int ld = 0, off = 1; int fi = vm->fp - 1;
+    while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
+    int slot = vm->frames[fi].base + off;
+    push(vm, MK_STACK_ADDR(slot)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  { Cell a = pop(vm); push(vm, memRead(vm, a)); }
+  push(vm, (Cell)(int32_t)256);
+  { int lmod = 0, procIdx = 7, steps = 1;
+    if (lmod == 255) {
+      int nparams = builtinNparams(procIdx);
+      int base = vm->sp - nparams;
+      callBuiltin(vm, procIdx, base, nparams);
+      vm->sp = base + (builtinHasResult(procIdx) ? 1 : 0);
+    } else {
+      int g = cur->map[lmod];
+      VMMod *callee = vm->mods[g];
+      LProc *cp = &callee->lm->procs[procIdx];
+      int base = vm->sp - cp->nparams;
+      int fi = vm->fp - 1;
+      int st = steps;
+      while (st-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) break; }
+      if (vm->fp >= vm->frameCap) {
+        vm->frameCap *= 2;
+        vm->frames = realloc(vm->frames, vm->frameCap * sizeof(Frame));
+        fr = &vm->frames[vm->fp - 1];
+      }
+      Frame *nf = &vm->frames[vm->fp++];
+      nf->mod = g; nf->proc = procIdx; nf->pc = 0; nf->base = base; nf->slink = fi;
+      nf->extra = 0; nf->cref = 0;
+      vm->sp = base + cp->nlocals;
+      procTab[g][procIdx](vm);
+      fr = &vm->frames[vm->fp - 1];
+      cur = vm->mods[fr->mod];
+      if (!vm->running) return;
+    }
+  }
+  goto L2642;
+L2360: ;
   { int ld = 0, off = 2; int fi = vm->fp - 1;
     while (ld-- > 0) { fi = vm->frames[fi].slink; if (fi < 0) vmRuntimeError(vm, "bad static link"); }
     int slot = vm->frames[fi].base + off;
@@ -11737,34 +11810,35 @@ L2325: ;
       case 36: goto L1275;
       case 37: goto L1310;
       case 38: goto L1345;
-      case 39: goto L1380;
-      case 40: goto L1415;
-      case 41: goto L1450;
-      case 42: goto L1485;
-      case 43: goto L1520;
-      case 44: goto L1555;
-      case 45: goto L1590;
-      case 46: goto L1625;
-      case 47: goto L1660;
-      case 48: goto L1695;
-      case 49: goto L1730;
-      case 50: goto L1765;
-      case 51: goto L1800;
-      case 52: goto L1835;
-      case 53: goto L1870;
-      case 54: goto L1905;
-      case 55: goto L1940;
-      case 56: goto L1975;
-      case 57: goto L2010;
-      case 58: goto L2045;
-      case 59: goto L2080;
-      case 60: goto L2115;
-      case 61: goto L2150;
-      case 62: goto L2185;
-      case 63: goto L2220;
-      case 64: goto L2255;
-      default: goto L2290; } }
-L2603: ;
+      case 39: goto L1415;
+      case 40: goto L1450;
+      case 41: goto L1485;
+      case 42: goto L1520;
+      case 43: goto L1555;
+      case 44: goto L1590;
+      case 45: goto L1625;
+      case 46: goto L1660;
+      case 47: goto L1695;
+      case 48: goto L1730;
+      case 49: goto L1765;
+      case 50: goto L1800;
+      case 51: goto L1835;
+      case 52: goto L1870;
+      case 53: goto L1905;
+      case 54: goto L1940;
+      case 55: goto L1975;
+      case 56: goto L2010;
+      case 57: goto L2045;
+      case 58: goto L2080;
+      case 59: goto L2115;
+      case 60: goto L2150;
+      case 61: goto L2185;
+      case 62: goto L2220;
+      case 63: goto L2255;
+      case 64: goto L2290;
+      case 65: goto L1380;
+      default: goto L2325; } }
+L2642: ;
   rtLeaveFrame(vm);
   return;
   return;

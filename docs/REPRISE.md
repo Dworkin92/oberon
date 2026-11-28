@@ -3,21 +3,26 @@
 > **Règle d'or** : mettre ce fichier à jour à chaque fin de session (état, tests, prochaine étape).
 > Tout l'état du projet vit dans le dépôt ; une nouvelle session repart d'ici.
 
-## État actuel (28/11/2026, vérifié ce jour)
+## État actuel (28/11/2026, soir — vérifié)
 
 Chaîne complète **compilateur Oberon-07 → bytecode `.obc` → VM maison**, stage-0 en C,
-plus VM réécrite en Oberon **en threaded code** (dispatch par valeurs procédurales),
-et début d'auto-hébergement : **`selfhost/OCS.Mod` = le lexer/scanner en Oberon** (port fidèle
-de `lexer.c`, mêmes constantes `S_*` exportées, pushback de tokens) — testé par
-`examples/LexDump.Mod` (dump des tokens d'un fichier passé en argument).
-**Tests : 120/120** (30 exemples × 4 moteurs : `obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm,
-`VM.Mod` natif) — dont `SqlDemo.Mod` (SQLite via **FFI pur Oberon** : `lib/Sqlite.Mod` au-dessus de
+plus VM réécrite en Oberon **en threaded code**, et **auto-hébergement atteint** :
+`selfhost/OCS.Mod` (lexer en Oberon) + **`selfhost/OC.Mod` (le compilateur complet en Oberon,
+~2900 lignes, 103 procs)** émet des `.obc` **octet-identiques** au stage-0 C sur les 31 exemples,
+**et OC.Mod se compile lui-même : OC.obc → OC2.obc → OC3.obc, point fixe byte-identique** 🎉
+(`obvm OC.obc OC.Mod -o OC2.obc`, `cmp OC.obc OC2.obc`).
+**Tests : 151/151** = 31 exemples × 4 moteurs (obvm C, natif ob2c+gcc, VM.Mod sur obvm,
+VM.Mod natif) + 31 phases **PASS-OC** (cmp du .obc produit par OC.Mod vs stage-0).
+Dont `SqlDemo.Mod` (SQLite via **FFI pur Oberon** : `lib/Sqlite.Mod` au-dessus de
 `SYSTEM.CALLC/LOADLIB/SYMBOL` ids 80–89, glue C `src/ffi_glue.c`, DLL `sqlite3.dll` chargée à
-l'exécution, aucun link statique). Sémantique : le body de chaque module chargé tourne au
-démarrage (dépendances d'abord) — `rtEnterBody` chaîné, idem ob2c généré et VM.Mod. Groupe A du TODO terminé ✅ : types procéduraux + closures + threaded code
+l'exécution). Sémantique : le body de chaque module chargé tourne au démarrage (dépendances
+d'abord) — `rtEnterBody` chaîné, idem ob2c généré et VM.Mod. Groupe A du TODO terminé ✅,
+**groupe B (OC.Mod → bytecode) terminé ✅** : types procéduraux + closures + threaded code
 + records en ligne / `VAR` record / `ARRAY OF RECORD` + conformité Oberon-07 (`WHILE...ELSIF`,
-CASE de type, `CAP` — aucun opcode nouveau) (`OP_PROCVAL`=88 / `OP_CALLP`=89,
-`CLOSURE_TAG`, handlers `H_OP_*`, `telem`/`ElemCells` dans VM.Mod).
+CASE de type, `CAP`, **`FORWARD`** ajouté 28/11 — `S_FORWARD`=65 append-only) —
+(`OP_PROCVAL`=88 / `OP_CALLP`=89, `CLOSURE_TAG`, handlers `H_OP_*`, `telem`/`ElemCells` dans VM.Mod).
+Toolchain : gcc/clang winlibs **16.2.0** (`/c/Local/Tools/mingw64-16.2.0`), préféré dans
+build.sh/run_tests.sh/Makefile.
 
 ```
 oberon/
@@ -90,18 +95,26 @@ module `SYSTEM`
 (BAND/BOR/BXOR/BNOT/LSH/ROT/BIT/ARGC/ARGV/TICKS/EXIT, casts L2I/REALBITS/BITSREAL/I2REAL),
 superinstruction `OP_JUMPTABLE` pour les `CASE` denses.
 
-## Prochaine étape — **OC.Mod, le compilateur en Oberon** (groupe A terminé ✅, conformité Oberon-07 faite ✅, **OCS.Mod = lexer OK ✅**)
+## Prochaine étape — **groupe C : backend C dans OC.Mod** (OC.Mod → bytecode ✅ fait)
 
-1. **OC.Mod** : parser single-pass en Oberon sur OCS.Mod, émettant un `.obc` identique au
-   stage-0 (phase `PASS-OC` dans run_tests.sh ; `LexDump` sert déjà de test du scanner)
-2. Backend C dans OC.Mod + auto-compilation (`oc.obc → oc2.c → gcc`, `diff`),
-   `bootstrap/tests/expected/` comme banc de régression
+1. OC.Mod émettant du **C** à la place du bytecode (pattern `ob2c` : une fonction C par proc,
+   runtime `rt.c` partagé) → auto-compilation native : `oc.obc → oc.c → gcc → oc2.exe`,
+   puis `oc2.exe` se recompile lui-même, `diff` des .c
+2. `bootstrap/tests/expected/` comme banc de régression complet
 3. `SYSTEM.VAL/ADR/GET/PUT` seulement si besoin réel (sinon PROCV/PROCC suffisent)
 
+Pièges OC.Mod (ne pas régresser) : **jamais de champ tableau inline de record (t.name) passé
+en param open array** — les `name` sont des `StrRef = POINTER TO ARRAY … OF CHAR` ; `&`/`OR`
+**non court-circuitants** (ne jamais indexer avec un indice possiblement hors limites dans une
+chaîne `&`) ; `INC/DEC` = variable INTEGER + constante seulement ; labels de CASE = constantes
+**locales** (pas `OCS.S_*`) ; code émis par blocs chaînés par proc (`CodeBlock`, 4096 octets),
+`Patch32` octet par octet ; `OCS.Open` lit déjà le 1er token ; `HALT` = ident (pas mot-clé :
+retiré du KwLookup d'OCS pour coller au lexer C) ; littéraux REAL : parseur correctement
+arrondi (mantisse exacte + une seule échelle 10^k) pour coller à `strtod`.
 Bugs corrigés le 28/11 (ne pas régresser) : `nc` non déclaré dans `LoadMod` (VM.Mod) ;
-`RefToStr` (VM.Mod) : sur `NUL` faire `i := total` → `buf[256]` hors limites, remplacé par
-une boucle `WHILE (i < total) & (i < LEN(buf,0)-1) & (heap[…] # 0)` ; champ record tableau =
-`typeInlineCells` (voir invariants) ; indexation tableau inline = `AADD` pas `ELEM_ADDR`.
+`RefToStr` (VM.Mod) : sur `NUL` faire `i := total` → `buf[256]` hors limites ; champ record
+tableau = `typeInlineCells` (voir invariants) ; indexation tableau inline = `AADD` pas
+`ELEM_ADDR` ; FORWARD : à la déclaration réelle, remettre `nparams`/`nlocals`/`code` à zéro.
 
 Rappel conformité (rapport Oberon-07 officiel, rev. 3.5.2016) : **pas de LOOP/EXIT/WITH** —
 remplacés par `WHILE...ELSIF` (boucle gardée de Dijkstra) et le CASE de type ; `WITH` gardé

@@ -777,13 +777,29 @@ static void parseProcDecl(void) {
   char pname[64];
   readIdent(pname);
   int exported = accept(S_STAR);
-  Obj *po = newObj(pname, CL_PROC);
-  po->level = curLevel;
-  po->exported = exported;
-  po->procIndex = curMod->nprocs;
-  insertObj(po);
-  int pIdx = curMod->nprocs;
-  addProc(pname, exported, 0);
+  /* FORWARD: reuse the pending object and its reserved proc index */
+  Obj *existing = lookupIn(scopeStack[scopeTop], pname);
+  Obj *po;
+  int pIdx, reused;
+  reused = existing && existing->cls == CL_PROC && existing->forward;
+  if (reused) {
+    po = existing;
+    po->forward = 0;
+    po->exported = exported;
+    pIdx = po->procIndex;
+    curMod->procs[pIdx].nparams = 0; /* re-parse the heading params */
+    curMod->procs[pIdx].nlocals = 0;
+    curMod->procs[pIdx].code.len = 0;
+    po->params = NULL;
+  } else {
+    po = newObj(pname, CL_PROC);
+    po->level = curLevel;
+    po->exported = exported;
+    po->procIndex = curMod->nprocs;
+    insertObj(po);
+    pIdx = curMod->nprocs;
+    addProc(pname, exported, 0);
+  }
   Proc *p = &curMod->procs[pIdx];
   Proc *savedProc = curProc;
   curProc = p;
@@ -829,6 +845,15 @@ static void parseProcDecl(void) {
   }
   expect(S_SEMI);
   po->nparams = curProc->nparams;
+  if (accept(S_FORWARD)) {
+    /* forward declaration: heading only, body comes later (Oberon-07) */
+    po->forward = 1;
+    expect(S_SEMI);
+    scopePop();
+    curLevel--;
+    curProc = savedProc;
+    return;
+  }
   parseDeclarations(0);
   curProc = &curMod->procs[pIdx]; /* procs array may have been reallocated */
   if (accept(S_BEGIN)) parseStatements();

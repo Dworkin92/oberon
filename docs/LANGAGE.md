@@ -24,7 +24,8 @@ ConstDecl    = ident [ "*" ] "=" ConstExpression ";" .
 TypeDecl     = ident [ "*" | "-" ] "=" Type ";" .
 VarDecl      = ident { "," ident } [ "*" ] ":" Type ";" .
 ProcedureDecl= "PROCEDURE" ident [ "*" ] [ FormalParameters ] [ ":" Type ] ";"
-               DeclarationSequence [ "BEGIN" StatementSequence ] "END" [ ident ] ";" .
+               ( "FORWARD" ";"                       (* déclaration différée, Oberon-07 *)
+               | DeclarationSequence [ "BEGIN" StatementSequence ] "END" [ ident ] ";" ) .
 FormalParameters = "(" [ FPSection { ";" FPSection } ] ")" .
 FPSection    = [ "VAR" ] ident { "," ident } ":" Type .
 ```
@@ -41,6 +42,9 @@ un autre module (`UseMath.Mod`).
 - Le corps `BEGIN ... END` est exécuté au chargement du module (proc 0 du bytecode).
 - **Procédures fonction (ext)** : `PROCEDURE F(x: INTEGER): INTEGER; ... RETURN expr END F;`
   (dans Oberon-07 strict, `RETURN` n'a pas d'expression).
+- **`FORWARD`** (Oberon-07) : `PROCEDURE P(x: INTEGER); FORWARD;` réserve la signature ;
+  la déclaration réelle (avec le corps) peut apparaître plus tard dans la même portée,
+  y compris après des procédures qui l'appellent déjà (`examples/Fwd.Mod`).
 
 ## 2. Types
 

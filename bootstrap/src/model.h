@@ -61,6 +61,7 @@ typedef struct Obj {
   struct Obj *params;   /* linked list of param Objs (CL_VAR, isVarParam set) */
   int procIndex;        /* index in Module.procs */
   int exported;
+  int forward;          /* FORWARD declaration pending body (Oberon-07) */
   /* CL_MODULE */
   struct Obj *members;  /* linked list of exported members */
   int builtin;          /* 1 if builtin module (Out/In) */

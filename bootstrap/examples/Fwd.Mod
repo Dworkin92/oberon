@@ -1,0 +1,13 @@
+MODULE Fwd;
+IMPORT Out;
+PROCEDURE IsEven(n: INTEGER): BOOLEAN; FORWARD;
+PROCEDURE IsOdd(n: INTEGER): BOOLEAN;
+BEGIN IF n = 0 THEN RETURN FALSE ELSE RETURN IsEven(n - 1) END
+END IsOdd;
+PROCEDURE IsEven(n: INTEGER): BOOLEAN;
+BEGIN IF n = 0 THEN RETURN TRUE ELSE RETURN IsOdd(n - 1) END
+END IsEven;
+BEGIN
+  IF IsEven(10) THEN Out.String("10 even") ELSE Out.String("10 odd") END; Out.Ln;
+  IF IsOdd(7) THEN Out.String("7 odd") ELSE Out.String("7 even") END; Out.Ln
+END Fwd.

@@ -10,6 +10,8 @@ rm -f ../lib/*.obc   # force recompilation of library modules from lib/*.Mod
 # FFI : les binaires natifs linkent src/ffi_glue.c (LoadLibrary/GetProcAddress/CALLC) ;
 # la DLL sqlite3.dll est chargee a l'execution (chemin absolu de repli dans lib/Sqlite.Mod).
 FFI_O="src/ffi_glue.c"
+CC=gcc
+if [ -x "/c/Local/Tools/mingw64-16.2.0/bin/gcc.exe" ]; then CC="/c/Local/Tools/mingw64-16.2.0/bin/gcc.exe"; fi
 pass=0; fail=0
 
 # build the Oberon-written VM once (selfhost/VM.Mod -> ../selfhost/VM.obc)
@@ -17,6 +19,14 @@ if [ ! -f ../selfhost/VM.obc ] || [ ../selfhost/VM.Mod -nt ../selfhost/VM.obc ];
   $BIN/obc.exe ../selfhost/VM.Mod > /dev/null 2>&1 || echo "WARN: cannot compile ../selfhost/VM.Mod (VM phases skipped)"
 fi
 HAVE_VM=$([ -f ../selfhost/VM.obc ] && echo 1 || echo 0)
+# build the Oberon-written compiler (selfhost/OC.Mod, needs OCS.Mod) -> ../selfhost/OC.obc
+if [ ! -f ../selfhost/OCS.obc ] || [ ../selfhost/OCS.Mod -nt ../selfhost/OCS.obc ]; then
+  $BIN/obc.exe ../selfhost/OCS.Mod > /dev/null 2>&1 || echo "WARN: cannot compile ../selfhost/OCS.Mod"
+fi
+if [ ! -f ../selfhost/OC.obc ] || [ ../selfhost/OC.Mod -nt ../selfhost/OC.obc ] || [ ../selfhost/OCS.obc -nt ../selfhost/OC.obc ]; then
+  $BIN/obc.exe ../selfhost/OC.Mod > /dev/null 2>&1 || echo "WARN: cannot compile ../selfhost/OC.Mod (OC phase skipped)"
+fi
+HAVE_OC=$([ -f ../selfhost/OC.obc ] && echo 1 || echo 0)
 # and its native version: ob2c + gcc (étape 5) -> tests/out/vm_native.exe
 HAVE_VMN=0
 if [ "$HAVE_VM" = 1 ]; then
@@ -27,6 +37,20 @@ if [ "$HAVE_VM" = 1 ]; then
     echo "WARN: native VM.Mod build failed (VMN phase skipped)"
   fi
 fi
+
+# OC phase: the Oberon-written compiler (OC.Mod on obvm) must emit a byte-identical .obc
+run_octest() {
+  local name=$1
+  if [ "$HAVE_OC" != 1 ]; then return; fi
+  if ! $BIN/obvm.exe ../selfhost/OC.obc "examples/$name.Mod" -o "tests/out/$name.oc.obc" 2> "tests/out/$name.oc.log"; then
+    echo "FAIL-OC $name (oc compile)"; head -3 "tests/out/$name.oc.log"; fail=$((fail+1)); return
+  fi
+  if cmp -s "examples/$name.obc" "tests/out/$name.oc.obc"; then
+    echo "PASS-OC $name"; pass=$((pass+1))
+  else
+    echo "FAIL-OC $name (.obc differs from stage-0)"; cmp -l "examples/$name.obc" "tests/out/$name.oc.obc" | head -3; fail=$((fail+1))
+  fi
+}
 
 run_test() {
   local name=$1; local input=$2; shift 2   # extra args = program args (SYSTEM.ARGV)
@@ -131,6 +155,12 @@ run_test SysDemo '' alpha 42;            run_ctest SysDemo '' alpha 42;     run_
 run_test LexDump '' examples/Hello.Mod; run_ctest LexDump '' examples/Hello.Mod; run_vmtest LexDump '' examples/Hello.Mod; run_vmntest LexDump '' examples/Hello.Mod
 # SqlDemo passe par lib/Sqlite.Mod : binding PUR Oberon au-dessus du FFI SYSTEM
 # (LOADLIB "sqlite3.dll" -> C:\Local\Tools\sqlite3\sqlite3.dll en repli, SYMBOL, CALLC).
+
+# OC phase: OC.Mod (compilateur écrit en Oberon) doit émettre un .obc identique au stage-0
+for m in examples/*.Mod; do
+  n=$(basename "$m" .Mod)
+  if [ -f "examples/$n.obc" ]; then run_octest "$n"; fi
+done
 
 echo "-----------------------------------"
 echo "passed: $pass  failed: $fail"

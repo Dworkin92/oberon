@@ -2,9 +2,9 @@
 
 > ⭐ Après un compactage ou une nouvelle session, repartir de [`docs/REPRISE.md`](docs/REPRISE.md).
 
-État au 28/11/2026 (soir) : étapes 0–5 faites + tout le groupe A (types procéduraux, closures, threaded code, records en ligne) + conformité Oberon-07 (WHILE...ELSIF, CASE de type, CAP) + FFI/DLL + `lib/Sqlite.Mod` + **OCS.Mod (lexer en Oberon)**, **120/120 tests** (30 exemples × 4 moteurs :
-`obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif). Voir
-[`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md) pour la vision d'ensemble. **Groupe A terminé ✅ — OC.Mod en cours : scanner OK ✅, reste le parser.**
+État au 28/11/2026 (soir) : étapes 0–5 faites + tout le groupe A (types procéduraux, closures, threaded code, records en ligne) + conformité Oberon-07 (WHILE...ELSIF, CASE de type, CAP, FORWARD) + FFI/DLL + `lib/Sqlite.Mod` + **OCS.Mod (lexer) + OC.Mod (compilateur complet en Oberon, .obc byte-identique, auto-compilation point fixe)**, **151/151 tests** (31 exemples × 4 moteurs :
+`obvm` C, natif `ob2c`+gcc, `VM.Mod` sur obvm, `VM.Mod` natif, + 31 phases PASS-OC). Voir
+[`docs/AUTOHEBERGEMENT.md`](docs/AUTOHEBERGEMENT.md) pour la vision d'ensemble. **Groupes A ✅ et B ✅ terminés — prochain : groupe C (backend C dans OC.Mod).**
 
 ## ✅ Fait
 
@@ -39,17 +39,18 @@
   - `CASE p OF T1: S1 | T2: S2 ELSE S3 END` (CASE de type, remplace WITH) — `ISTYPE` sur la chaîne d'extension + `CHECKTYPE` + narrowing statique du sélecteur dans la branche — test `TypeCase.Mod`
   - `CAP(c)` prédéfini — expansion inline (opcodes existants, aucun opcode nouveau) — test `CapDemo.Mod`
   - → **112/112** (28 ex × 4 moteurs). `WITH` conservé comme extension (hors rapport mais testé).
+  - **`FORWARD`** (28/11, Oberon-07) : `PROCEDURE P(...); FORWARD;` — déclaration différée, déclaration réelle avec corps plus tard dans la même portée (mutual recursion) — `S_FORWARD`=65 (append-only), `Obj.forward` dans model.h, parser C + OC.Mod — test `examples/Fwd.Mod` (31e exemple) → **151/151** avec OC.Mod.
 - [ ] `SYSTEM.VAL/ADR/GET/PUT` — pas de besoin réel constaté (PROCV/PROCC couvrent les casts) ; à rouvrir si OC.Mod en a besoin
 
-### B. OC.Mod émettant du bytecode d'abord (plus sûr)
+### B. OC.Mod émettant du bytecode d'abord — ✅ terminé le 28/11 (soir)
 
 - [x] Porter le lexer en Oberon — **`selfhost/OCS.Mod` fait le 28/11** (26 procs, pushback tokens, test `LexDump.Mod` sur les 4 moteurs → 120/120)
-- [ ] Porter le parser single-pass en Oberon, émission `.obc` identique au stage-0
-- [ ] Tables de symboles (hash simple), gestion des types, scopes
-- [ ] Buffers extensibles (code, chaînes) via NEW/DISPOSE sur tableaux
-- [ ] Helpers chaînes (concat, compare, insert) — pas de concat native
-- [ ] Test : `obc OC.Mod` → `OC.obc` ; `obvm OC.obc Hello.Mod` → `Hello2.obc` ; `obvm Hello2.obc` == sortie de référence
-- [ ] Brancher dans la suite de tests (phase `PASS-OC`)
+- [x] Porter le parser single-pass en Oberon — **`selfhost/OC.Mod` fait le 28/11** (~2900 lignes, 103 procs) : tables de symboles, types, scopes, expressions, toutes les statements, imports réels (LoadObc + chemin de recherche), writer .obc **byte-identique** au stage-0 sur les 31 exemples
+- [x] Buffers extensibles (blocs de code chaînés 4096 octets via NEW/DISPOSE, `Patch32` octet par octet)
+- [x] Helpers chaînes — `lib/Strings.Mod` + helpers internes OC
+- [x] Test : `obvm OC.obc X.Mod -o X.oc.obc` ; `cmp X.obc X.oc.obc` identique pour les 31 exemples ; OC-produit tourne correctement
+- [x] **Auto-compilation (point fixe)** : `obvm OC.obc OC.Mod -o OC2.obc` (OC2 dans `selfhost/` pour trouver OCS.obc), puis OC2→OC3, `cmp OC.obc OC3.obc` **identique** 🎉
+- [x] Branché dans la suite de tests (phase `PASS-OC` ×31) → **151/151**
 
 ### C. Backend C dans OC.Mod (l'étape 6 finale)
 

@@ -32,7 +32,8 @@ static struct { const char *kw; int s; } kwtab[] = {
   {"OR", S_OR}, {"POINTER", S_POINTER}, {"PROCEDURE", S_PROCEDURE},
   {"RECORD", S_RECORD}, {"REPEAT", S_REPEAT}, {"RETURN", S_RETURN},
   {"THEN", S_THEN}, {"TO", S_TO}, {"TYPE", S_TYPE}, {"UNTIL", S_UNTIL},
-  {"VAR", S_VAR}, {"WHILE", S_WHILE}, {"WITH", S_WITH}, {NULL, 0}
+  {"VAR", S_VAR}, {"WHILE", S_WHILE}, {"WITH", S_WITH},
+  {"FORWARD", S_FORWARD}, {NULL, 0}
 };
 
 static int kwLookup(const char *s) {

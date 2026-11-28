@@ -19,13 +19,14 @@ CONST
   S_LE* = 50; S_GT* = 51; S_GE* = 52; S_DOT* = 53; S_DOTDOT* = 54; S_COMMA* = 55;
   S_COLON* = 56; S_SEMI* = 57; S_LPAREN* = 58; S_RPAREN* = 59; S_LBRACK* = 60;
   S_RBRACK* = 61; S_CARET* = 62; S_LBRACE* = 63; S_RBRACE* = 64;
+  S_FORWARD* = 65;
 
 TYPE
-  Token = RECORD
+  Token* = RECORD
     sym, line: INTEGER; ival: LONGINT; rval: REAL; cval: INTEGER;
     name: ARRAY 64 OF CHAR; sval: ARRAY 4096 OF CHAR; slen: INTEGER
   END;
-  LexState = RECORD tok: Token; histMark: LONGINT END;
+  LexState* = RECORD tok: Token; histMark: LONGINT END;
 
 VAR
   sym*: INTEGER;               (* symbole courant *)
@@ -102,7 +103,7 @@ END ParseInt;
 
 (* v := valeur reelle de s : [chiffres][.chiffres][E[+-]chiffres] *)
 PROCEDURE ParseReal(VAR s: ARRAY OF CHAR; VAR v: REAL);
-VAR i, d, exp, esign, frac: INTEGER; mant: REAL; seenDot: BOOLEAN;
+VAR i, d, exp, esign, frac, k: INTEGER; mant, p: REAL; seenDot: BOOLEAN;
 BEGIN
   mant := 0.0; frac := 0; exp := 0; esign := 1; i := 0; seenDot := FALSE;
   WHILE (s[i] # 0X) & (s[i] # 'E') & (s[i] # 'e') DO
@@ -128,9 +129,12 @@ BEGIN
     END
   END;
   exp := exp * esign - frac;
-  WHILE exp > 0 DO mant := mant * 10.0; DEC(exp) END;
-  WHILE exp < 0 DO mant := mant / 10.0; INC(exp) END;
-  v := mant
+  (* single correctly-rounded scaling (matches C strtod for usual literals):
+     10^k is exact in REAL for k <= 22, mantissa exact while < 2^53 *)
+  k := exp; IF k < 0 THEN k := -k END;
+  p := 1.0;
+  WHILE k > 0 DO p := p * 10.0; DEC(k) END;
+  IF exp >= 0 THEN v := mant * p ELSE v := mant / p END
 END ParseReal;
 
 (* ---------- keywords (casse exacte, majuscules) ---------- *)
@@ -148,7 +152,6 @@ BEGIN
   ELSIF Eq(s, "ELSIF") THEN RETURN S_ELSIF
   ELSIF Eq(s, "END") THEN RETURN S_END
   ELSIF Eq(s, "FOR") THEN RETURN S_FOR
-  ELSIF Eq(s, "HALT") THEN RETURN S_HALT
   ELSIF Eq(s, "IF") THEN RETURN S_IF
   ELSIF Eq(s, "IMPORT") THEN RETURN S_IMPORT
   ELSIF Eq(s, "IN") THEN RETURN S_IN
@@ -170,6 +173,7 @@ BEGIN
   ELSIF Eq(s, "VAR") THEN RETURN S_VAR
   ELSIF Eq(s, "WHILE") THEN RETURN S_WHILE
   ELSIF Eq(s, "WITH") THEN RETURN S_WITH
+  ELSIF Eq(s, "FORWARD") THEN RETURN S_FORWARD
   END;
   RETURN S_IDENT
 END KwLookup;
@@ -434,6 +438,7 @@ BEGIN
   | S_VAR: CopyStr("VAR", out, 256)
   | S_WHILE: CopyStr("WHILE", out, 256)
   | S_WITH: CopyStr("WITH", out, 256)
+  | S_FORWARD: CopyStr("FORWARD", out, 256)
   | S_ASSIGN: CopyStr(":=", out, 256)
   | S_PLUS: CopyStr("+", out, 256)
   | S_MINUS: CopyStr("-", out, 256)

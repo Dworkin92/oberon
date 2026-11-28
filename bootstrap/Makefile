@@ -1,4 +1,4 @@
-CC = gcc
+CC = /c/Local/Tools/mingw64-16.2.0/bin/gcc.exe
 CFLAGS = -O2 -Wall -Wextra -std=gnu11 -g
 BIN = build/bin
 LIB = build/lib
