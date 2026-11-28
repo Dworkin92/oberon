@@ -271,6 +271,21 @@ les DLL sont chargées **à l'exécution**, aucun link statique). Exemple comple
 `examples/SqlDemo.Mod`. Voir aussi la sémantique des bodies de modules :
 le body (proc 0) de **chaque** module chargé tourne au démarrage, dépendances d'abord.
 
+**Restrictions du FFI** :
+- `CALLC` : max **8 arguments**, tous entiers/pointeurs 64 bits (registres RCX/RDX/R8/R9 puis
+  pile, retour dans RAX). **Pas de flottants** (ils passent en XMM sur x64) : pour une fonction
+  C avec args/retour `double`, écrire un wrapper C mince (ex. dans `ffi_glue.c`) ;
+  idem structs retournées par valeur.
+- **Pas de callback C→Oberon** : la fonction C appelée ne doit pas rappeler dans la VM
+  (pas de réentrance). Choisir des API sans callback (ex. boucle `prepare/step` de SQLite
+  plutôt que `sqlite3_exec` avec callback).
+- `LOADLIB` : ordre de recherche Windows (répertoire de l'exe, PATH, System32…) ;
+  mettre la DLL à côté de l'exécutable ou donner un chemin absolu.
+- Les chaînes Oberon (1 `CHAR` par cellule) passent par `CSTR` (copie C allouée, à libérer
+  avec `FREE`) ; en retour `STR` tronque à `LEN(buf)-1` et termine par `0X`.
+- Mémoire C (`MALLOC`/`FREE`) et tas de la VM sont distincts : ne jamais `DISPOSE` un
+  pointeur C, ne jamais passer un ref heap à une fonction C sans `CSTR`.
+
 ## 7. Lexique
 
 - **Commentaires** : `(* ... *)`, imbriqués.
